@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07595da836a246459c3e0d2a5e4678d, type: 3}
+  m_Name: Properties_Enemy_Knight_Small
+  m_EditorClassIdentifier: 
+  isIndestructible: 0
+  isIndamageble: 0
+  healthPoints: 2
+  healthPointsIsRandom: 0
+  healthPointsRandomRange: {x: 1, y: 10}
+  damage: 1
+  damageIsRandom: 0
+  damageRandomRange: {x: 1, y: 10}
+  gold: 2
+  goldIsRandom: 0
+  goldRandomRange: {x: 1, y: 10}
+  score: 0
+  scoreIsRandom: 0
+  scoreRandomRange: {x: 1, y: 10}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  collorIsRandom: 0
+  colorsRandomArray: []
+  spriteScale: {x: 1, y: 1}
+  scaleIsRandom: 0
+  scaleRandomRange: {x: 1, y: 10}
+  animation: {fileID: 9100000, guid: d3f7b1aa3efc98b419e8b4e09cd5ace8, type: 2}
+  animationIsRandom: 0
+  animationsRandomArray: []
+  moveSpeed: 1.2
+  moveSpeedIsRandom: 0
+  moveSpeedRandomRange: {x: 1, y: 10}

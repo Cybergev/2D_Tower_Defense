@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07595da836a246459c3e0d2a5e4678d, type: 3}
+  m_Name: Properties_Enemy_Random
+  m_EditorClassIdentifier: 
+  isIndestructible: 0
+  isIndamageble: 0
+  healthPointsIsRandom: 1
+  healthPoints: 1
+  healthPointsRandomRange: {x: 5, y: 10}
+  damageIsRandom: 1
+  damage: 1
+  damageRandomRange: {x: 1, y: 5}
+  goldIsRandom: 1
+  gold: 1
+  goldRandomRange: {x: 1, y: 5}
+  scoreIsRandom: 1
+  score: 1
+  scoreRandomRange: {x: 1, y: 5}
+  collorIsRandom: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  colorsRandomArray:
+  - {r: 0.78431374, g: 0.19607843, b: 0.19607843, a: 1}
+  - {r: 0.19607843, g: 0.78431374, b: 0.19607843, a: 1}
+  - {r: 0.19607843, g: 0.19607843, b: 0.78431374, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  scaleIsRandom: 1
+  spriteScale: {x: 1, y: 1}
+  scaleRandomRange: {x: 1, y: 3}
+  animationIsRandom: 1
+  animation: {fileID: 0}
+  animationsRandomArray:
+  - {fileID: 9100000, guid: d3f7b1aa3efc98b419e8b4e09cd5ace8, type: 2}
+  - {fileID: 9100000, guid: b882fc41f3cbc0746810d732dd764b32, type: 2}
+  moveSpeedIsRandom: 0
+  moveSpeed: 1
+  moveSpeedRandomRange: {x: 1, y: 1}

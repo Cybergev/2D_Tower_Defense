@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 916880f3bb8ee144ebabbc33075108f3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_PerojectilePrefab: {fileID: 9105682222607819861, guid: a11261b1a10936e498c72e0ebc4b9fee, type: 3}
+  - m_LaunchSFX: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

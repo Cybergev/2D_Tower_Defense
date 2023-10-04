@@ -95,9 +95,9 @@ public abstract class Spawner : MonoBehaviour
 
     public void SetSpawnMode(string v_SpawnMode)
     {
-        if(v_SpawnMode == "Limit")
+        if(v_SpawnMode == nameof(SpawnMode.Limit))
             m_SpawnMode = SpawnMode.Limit;
-        if (v_SpawnMode == "Loop")
+        if (v_SpawnMode == nameof(SpawnMode.Loop))
             m_SpawnMode = SpawnMode.Loop;
     }
     public void SetRespawnTime(float v_RespawnTime)

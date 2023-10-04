@@ -59,37 +59,37 @@ public sealed class EnemyAsset : DestructibleAsset
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            enemyAsset.damageIsRandom = EditorGUILayout.Toggle("Damage Is Random", enemyAsset.damageIsRandom);
+            enemyAsset.damageIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.damageIsRandom), enemyAsset.damageIsRandom);
             if (!enemyAsset.damageIsRandom)
-                enemyAsset.damage = EditorGUILayout.IntField("Damage", enemyAsset.damage);
+                enemyAsset.damage = EditorGUILayout.IntField(nameof(enemyAsset.damage), enemyAsset.damage);
             else
-                enemyAsset.damageRandomRange = EditorGUILayout.Vector2IntField("Damage Random Range", enemyAsset.damageRandomRange);
+                enemyAsset.damageRandomRange = EditorGUILayout.Vector2IntField(nameof(enemyAsset.damageRandomRange), enemyAsset.damageRandomRange);
 
-            enemyAsset.goldIsRandom = EditorGUILayout.Toggle("Gold Is Random", enemyAsset.goldIsRandom);
+            enemyAsset.goldIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.goldIsRandom), enemyAsset.goldIsRandom);
             if (!enemyAsset.goldIsRandom)
-                enemyAsset.gold = EditorGUILayout.IntField("Gold", enemyAsset.gold);
+                enemyAsset.gold = EditorGUILayout.IntField(nameof(enemyAsset.gold), enemyAsset.gold);
             else
-                enemyAsset.goldRandomRange = EditorGUILayout.Vector2IntField("Gold Random Range", enemyAsset.goldRandomRange);
+                enemyAsset.goldRandomRange = EditorGUILayout.Vector2IntField(nameof(enemyAsset.goldRandomRange), enemyAsset.goldRandomRange);
 
-            enemyAsset.scoreIsRandom = EditorGUILayout.Toggle("Score Is Random", enemyAsset.scoreIsRandom);
+            enemyAsset.scoreIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.scoreIsRandom), enemyAsset.scoreIsRandom);
             if (!enemyAsset.scoreIsRandom)
-                enemyAsset.score = EditorGUILayout.IntField("Score", enemyAsset.score);
+                enemyAsset.score = EditorGUILayout.IntField(nameof(enemyAsset.score), enemyAsset.score);
             else
-                enemyAsset.scoreRandomRange = EditorGUILayout.Vector2IntField("Score Random Range", enemyAsset.scoreRandomRange);
+                enemyAsset.scoreRandomRange = EditorGUILayout.Vector2IntField(nameof(enemyAsset.scoreRandomRange), enemyAsset.scoreRandomRange);
 
-            enemyAsset.collorIsRandom = EditorGUILayout.Toggle("Collor Is Random", enemyAsset.collorIsRandom);
+            enemyAsset.collorIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.collorIsRandom), enemyAsset.collorIsRandom);
             if (!enemyAsset.collorIsRandom)
-                enemyAsset.color = EditorGUILayout.ColorField("Color", enemyAsset.color);
+                enemyAsset.color = EditorGUILayout.ColorField(nameof(enemyAsset.color), enemyAsset.color);
 
-            enemyAsset.scaleIsRandom = EditorGUILayout.Toggle("Scale Is Random", enemyAsset.scaleIsRandom);
+            enemyAsset.scaleIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.scaleIsRandom), enemyAsset.scaleIsRandom);
             if (!enemyAsset.scaleIsRandom)
-                enemyAsset.spriteScale = EditorGUILayout.Vector2Field("Sprite Scale", enemyAsset.spriteScale);
+                enemyAsset.spriteScale = EditorGUILayout.Vector2Field(nameof(enemyAsset.spriteScale), enemyAsset.spriteScale);
             else
-                enemyAsset.scaleRandomRange = EditorGUILayout.Vector2Field("Scale Random Range", enemyAsset.scaleRandomRange);
+                enemyAsset.scaleRandomRange = EditorGUILayout.Vector2Field(nameof(enemyAsset.scaleRandomRange), enemyAsset.scaleRandomRange);
 
-            enemyAsset.animationIsRandom = EditorGUILayout.Toggle("Animation Is Random", enemyAsset.animationIsRandom);
+            enemyAsset.animationIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.animationIsRandom), enemyAsset.animationIsRandom);
             if(!enemyAsset.animationIsRandom)
-                enemyAsset.animation = EditorGUILayout.ObjectField("Animation", enemyAsset.animation, typeof(RuntimeAnimatorController), false) as RuntimeAnimatorController;
+                enemyAsset.animation = EditorGUILayout.ObjectField(nameof(enemyAsset.animation), enemyAsset.animation, typeof(RuntimeAnimatorController), false) as RuntimeAnimatorController;
             serializedObject.ApplyModifiedProperties();
         }
     }

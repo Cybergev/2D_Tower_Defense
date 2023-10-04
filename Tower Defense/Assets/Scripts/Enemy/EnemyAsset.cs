@@ -80,6 +80,8 @@ public sealed class EnemyAsset : DestructibleAsset
             enemyAsset.collorIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.collorIsRandom), enemyAsset.collorIsRandom);
             if (!enemyAsset.collorIsRandom)
                 enemyAsset.color = EditorGUILayout.ColorField(nameof(enemyAsset.color), enemyAsset.color);
+            else
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.collorIsRandom)));
 
             enemyAsset.scaleIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.scaleIsRandom), enemyAsset.scaleIsRandom);
             if (!enemyAsset.scaleIsRandom)
@@ -90,6 +92,8 @@ public sealed class EnemyAsset : DestructibleAsset
             enemyAsset.animationIsRandom = EditorGUILayout.Toggle(nameof(enemyAsset.animationIsRandom), enemyAsset.animationIsRandom);
             if(!enemyAsset.animationIsRandom)
                 enemyAsset.animation = EditorGUILayout.ObjectField(nameof(enemyAsset.animation), enemyAsset.animation, typeof(RuntimeAnimatorController), false) as RuntimeAnimatorController;
+            else
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.animationsRandomArray)));
             serializedObject.ApplyModifiedProperties();
         }
     }

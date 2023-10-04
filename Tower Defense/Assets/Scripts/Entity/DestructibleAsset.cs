@@ -20,21 +20,22 @@ public class DestructibleAsset : ScriptableObject
     {
         private DestructibleAsset destructibleAsset;
 
-
         private void OnEnable()
         {
-            EnemyAsset destructibleAsset = (EnemyAsset)target;
+            destructibleAsset = (DestructibleAsset)target;
         }
 
         public override void OnInspectorGUI()
         {
-            destructibleAsset.isIndestructible = EditorGUILayout.Toggle(name, destructibleAsset.isIndestructible);
-            destructibleAsset.isIndamageble = EditorGUILayout.Toggle(name, destructibleAsset.isIndamageble);
-            destructibleAsset.healthPointsIsRandom = EditorGUILayout.Toggle(name, destructibleAsset.healthPointsIsRandom);
+            serializedObject.Update();
+            destructibleAsset.isIndestructible = EditorGUILayout.Toggle("Is Indestructible", destructibleAsset.isIndestructible);
+            destructibleAsset.isIndamageble = EditorGUILayout.Toggle("Is Indamageble", destructibleAsset.isIndamageble);
+            destructibleAsset.healthPointsIsRandom = EditorGUILayout.Toggle("Health Points Is Random", destructibleAsset.healthPointsIsRandom);
             if (!destructibleAsset.healthPointsIsRandom)
-                destructibleAsset.healthPoints = EditorGUILayout.IntField(name, destructibleAsset.healthPoints);
+                destructibleAsset.healthPoints = EditorGUILayout.IntField("Health Points", destructibleAsset.healthPoints);
             else
-                destructibleAsset.healthPointsRandomRange = EditorGUILayout.Vector2IntField(name, destructibleAsset.healthPointsRandomRange);
+                destructibleAsset.healthPointsRandomRange = EditorGUILayout.Vector2IntField("Health Points Random Range", destructibleAsset.healthPointsRandomRange);
+            serializedObject.ApplyModifiedProperties();
         }
     }
 #endif

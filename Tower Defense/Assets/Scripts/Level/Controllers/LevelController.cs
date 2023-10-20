@@ -1,17 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface ILevelCondition
-{
-    bool IsCompleted { get; }
-}
-
 public class LevelController : MonoSingleton<LevelController>
 {
     [SerializeField] private int m_referenceTime;
     public int ReferenceTime => m_referenceTime;
 
     [SerializeField] private UnityEvent m_EventLevelCompleted;
+    [SerializeField] private UnityEvent m_EventLevelCanceled;
 
     private ILevelCondition[] m_Conditions;
 
@@ -33,7 +29,6 @@ public class LevelController : MonoSingleton<LevelController>
             CheckLevelConditions();
         }
     }
-
     private void CheckLevelConditions()
     {
         if (m_Conditions == null || m_Conditions.Length == 0) return;
@@ -49,9 +44,36 @@ public class LevelController : MonoSingleton<LevelController>
         if (numCompleted == m_Conditions.Length)
         {
             m_IsLevelCompleted = true;
+            FinishLevel(true, Player.Instance.Score);
             m_EventLevelCompleted?.Invoke();
-
-            LevelSequenceController.Instance?.FinishCurrentLevel(true);
+        }
+    }
+    public void FinishLevel(bool success, int levelScore)
+    {
+        LevelResult result = new LevelResult(LevelSequenceController.Instance.CurrentLevel.LevelName, success, levelScore, LevelTime);
+        LevelResultController.Instance.HashSaveLevelResult(result);
+        LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults);
+        ResultPanelController.Instance.ShownResult(result);
+    }
+    public void CancelLevel()
+    {
+        foreach(var result in LevelResultController.Instance.ArrayLevelResults)
+        {
+            if(result.levelName == LevelSequenceController.Instance.CurrentLevel.LevelName)
+            {
+                if (result.levelSuccess)
+                {
+                    m_EventLevelCanceled.Invoke();
+                    LevelSequenceController.Instance.LoadMineMenu();
+                }
+                else
+                {
+                    result.levelScore = Player.Instance.Score;
+                    result.levelTime = LevelTime;
+                    m_EventLevelCanceled.Invoke();
+                    LevelSequenceController.Instance.LoadMineMenu();
+                }
+            }
         }
     }
 }

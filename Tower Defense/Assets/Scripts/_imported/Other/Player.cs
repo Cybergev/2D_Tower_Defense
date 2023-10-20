@@ -4,7 +4,8 @@ using UnityEngine.Events;
 
 public class Player : MonoSingleton<Player>
 {
-    private static event Action<int> ChangeLivesAmount;
+    [SerializeField] private UnityEvent<int> changeLivesAmount;
+    [HideInInspector] public UnityEvent<int> ChangeLivesAmount => changeLivesAmount;
 
     [SerializeField] private UnityEvent m_EventOnPlayerDeath;
     [HideInInspector] public UnityEvent EventOnPlayerDeath => m_EventOnPlayerDeath;
@@ -21,17 +22,6 @@ public class Player : MonoSingleton<Player>
     [SerializeField] private int m_NumLives;
     public int NumLives => m_NumLives;
     public int PastNumLives { get; private set; }
-    public static void LifeUpdateSubscribe(Action<int> act)
-    {
-        ChangeLivesAmount += act;
-        act(Instance.m_NumLives);
-    }
-    public static void LifeUpdateDisscribe(Action<int> act)
-    {
-        ChangeLivesAmount -= act;
-        act(Instance.m_NumLives);
-    }
-
 
     //[SerializeField] private CameraController m_CameraController;
     //[SerializeField] private MovementController m_MovementController;
@@ -52,45 +42,40 @@ public class Player : MonoSingleton<Player>
         }
     }
 
-    private void Start()
-    {
-        ChangeLivesAmount(m_NumLives);
-    }
-
     protected virtual void Update()
     {
         if(PastNumLives != NumLives)
         {
             PastNumLives = NumLives;
-            ChangeLivesAmount(NumLives);
+            changeLivesAmount.Invoke(NumLives);
         }
     }
 
-    private void onPlayerDeath()
+    private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
-        LevelSequenceController.Instance.FinishCurrentLevel(false);
+        LevelController.Instance.FinishLevel(false, Score);
     }
 
-    private void onShipDeath()
+    private void OnShipDeath()
     {
         m_NumLives--;
 
-        m_Ship.EventOnDeath.RemoveListener(onShipDeath);
+        m_Ship.EventOnDeath.RemoveListener(OnShipDeath);
         if (m_NumLives > 0) 
             Respawn();
-        else 
-            LevelSequenceController.Instance.FinishCurrentLevel(false);
+        else
+            LevelController.Instance.FinishLevel(false, Score);
     }
 
     private void Respawn()
     {
-        if (LevelSequenceController.PlayerShip != null)
+        if (LevelSequenceController.Instance.PlayerShip != null)
         {
-            var newPlayerShip = Instantiate(LevelSequenceController.PlayerShip, m_SpawnPoint);
+            var newPlayerShip = Instantiate(LevelSequenceController.Instance.PlayerShip, m_SpawnPoint);
 
             m_Ship = newPlayerShip.GetComponent<SpaceShip>();
-            m_Ship.EventOnDeath.AddListener(onShipDeath);
+            m_Ship.EventOnDeath.AddListener(OnShipDeath);
             m_Ship.SetOwner(gameObject);
 
             //m_CameraController.SetTarget(m_Ship.transform);
@@ -108,7 +93,7 @@ public class Player : MonoSingleton<Player>
             m_NumLives -= damage;
 
             if (m_NumLives <= 0)
-                onPlayerDeath();
+                OnPlayerDeath();
         }
     }
 
@@ -128,6 +113,5 @@ public class Player : MonoSingleton<Player>
         NumKills++;
         ChangeKillsAmount.Invoke();
     }
-
     #endregion
 }

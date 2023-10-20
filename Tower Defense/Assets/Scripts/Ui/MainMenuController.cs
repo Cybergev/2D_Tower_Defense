@@ -10,7 +10,7 @@ public class MainMenuController : MonoSingleton<MainMenuController>
 
     private void Start()
     {
-        LevelSequenceController.PlayerShip = m_DefaultSpaceShip;
+        LevelSequenceController.Instance.PlayerShip = m_DefaultSpaceShip;
     }
 
     public void OnButtonStartNew()

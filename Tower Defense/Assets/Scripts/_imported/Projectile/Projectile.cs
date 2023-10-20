@@ -31,7 +31,6 @@ public class Projectile : MonoBehaviour
         m_Rigid.mass = m_ProjectileProperties.Mass;
         m_Rigid.angularDrag = m_ProjectileProperties.AngularDrag;
         m_Rigid.gravityScale = m_ProjectileProperties.GravityScale;
-
         if (m_ProjectileProperties.IsHoming)
         {
             if (m_Target.targetTransform)
@@ -41,7 +40,7 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            Vector2 stepLenght = transform.up * (m_ProjectileProperties.ThrustForce / m_ProjectileProperties.MaxLinearVelocity) * Time.fixedDeltaTime;
+            Vector2 stepLenght = (m_ProjectileProperties.ThrustForce / m_ProjectileProperties.MaxLinearVelocity) * Time.fixedDeltaTime * transform.up;
             m_Rigid.AddForce(stepLenght, ForceMode2D.Impulse);
         }
 
@@ -54,13 +53,8 @@ public class Projectile : MonoBehaviour
         {
             if (m_Target.targetTransform)
             {
-                m_Rigid.AddTorque(CalculateAngle(m_Target.targetTransform.position * Time.fixedDeltaTime), ForceMode2D.Force);
+                m_Rigid.AddTorque(CalculateAngle(m_Target.targetTransform.position), ForceMode2D.Force);
                 transform.position = Vector3.MoveTowards(transform.position, m_Target.targetTransform.position, m_ProjectileProperties.MaxLinearVelocity * Time.fixedDeltaTime);
-                /*
-                m_Rigid.AddTorque(CalculateAngle(m_Target.targetTransform.position * Time.fixedDeltaTime), ForceMode2D.Force);
-                m_Rigid.AddForce(transform.up * m_ProjectileProperties.ThrustForce * Time.fixedDeltaTime, ForceMode2D.Force);
-                m_Rigid.AddForce(-m_Rigid.velocity * (m_ProjectileProperties.ThrustForce / m_ProjectileProperties.MaxLinearVelocity) * Time.fixedDeltaTime, ForceMode2D.Force);
-                */
             }
             else
                 Destroy(gameObject);
@@ -107,9 +101,9 @@ public class Projectile : MonoBehaviour
 
         m_ImpactEffect.Invoke();
     }
-    private float CalculateAngle(Vector3 targetPositin)
+    private float CalculateAngle(Vector3 targetPosition)
     {
-        Vector2 localTargetPosition = transform.InverseTransformPoint(targetPositin);
+        Vector2 localTargetPosition = transform.InverseTransformPoint(targetPosition);
         float angle = Vector3.SignedAngle(localTargetPosition, Vector3.up, Vector3.forward);
         angle = Mathf.Clamp(angle, -m_ProjectileProperties.HomingAngle, m_ProjectileProperties.HomingAngle) / m_ProjectileProperties.HomingAngle;
         return -angle;

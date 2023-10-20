@@ -28,13 +28,13 @@ public abstract class Spawner : MonoBehaviour
     private Timer m_Timer;
 
     [SerializeField] private UnityEvent m_EventOnSpawnObject;
-    [SerializeField] public UnityEvent EventOnSpawnObject => m_EventOnSpawnObject;
+    [HideInInspector] public UnityEvent EventOnSpawnObject => m_EventOnSpawnObject;
 
     [SerializeField] private UnityEvent m_EventOnSpawnIteration;
-    [SerializeField] public UnityEvent EventOnSpawnIteration => m_EventOnSpawnIteration;
+    [HideInInspector] public UnityEvent EventOnSpawnIteration => m_EventOnSpawnIteration;
 
     [SerializeField] private UnityEvent m_EventOnSpawnComplete;
-    [SerializeField] public UnityEvent EventOnSpawnComplete => m_EventOnSpawnComplete;
+    [HideInInspector] public UnityEvent EventOnSpawnComplete => m_EventOnSpawnComplete;
 
     protected virtual void Start()
     {

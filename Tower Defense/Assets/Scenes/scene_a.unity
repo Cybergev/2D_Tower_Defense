@@ -220,6 +220,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd0bcb88d8f62f04b81d30f9fb8252ac, type: 3}
+--- !u!114 &363428736 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5888782975908763316, guid: fd0bcb88d8f62f04b81d30f9fb8252ac, type: 3}
+  m_PrefabInstance: {fileID: 363428735}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &780440483 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9086930452370679073, guid: fd0bcb88d8f62f04b81d30f9fb8252ac, type: 3}
@@ -903,6 +914,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  m_EventLevelCanceled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3897596905802320537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -916,6 +930,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyOnLoad: 0
+  m_MainMenuLevel: {fileID: 0}
+  m_AllLevels: []
+  PlayerShip: {fileID: 0}
 --- !u!4 &4430093909709762793
 Transform:
   m_ObjectHideFlags: 0
@@ -1054,7 +1071,6 @@ MonoBehaviour:
   m_RespawnTime: 3
   m_NumSpawnObjects: 2
   m_NumSpawnIterations: 5
-  m_NumCurrentSpawnIterations: 0
   m_EventOnSpawnObject:
     m_PersistentCalls:
       m_Calls: []
@@ -1233,7 +1249,6 @@ MonoBehaviour:
   m_RespawnTime: 1
   m_NumSpawnObjects: 2
   m_NumSpawnIterations: 10
-  m_NumCurrentSpawnIterations: 0
   m_EventOnSpawnObject:
     m_PersistentCalls:
       m_Calls: []
@@ -1276,7 +1291,6 @@ MonoBehaviour:
   m_RespawnTime: 3
   m_NumSpawnObjects: 1
   m_NumSpawnIterations: 3
-  m_NumCurrentSpawnIterations: 0
   m_EventOnSpawnObject:
     m_PersistentCalls:
       m_Calls: []
@@ -1350,6 +1364,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyOnLoad: 0
+  changeLivesAmount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363428736}
+        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
+        m_MethodName: OnChangeTargetValueAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_EventOnPlayerDeath:
     m_PersistentCalls:
       m_Calls:
@@ -1378,8 +1407,10 @@ MonoBehaviour:
   ChangeKillsAmount:
     m_PersistentCalls:
       m_Calls: []
-  m_towerPrefab: {fileID: 4346942766804586214, guid: da1fad4f4348f47409ddd8e9752022a9, type: 3}
-  m_NumGold: 20
+  changeGoldAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  m_NumGold: 25
 --- !u!1 &7961322584078998946
 GameObject:
   m_ObjectHideFlags: 0

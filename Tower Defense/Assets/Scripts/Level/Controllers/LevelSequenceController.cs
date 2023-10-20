@@ -5,47 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class LevelSequenceController : MonoSingleton<LevelSequenceController>
 {
-    /// <summary>
-    /// Первый элемент массива(0) всегда сцена главного меню.
-    /// </summary>
+    [SerializeField] private Level m_MainMenuLevel;
     [SerializeField] private Level[] m_AllLevels;
+    public Level MainMenuLevel => m_MainMenuLevel;
     public Level[] AllLevels => m_AllLevels;
     public Level CurrentLevel { get; private set; }
-
-    public bool LastLevelResult { get; private set; }
-
-    public PlayerStatistics LevelStatistics { get; private set; }
-
-    public static SpaceShip PlayerShip { get; set; }
-
+    public SpaceShip PlayerShip;
     public void StartLevel(Level level)
     {
         CurrentLevel = level;
-
-        LevelStatistics = new PlayerStatistics();
-        LevelStatistics.Reset();
-
         SceneManager.LoadScene(level.SceneNumber);
     }
-
     public void RestartLevel()
     {
         SceneManager.LoadScene(CurrentLevel.SceneNumber);
     }
-
-    public void FinishCurrentLevel(bool success)
-    {
-        LastLevelResult = success;
-        LevelStatistics.CalculateLevelStatistic();
-        LevelStatistics.SaveLevelStatistic();
-
-        ResultPanelController.Instance.ShownResults(LevelStatistics, success);
-    }
-
     public void AvanceLevel()
     {
-        LevelStatistics.Reset();
-
         if (CurrentLevel.SceneNumber + 1 < m_AllLevels.Length)
         {
             StartLevel(m_AllLevels[CurrentLevel.SceneNumber + 1]);
@@ -55,5 +31,8 @@ public class LevelSequenceController : MonoSingleton<LevelSequenceController>
             SceneManager.LoadScene(m_AllLevels[0].SceneNumber);
         }
     }
-
+    public void LoadMineMenu()
+    {
+        SceneManager.LoadScene(m_MainMenuLevel.SceneNumber);
+    }
 }

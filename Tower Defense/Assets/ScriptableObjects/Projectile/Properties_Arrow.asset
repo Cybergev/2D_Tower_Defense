@@ -19,7 +19,7 @@ MonoBehaviour:
   m_ThrustForce: 5
   m_MaxLinearVelocity: 5
   m_IsHoming: 1
-  m_HomingAngle: 0
+  m_HomingAngle: 45
   m_ImpactCheckLineLenght: 0.2
   m_HasImpactForce: 0
   m_ImpactForceModifier: 1

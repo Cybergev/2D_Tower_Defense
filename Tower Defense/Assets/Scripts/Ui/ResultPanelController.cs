@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class ResultPanelController : MonoSingleton<ResultPanelController>
 {
-    [SerializeField] private Text m_Gold;
+    [SerializeField] private Text m_Score;
     [SerializeField] private Text m_Time;
-
     [SerializeField] private Text m_Result;
     [SerializeField] private Text m_ButtonNextText;
 
@@ -19,19 +18,14 @@ public class ResultPanelController : MonoSingleton<ResultPanelController>
         gameObject.SetActive(false);
     }
 
-    public void ShownResults(PlayerStatistics levelResults, bool success)
+    public void ShownResult(LevelResult result)
     {
         gameObject.SetActive(true);
-
-        m_Success = success;
-
-        m_Result.text = success ? "Win" : "Lose";
-
-        m_Gold.text = "Gold : " + levelResults.gold.ToString();
-        m_Time.text = "Time : " + levelResults.time.ToString();
-
-        m_ButtonNextText.text = success ? "Next" : "Restart";
-
+        m_Score.text = result.levelScore.ToString();
+        m_Time.text = result.levelTime.ToString();
+        m_Result.text = result.levelSuccess ? "Win" : "Lose";
+        m_ButtonNextText.text = result.levelSuccess ? "Next" : "Restart";
+        m_Success = result.levelSuccess;
         Time.timeScale = 0;
     }
 

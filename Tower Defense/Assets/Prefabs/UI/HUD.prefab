@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 2464329329754621152}
   - component: {fileID: 5224580905322680502}
   - component: {fileID: 4104642114342876027}
-  - component: {fileID: 3514129203445341930}
+  - component: {fileID: 5888782975908763316}
   m_Layer: 5
   m_Name: UILife
   m_TagString: Untagged
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3514129203445341930
+--- !u!114 &5888782975908763316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -272,10 +272,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 873227898512845725}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b6ff763eeb99f347af5d9b0b243d1c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesText: {fileID: 3936674519858599451}
+  targetExitText:
+  - {fileID: 3936674519858599451}
+  firstTextString: 
+  lastTextString: 
 --- !u!1 &1133664856728515369
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,7 +2204,7 @@ GameObject:
   - component: {fileID: 169205556461004716}
   - component: {fileID: 3338112677497677738}
   - component: {fileID: 140799301872645037}
-  - component: {fileID: 2307109589630864175}
+  - component: {fileID: 4892284006123784355}
   m_Layer: 5
   m_Name: UIMoney
   m_TagString: Untagged
@@ -2294,7 +2297,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2307109589630864175
+--- !u!114 &4892284006123784355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2303,10 +2306,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6767400433261750281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2890ae2979d2cd428457b100ef79cb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyText: {fileID: 4428752452852559814}
+  targetExitText:
+  - {fileID: 4428752452852559814}
+  firstTextString: 
+  lastTextString: 
 --- !u!1 &6784398476967100140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,8 +2496,8 @@ RectTransform:
   m_Children:
   - {fileID: 6625658674126920767}
   - {fileID: 4639963039143508754}
-  - {fileID: 6947397357817158671}
   - {fileID: 2818489300045452975}
+  - {fileID: 6947397357817158671}
   - {fileID: 982029977971519662}
   - {fileID: 334068566629401231}
   - {fileID: 3286787999072670579}
@@ -2986,7 +2992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyOnLoad: 0
-  m_Gold: {fileID: 6955981714580439391}
+  m_Score: {fileID: 0}
   m_Time: {fileID: 3319755667315855157}
   m_Result: {fileID: 387903319566739552}
   m_ButtonNextText: {fileID: 6652763013265114849}
@@ -3086,6 +3092,14 @@ PrefabInstance:
       propertyPath: m_towerAsset
       value: 
       objectReference: {fileID: 11400000, guid: be9f0c434aadbbf4a80054c1274e0f25, type: 2}
+    - target: {fileID: 5900732899341593302, guid: f2a3bee657dcbee4f99ff2556ac766fe, type: 3}
+      propertyPath: m_towerPrefab
+      value: 
+      objectReference: {fileID: 4346942766804586214, guid: da1fad4f4348f47409ddd8e9752022a9, type: 3}
+    - target: {fileID: 7690180113224777662, guid: f2a3bee657dcbee4f99ff2556ac766fe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TryBuild
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3192,6 +3206,14 @@ PrefabInstance:
       propertyPath: m_towerAsset
       value: 
       objectReference: {fileID: 11400000, guid: 2ea103ef3bf161344bd9068eab5cfef2, type: 2}
+    - target: {fileID: 5900732899341593302, guid: f2a3bee657dcbee4f99ff2556ac766fe, type: 3}
+      propertyPath: m_towerPrefab
+      value: 
+      objectReference: {fileID: 4346942766804586214, guid: da1fad4f4348f47409ddd8e9752022a9, type: 3}
+    - target: {fileID: 7690180113224777662, guid: f2a3bee657dcbee4f99ff2556ac766fe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TryBuild
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3298,6 +3320,14 @@ PrefabInstance:
       propertyPath: m_towerAsset
       value: 
       objectReference: {fileID: 11400000, guid: 43f894bd4f5e8e84db63cad7c481df77, type: 2}
+    - target: {fileID: 5900732899341593302, guid: f2a3bee657dcbee4f99ff2556ac766fe, type: 3}
+      propertyPath: m_towerPrefab
+      value: 
+      objectReference: {fileID: 4346942766804586214, guid: da1fad4f4348f47409ddd8e9752022a9, type: 3}
+    - target: {fileID: 7690180113224777662, guid: f2a3bee657dcbee4f99ff2556ac766fe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TryBuild
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

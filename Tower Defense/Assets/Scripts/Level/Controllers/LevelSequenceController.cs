@@ -16,23 +16,41 @@ public class LevelSequenceController : MonoSingleton<LevelSequenceController>
         CurrentLevel = level;
         SceneManager.LoadScene(level.SceneNumber);
     }
+    public void StartLevel(string levelName)
+    {
+        for (int i = 0; i < m_AllLevels.Length; i++)
+        {
+            if (m_AllLevels[i].name == levelName)
+                StartLevel(m_AllLevels[i]);
+        }
+    }
+    public void StartLevel(int leveNumber)
+    {
+        for (int i = 0; i < m_AllLevels.Length; i++)
+        {
+            if (m_AllLevels[i].SceneNumber == leveNumber)
+                StartLevel(m_AllLevels[i]);
+        }
+    }
     public void RestartLevel()
     {
-        SceneManager.LoadScene(CurrentLevel.SceneNumber);
+        StartLevel(CurrentLevel);
     }
     public void AvanceLevel()
     {
-        if (CurrentLevel.SceneNumber + 1 < m_AllLevels.Length)
+        for (int i = 0; i < m_AllLevels.Length; i++)
         {
-            StartLevel(m_AllLevels[CurrentLevel.SceneNumber + 1]);
-        }
-        else
-        {
-            SceneManager.LoadScene(m_AllLevels[0].SceneNumber);
+            if (m_AllLevels[i].LevelName == CurrentLevel.LevelName)
+            {
+                if (i == m_AllLevels.Length)
+                    LoadMineMenu();
+                else
+                    StartLevel(CurrentLevel.SceneNumber + 1);
+            }
         }
     }
     public void LoadMineMenu()
     {
-        SceneManager.LoadScene(m_MainMenuLevel.SceneNumber);
+        StartLevel(m_MainMenuLevel);
     }
 }

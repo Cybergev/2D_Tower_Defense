@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEngine;
@@ -40,10 +41,10 @@ public class LevelResultController : MonoSingleton<LevelResultController>
             }
             if (arrayLevelResults[i].levelName != levelResult.levelName && i == arrayLevelResults.Length)
             {
-                LevelResult[] NewArrayResults = new LevelResult[arrayLevelResults.Length + 1];
-                NewArrayResults = arrayLevelResults;
-                arrayLevelResults = new LevelResult[NewArrayResults.Length];
-                arrayLevelResults = NewArrayResults;
+                LevelResult[] ArrayLevelResultsNew = new LevelResult[arrayLevelResults.Length + 1];
+                ArrayLevelResultsNew = arrayLevelResults;
+                arrayLevelResults = new LevelResult[ArrayLevelResultsNew.Length];
+                arrayLevelResults = ArrayLevelResultsNew;
                 arrayLevelResults[i + 1] = levelResult;
             }
         }
@@ -59,6 +60,7 @@ public class LevelResultController : MonoSingleton<LevelResultController>
     }
     public void ClearAllResults()
     {
+        arrayLevelResults = new LevelResult[LevelSequenceController.Instance.AllLevels.Length];
         for (int i = 0; i < arrayLevelResults.Length; i++)
         {
             arrayLevelResults[i] = new LevelResult(LevelSequenceController.Instance.AllLevels[i].LevelName);
@@ -66,6 +68,7 @@ public class LevelResultController : MonoSingleton<LevelResultController>
         HardSaveLevelResult(arrayLevelResults);
     }
 }
+[Serializable]
 public class LevelResult
 {
     public string levelName;

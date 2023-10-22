@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyOnLoad: 1
+  m_MainMenuLevel: {fileID: 11400000, guid: 7852e93464d183c4ba32191710502957, type: 2}
   m_AllLevels:
-  - {fileID: 11400000, guid: 7852e93464d183c4ba32191710502957, type: 2}
   - {fileID: 11400000, guid: 806b40d03966c6f4392311dc0b7cb780, type: 2}
   - {fileID: 11400000, guid: e3e0f9b05a994df48aadec58ea62d8ef, type: 2}
+  PlayerShip: {fileID: 0}

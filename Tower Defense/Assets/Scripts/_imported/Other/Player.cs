@@ -4,9 +4,6 @@ using UnityEngine.Events;
 
 public class Player : MonoSingleton<Player>
 {
-    [SerializeField] private UnityEvent<int> changeLivesAmount;
-    [HideInInspector] public UnityEvent<int> ChangeLivesAmount => changeLivesAmount;
-
     [SerializeField] private UnityEvent m_EventOnPlayerDeath;
     [HideInInspector] public UnityEvent EventOnPlayerDeath => m_EventOnPlayerDeath;
 
@@ -18,10 +15,6 @@ public class Player : MonoSingleton<Player>
     public SpaceShip ActiveShip => m_Ship;
     [SerializeField] private Transform[] m_SpawnPoints;
     private Transform m_SpawnPoint;
-
-    [SerializeField] private int m_NumLives;
-    public int NumLives => m_NumLives;
-    public int PastNumLives { get; private set; }
 
     //[SerializeField] private CameraController m_CameraController;
     //[SerializeField] private MovementController m_MovementController;
@@ -42,19 +35,15 @@ public class Player : MonoSingleton<Player>
         }
     }
 
-    protected virtual void Update()
+    private void Update()
     {
-        if(PastNumLives != NumLives)
-        {
-            PastNumLives = NumLives;
-            changeLivesAmount.Invoke(NumLives);
-        }
+        CheckPlayerDataChenges();
     }
 
     private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
-        LevelController.Instance.FinishLevel(false, Score);
+        LevelController.Instance.FinishLevel(false);
     }
 
     private void OnShipDeath()
@@ -65,7 +54,7 @@ public class Player : MonoSingleton<Player>
         if (m_NumLives > 0) 
             Respawn();
         else
-            LevelController.Instance.FinishLevel(false, Score);
+            LevelController.Instance.FinishLevel(false);
     }
 
     private void Respawn()
@@ -97,21 +86,70 @@ public class Player : MonoSingleton<Player>
         }
     }
 
-    #region Score
-    [HideInInspector] public UnityEvent ChangeScoreAmount;
-    [HideInInspector] public UnityEvent ChangeKillsAmount;
-    public int Score { get; private set; }
-    public int NumKills { get; private set; }
+    #region Lives&Score&Money&Kills
+    [SerializeField] private UnityEvent<int> changeLivesAmount;
+    [HideInInspector] public UnityEvent<int> ChangeLivesAmount => changeLivesAmount;
 
-    public void AddScore(int num)
+    [SerializeField] private UnityEvent<int> changeScoreAmount;
+    [HideInInspector] public UnityEvent<int> ChangeScoreAmount => changeScoreAmount;
+
+    [SerializeField] private UnityEvent<int> changeKillsAmount;
+    [HideInInspector] public UnityEvent<int> ChangeKillsAmount => changeLivesAmount;
+
+    [SerializeField] private UnityEvent<int> changeGoldAmount;
+    [HideInInspector] public UnityEvent<int> ChangeGoldAmount => changeGoldAmount;
+
+
+    [SerializeField] private int m_NumLives;
+    public int NumLives => m_NumLives;
+    public int PastNumLives { get; private set; }
+
+    public int NumScore { get; private set; }
+    public int PastNumScore { get; private set; }
+
+
+    [SerializeField] private int m_NumGold;
+    public int NumGold => m_NumGold;
+    public int PastNumGold { get; private set; }
+
+    public int NumKills { get; private set; }
+    public int PastNumKills { get; private set; }
+
+    private void CheckPlayerDataChenges()
     {
-        Score += num;
-        ChangeScoreAmount.Invoke();
+        if (PastNumLives != NumLives)
+        {
+            PastNumLives = NumLives;
+            changeLivesAmount.Invoke(NumLives);
+        }
+        if (PastNumScore != NumScore)
+        {
+            PastNumScore = NumScore;
+            changeScoreAmount.Invoke(NumScore);
+        }
+        if (PastNumGold != NumGold)
+        {
+            PastNumGold = NumGold;
+            changeGoldAmount.Invoke(NumGold);
+        }
+        if (PastNumKills != NumKills)
+        {
+            PastNumKills = NumKills;
+            changeKillsAmount.Invoke(NumKills);
+        }
+    }
+
+    public void ChangeScore(int num)
+    {
+        NumScore += num;
+    }
+    public void ChangeGold(int value)
+    {
+        m_NumGold += value;
     }
     public void AddKill()
     {
         NumKills++;
-        ChangeKillsAmount.Invoke();
     }
     #endregion
 }

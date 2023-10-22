@@ -41,15 +41,15 @@ public class Enemy : MonoBehaviour
     }
     public void DamagePlayer()
     {
-        TDPlayer.Instance.TakeDamage(m_damage);
+        Player.Instance.TakeDamage(m_damage);
     }
     public void GivePlayerGold()
     {
-        TDPlayer.Instance.ChangeGold(m_gold);
+        Player.Instance.ChangeGold(m_gold);
     }
     private void OnDestroy()
     {
-        TDPlayer.Instance.AddKill();
+        Player.Instance.AddKill();
     }
     #if UNITY_EDITOR
     [CustomEditor(typeof(Enemy))]

@@ -231,14 +231,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &363428737 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4892284006123784355, guid: fd0bcb88d8f62f04b81d30f9fb8252ac, type: 3}
+  m_PrefabInstance: {fileID: 363428735}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &780440483 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9086930452370679073, guid: fd0bcb88d8f62f04b81d30f9fb8252ac, type: 3}
-  m_PrefabInstance: {fileID: 363428735}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1766934562 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3823317491775784890, guid: fd0bcb88d8f62f04b81d30f9fb8252ac, type: 3}
   m_PrefabInstance: {fileID: 363428735}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7631737261749591
@@ -286,8 +292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5925922357570664157}
-  - component: {fileID: 7903996491167248842}
-  - component: {fileID: 3897596905802320537}
+  - component: {fileID: 5925922357570664158}
   m_Layer: 0
   m_Name: PlayerCamp
   m_TagString: Untagged
@@ -917,22 +922,6 @@ MonoBehaviour:
   m_EventLevelCanceled:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3897596905802320537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386062127337383243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5e41bfca781f448af91ede390cd56b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DoNotDestroyOnLoad: 0
-  m_MainMenuLevel: {fileID: 0}
-  m_AllLevels: []
-  PlayerShip: {fileID: 0}
 --- !u!4 &4430093909709762793
 Transform:
   m_ObjectHideFlags: 0
@@ -1127,6 +1116,66 @@ Transform:
   - {fileID: 1914152431343525011}
   m_Father: {fileID: 2222854990057254680}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5925922357570664158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386062127337383243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4901ac351c460a4a9d7ee9628b7f714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DoNotDestroyOnLoad: 0
+  m_EventOnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EventOnShipRespawn:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Ship: {fileID: 0}
+  m_PlayerShipPrefab: {fileID: 0}
+  m_SpawnPoints: []
+  changeLivesAmount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363428736}
+        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
+        m_MethodName: OnChangeTargetValueAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  changeScoreAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  changeKillsAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  changeGoldAmount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 363428737}
+        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
+        m_MethodName: OnChangeTargetValueAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_NumLives: 10
+  m_NumGold: 25
 --- !u!4 &6123865086949871791
 Transform:
   m_ObjectHideFlags: 0
@@ -1351,66 +1400,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2222854990057254680}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7903996491167248842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 386062127337383243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33209cfdba121ea4fab203bef5d82ab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DoNotDestroyOnLoad: 0
-  changeLivesAmount:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 363428736}
-        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
-        m_MethodName: OnChangeTargetValueAmount
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_EventOnPlayerDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1766934562}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  m_EventOnShipRespawn:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Ship: {fileID: 0}
-  m_PlayerShipPrefab: {fileID: 0}
-  m_SpawnPoints: []
-  m_NumLives: 10
-  ChangeScoreAmount:
-    m_PersistentCalls:
-      m_Calls: []
-  ChangeKillsAmount:
-    m_PersistentCalls:
-      m_Calls: []
-  changeGoldAmount:
-    m_PersistentCalls:
-      m_Calls: []
-  m_NumGold: 25
 --- !u!1 &7961322584078998946
 GameObject:
   m_ObjectHideFlags: 0

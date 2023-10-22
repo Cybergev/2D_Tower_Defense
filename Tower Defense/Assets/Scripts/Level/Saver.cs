@@ -5,7 +5,7 @@ using UnityEngine;
 [Serializable]
 public class Saver<T>
 {
-    public T data;
+    public T saveData;
     private static string Path(string filename)
     {
         return $"{Application.persistentDataPath}/{filename}";
@@ -16,12 +16,13 @@ public class Saver<T>
         if (File.Exists(path))
         {
             var dataString = File.ReadAllText(path);
-            data = JsonUtility.FromJson<T>(dataString);
+            var wrapper = JsonUtility.FromJson<Saver<T>>(dataString);
+            data = wrapper.saveData;
         }
     }
     public static void Save(string filename, T data)
     {
-        var wrapper = new Saver<T> { data = data };
+        var wrapper = new Saver<T> { saveData = data };
         var dataString = JsonUtility.ToJson(wrapper);
         File.WriteAllText(Path(filename), dataString);
     }

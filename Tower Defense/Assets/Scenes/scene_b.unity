@@ -1621,6 +1621,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  m_EventLevelCanceled:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4567825646386382790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,8 +1820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1570072552127013866}
-  - component: {fileID: 7988305511804500995}
-  - component: {fileID: 6916662774749327499}
+  - component: {fileID: 6068666249273028117}
   m_Layer: 0
   m_Name: PlayerCamp
   m_TagString: Untagged
@@ -1826,6 +1828,66 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6068666249273028117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6068666249273028116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4901ac351c460a4a9d7ee9628b7f714, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DoNotDestroyOnLoad: 0
+  m_EventOnPlayerDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EventOnShipRespawn:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Ship: {fileID: 0}
+  m_PlayerShipPrefab: {fileID: 0}
+  m_SpawnPoints: []
+  changeLivesAmount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 25365598}
+        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
+        m_MethodName: OnChangeTargetValueAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  changeScoreAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  changeKillsAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  changeGoldAmount:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 25365597}
+        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
+        m_MethodName: OnChangeTargetValueAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_NumLives: 10
+  m_NumGold: 50
 --- !u!114 &6366353328556598573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1993,22 +2055,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6916662774749327499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6068666249273028116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df5e41bfca781f448af91ede390cd56b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DoNotDestroyOnLoad: 0
-  m_MainMenuLevel: {fileID: 0}
-  m_AllLevels: []
-  PlayerShip: {fileID: 0}
 --- !u!1 &7421340544842192718
 GameObject:
   m_ObjectHideFlags: 0
@@ -2147,66 +2193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Radius: 0.2
---- !u!114 &7988305511804500995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6068666249273028116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33209cfdba121ea4fab203bef5d82ab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DoNotDestroyOnLoad: 0
-  changeLivesAmount:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 25365598}
-        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
-        m_MethodName: OnChangeTargetValueAmount
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_EventOnPlayerDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnShipRespawn:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Ship: {fileID: 0}
-  m_PlayerShipPrefab: {fileID: 0}
-  m_SpawnPoints: []
-  m_NumLives: 10
-  ChangeScoreAmount:
-    m_PersistentCalls:
-      m_Calls: []
-  ChangeKillsAmount:
-    m_PersistentCalls:
-      m_Calls: []
-  ChangeGoldAmount:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 25365597}
-        m_TargetAssemblyTypeName: UIUserHUDTextController, Assembly-CSharp
-        m_MethodName: OnChangeTargetValueAmount
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_NumGold: 100
 --- !u!114 &8232797642373848354
 MonoBehaviour:
   m_ObjectHideFlags: 0

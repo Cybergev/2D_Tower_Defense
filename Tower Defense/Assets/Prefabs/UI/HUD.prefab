@@ -2729,7 +2729,7 @@ GameObject:
   - component: {fileID: 5300965634950046933}
   - component: {fileID: 6955981714580439391}
   m_Layer: 5
-  m_Name: GoldText
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2795,7 +2795,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Gold : 0'
+  m_Text: 'Score : 0'
 --- !u!1 &8992424440777791835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2992,7 +2992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyOnLoad: 0
-  m_Score: {fileID: 0}
+  m_Score: {fileID: 6955981714580439391}
   m_Time: {fileID: 3319755667315855157}
   m_Result: {fileID: 387903319566739552}
   m_ButtonNextText: {fileID: 6652763013265114849}

@@ -41,7 +41,7 @@ public class ResultPanelController : MonoSingleton<ResultPanelController>
         }
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LevelSequenceController.Instance.RestartLevel();
         }
     }
 }

@@ -18,13 +18,13 @@ public class TowerBuyControl : MonoBehaviour
 
     private void Start()
     {
-        TDPlayer.Instance.ChangeGoldAmount.AddListener(GoldStatusCheck);
+        Player.Instance.ChangeGoldAmount.AddListener(GoldStatusCheck);
         m_text.text = m_towerAsset.glodCost.ToString();
         m_button.GetComponent<Image>().sprite = m_towerAsset.GUISprite;
     }
     private void OnDestroy()
     {
-        TDPlayer.Instance.ChangeGoldAmount.RemoveListener(GoldStatusCheck);
+        Player.Instance.ChangeGoldAmount.RemoveListener(GoldStatusCheck);
     }
     private void GoldStatusCheck(int value)
     {
@@ -36,7 +36,7 @@ public class TowerBuyControl : MonoBehaviour
     }
     public void TryBuild()
     {
-        TDPlayer.Instance.ChangeGold(-m_towerAsset.glodCost);
+        Player.Instance.ChangeGold(-m_towerAsset.glodCost);
         var towerObject = Instantiate(m_towerPrefab, m_buildSiteTransfom.position, Quaternion.identity);
         var towerTurret = towerObject.GetComponentInChildren<Turret>();
         var tower = towerObject.GetComponentInChildren<Tower>();

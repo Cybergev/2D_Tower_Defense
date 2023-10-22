@@ -20,7 +20,7 @@ public class LevelConditionAllEnemiesDestroyed : MonoBehaviour, ILevelCondition
     {
         get
         {
-            if (TDPlayer.Instance.NumKills == sholdBeKill)
+            if (Player.Instance.NumKills == sholdBeKill)
                 m_Reached = true;
             return m_Reached;
         }

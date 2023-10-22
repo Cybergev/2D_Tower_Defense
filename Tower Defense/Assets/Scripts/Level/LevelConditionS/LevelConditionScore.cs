@@ -14,7 +14,7 @@ public class LevelConditionScore : MonoBehaviour, ILevelCondition
         {
             if (Player.Instance != null && Player.Instance.ActiveShip != null)
             {
-                if (Player.Instance.Score >= score)
+                if (Player.Instance.NumScore >= score)
                 {
                     m_Reached = true;
                 }

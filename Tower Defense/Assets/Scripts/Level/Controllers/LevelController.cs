@@ -44,13 +44,13 @@ public class LevelController : MonoSingleton<LevelController>
         if (numCompleted == m_Conditions.Length)
         {
             m_IsLevelCompleted = true;
-            FinishLevel(true, Player.Instance.Score);
+            FinishLevel(true);
             m_EventLevelCompleted?.Invoke();
         }
     }
-    public void FinishLevel(bool success, int levelScore)
+    public void FinishLevel(bool success)
     {
-        LevelResult result = new LevelResult(LevelSequenceController.Instance.CurrentLevel.LevelName, success, levelScore, LevelTime);
+        LevelResult result = new LevelResult(LevelSequenceController.Instance.CurrentLevel.LevelName, success, Player.Instance.NumKills, LevelTime);
         LevelResultController.Instance.HashSaveLevelResult(result);
         LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults);
         ResultPanelController.Instance.ShownResult(result);
@@ -68,8 +68,10 @@ public class LevelController : MonoSingleton<LevelController>
                 }
                 else
                 {
-                    result.levelScore = Player.Instance.Score;
-                    result.levelTime = LevelTime;
+                    if (result.levelScore < Player.Instance.NumScore)
+                        result.levelScore = Player.Instance.NumScore;
+                    if (result.levelTime > LevelTime)
+                        result.levelTime = LevelTime;
                     m_EventLevelCanceled.Invoke();
                     LevelSequenceController.Instance.LoadMineMenu();
                 }

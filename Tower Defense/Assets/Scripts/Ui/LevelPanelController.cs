@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class LevelPanelController : MonoBehaviour
 {
-    private Level[] Levels => LevelSequenceController.Instance.AllLevels;
     [SerializeField] 
     private LevelSelectionController[] uiLevelSelectionObjects;
+
+    private LevelResult[] LevelResults => LevelResultController.Instance.ArrayLevelResults;
 
     void Start()
     {
         if (uiLevelSelectionObjects.Length == 0)
             uiLevelSelectionObjects = GetComponentsInChildren<LevelSelectionController>();
-
-        var drawLevel = 0;
-        foreach (var hashResults in LevelResultController.Instance.ArrayLevelResults)
+        if (LevelResults != null)
         {
-            if (hashResults.levelName == Levels[drawLevel].LevelName)
+            for (int i = 0; i < LevelResults.Length; i++)
             {
-                if (hashResults.levelSuccess)
-                    drawLevel++;
+                if (i == 0)
+                {
+                    uiLevelSelectionObjects[i].gameObject.SetActive(true);
+                }
                 else
-                    break;
+                    uiLevelSelectionObjects[i].gameObject.SetActive(false);
             }
-            else
-                continue;
+            for (int i = 0; i < LevelResults.Length; i++)
+            {
+                if (uiLevelSelectionObjects[i].Level.LevelName == LevelResults[i].levelName && LevelResults[i].levelSuccess)
+                {
+                    uiLevelSelectionObjects[i + 1].gameObject.SetActive(true);
+                }
+            }
         }
-        for (int i = drawLevel; i < Levels.Length; i++)
-        {
-            uiLevelSelectionObjects[i].gameObject.SetActive(false);
-        }
-
     }
-
 }

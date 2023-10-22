@@ -11,7 +11,7 @@ public class LevelConditionEnemyDestroyed : MonoBehaviour, ILevelCondition
     {
         get
         {
-            if (TDPlayer.Instance.NumKills == m_NumDeadEnemies)
+            if (Player.Instance.NumKills == m_NumDeadEnemies)
                 m_Reached = true;
             return m_Reached;
         }

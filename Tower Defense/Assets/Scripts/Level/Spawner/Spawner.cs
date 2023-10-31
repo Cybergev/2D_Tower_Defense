@@ -23,7 +23,23 @@ public abstract class Spawner : MonoBehaviour
     public int NumSpawnIterations => m_NumSpawnIterations;
 
     public bool SpawnIsComplete { get; private set; }
+    static public bool AllSpawnsIsComplete 
+    {
+        get
+        {
+            int numComplete = 0;
+            foreach(var spawner in AllSpawners)
+            {
+                numComplete += spawner.SpawnIsComplete ? 1 : 0;
+            }
+            if(numComplete == AllSpawners.Count)
+                return true;
+            else
+                return false;
+        }
+    }
     public static HashSet<GameObject> SpawnedObjects { get; private set; }
+    public static HashSet<Spawner> AllSpawners { get; private set; }
 
     private Timer m_Timer;
 
@@ -51,6 +67,15 @@ public abstract class Spawner : MonoBehaviour
         else
             SpawnIsComplete = false;
     }
+    protected virtual void OnEnable()
+    {
+        if (AllSpawners == null) AllSpawners = new HashSet<Spawner>();
+        AllSpawners.Add(this);
+    }
+    protected virtual void OnDestroy()
+    {
+        AllSpawners.Remove(this);
+    }
     protected virtual void Update()
     {
         if (!m_Timer.IsFinished)
@@ -76,7 +101,6 @@ public abstract class Spawner : MonoBehaviour
             m_Timer = new Timer(m_RespawnTime);
         }
     }
-
     protected virtual void Spawn(int numSpawnObjects)
     {
         if (numSpawnObjects <= 0)

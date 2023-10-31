@@ -43,7 +43,7 @@ public class Player : MonoSingleton<Player>
     private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
-        LevelController.Instance.FinishLevel(false);
+        LevelsController.Instance.FinishLevel(false);
     }
 
     private void OnShipDeath()
@@ -54,14 +54,14 @@ public class Player : MonoSingleton<Player>
         if (m_NumLives > 0) 
             Respawn();
         else
-            LevelController.Instance.FinishLevel(false);
+            LevelsController.Instance.FinishLevel(false);
     }
 
     private void Respawn()
     {
-        if (LevelSequenceController.Instance.PlayerShip != null)
+        if (LevelsController.Instance.PlayerShip != null)
         {
-            var newPlayerShip = Instantiate(LevelSequenceController.Instance.PlayerShip, m_SpawnPoint);
+            var newPlayerShip = Instantiate(LevelsController.Instance.PlayerShip, m_SpawnPoint);
 
             m_Ship = newPlayerShip.GetComponent<SpaceShip>();
             m_Ship.EventOnDeath.AddListener(OnShipDeath);

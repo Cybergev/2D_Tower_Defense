@@ -1,25 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using UnityEngine;
 
 public class LevelResultController : MonoSingleton<LevelResultController>
 {
-    const string filename = "LevelResults.dat";
-
     private LevelResult[] arrayLevelResults;
     public LevelResult[] ArrayLevelResults => arrayLevelResults;
     private void Start()
     {
-        arrayLevelResults = new LevelResult[LevelSequenceController.Instance.AllLevels.Length];
+        arrayLevelResults = new LevelResult[LevelsController.Instance.AllLevels.Length];
         HardLoadLevelResult(ref arrayLevelResults);
         for (int i = 0; i < arrayLevelResults.Length; i++)
         {
-            if (arrayLevelResults[i] == null ||arrayLevelResults[i].levelName == null)
-                arrayLevelResults[i] = new LevelResult(LevelSequenceController.Instance.AllLevels[i].LevelName);
+            if (arrayLevelResults[i] == null || arrayLevelResults[i].levelName == null)
+                arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, false, 0, 1000);
         }
     }
-
     public void HashSaveLevelResult(LevelResult levelResult)
     {
         for (int i = 0; i < arrayLevelResults.Length; i++)
@@ -33,10 +27,12 @@ public class LevelResultController : MonoSingleton<LevelResultController>
                 {
                     arrayLevelResults[i].levelSuccess = levelResult.levelSuccess;
                     arrayLevelResults[i].levelScore = levelResult.levelScore;
+                    arrayLevelResults[i].levelTime = levelResult.levelTime;
                 }
-                if (hasLevelResultSuccessIsSame && arrayLevelResults[i].levelScore < levelResult.levelScore)
+                if (hasLevelResultSuccessIsSame)
                 {
-                    arrayLevelResults[i].levelScore = levelResult.levelScore;
+                    arrayLevelResults[i].levelScore = arrayLevelResults[i].levelScore < levelResult.levelScore ? levelResult.levelScore : arrayLevelResults[i].levelScore;
+                    arrayLevelResults[i].levelTime = arrayLevelResults[i].levelTime > levelResult.levelTime ? levelResult.levelTime : arrayLevelResults[i].levelTime;
                 }
             }
             if (arrayLevelResults[i].levelName != levelResult.levelName && i == arrayLevelResults.Length)
@@ -51,19 +47,18 @@ public class LevelResultController : MonoSingleton<LevelResultController>
     }
     public void HardSaveLevelResult(LevelResult[] levelResult)
     {
-        Saver<LevelResult[]>.Save(filename, levelResult);
+        SaveController<LevelResult[]>.Save(Save<LevelResult>.filename, levelResult);
     }
-
     public void HardLoadLevelResult(ref LevelResult[] levelResult)
     {
-        Saver<LevelResult[]>.TryLoad(filename, ref levelResult);
+        SaveController<LevelResult[]>.TryLoad(Save<LevelResult>.filename, ref levelResult);
     }
     public void ClearAllResults()
     {
-        arrayLevelResults = new LevelResult[LevelSequenceController.Instance.AllLevels.Length];
+        arrayLevelResults = new LevelResult[LevelsController.Instance.AllLevels.Length];
         for (int i = 0; i < arrayLevelResults.Length; i++)
         {
-            arrayLevelResults[i] = new LevelResult(LevelSequenceController.Instance.AllLevels[i].LevelName);
+            arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, false, 0, 1000);
         }
         HardSaveLevelResult(arrayLevelResults);
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelPanelController : MonoBehaviour
@@ -18,18 +16,15 @@ public class LevelPanelController : MonoBehaviour
             for (int i = 0; i < LevelResults.Length; i++)
             {
                 if (i == 0)
-                {
                     uiLevelSelectionObjects[i].gameObject.SetActive(true);
-                }
                 else
                     uiLevelSelectionObjects[i].gameObject.SetActive(false);
             }
             for (int i = 0; i < LevelResults.Length; i++)
             {
                 if (uiLevelSelectionObjects[i].Level.LevelName == LevelResults[i].levelName && LevelResults[i].levelSuccess)
-                {
-                    uiLevelSelectionObjects[i + 1].gameObject.SetActive(true);
-                }
+                    if (i + 1 < LevelResults.Length)
+                        uiLevelSelectionObjects[i + 1].gameObject.SetActive(true);
             }
         }
     }

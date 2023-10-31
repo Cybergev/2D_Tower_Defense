@@ -151,7 +151,7 @@ public class SpaceShip : Destructible
 
         if (m_LastDamger != null)
         {
-            m_LastDamger.transform.root.GetComponent<SpaceShip>()?.Owner.transform.root.GetComponent<Player>()?.AddKill();
+            //m_LastDamger.transform.root.GetComponent<SpaceShip>().Owner.transform.root.GetComponent<Player>().ChangeScore(1);
         }
     }
     #endregion

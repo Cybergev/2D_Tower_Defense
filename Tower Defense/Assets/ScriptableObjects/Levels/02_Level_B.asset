@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c945ee59fdd3b8045b0831fc01b4ebb9, type: 3}
   m_Name: 02_Level_B
   m_EditorClassIdentifier: 
-  m_SceneNumber: 2
-  m_SceneName: scene_b
   m_LevelName: Level B
-  m_PreviewImage: {fileID: 21300000, guid: 1c748a39f68b4514fb10eb86135971a4, type: 3}
+  m_LevelCondition:
+  - {fileID: 11400000, guid: 36c95ea51a3c6bb4280e30d678aea4b0, type: 2}
+  m_SceneName: scene_b
+  m_SceneNumber: 2
+  m_ScenePreviewImage: {fileID: 21300000, guid: f98c76f3a6fa42a448c281439469f905, type: 3}

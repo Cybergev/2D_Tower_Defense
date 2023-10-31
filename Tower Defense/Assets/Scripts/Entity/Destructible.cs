@@ -17,7 +17,6 @@ public class Destructible : Entity
     /// </summary>
     [SerializeField] private bool m_Indestructible;
     public bool Indestuctible => m_Indestructible;
-
     /// <summary>
     /// Своиство повреждаемости объекта.
     /// Если true - объект не может быть повреждён
@@ -25,18 +24,15 @@ public class Destructible : Entity
     /// </summary>
     [SerializeField] private bool m_Indamageble;
     public bool Indamageble => m_Indamageble;
-
     /// <summary>
     /// Текущее количество хитпоинтов.
     /// </summary>
     [SerializeField] protected int m_HitPoints;
-
     /// <summary>
     /// Текущие хитпоинты.
     /// </summary>
     [SerializeField] private int m_CurrentHitPoints;
     public int HitPoints => m_CurrentHitPoints;
-
     [SerializeField] private UnityEvent m_ChangeHitPoints;
     public UnityEvent ChangeHitPoints => m_ChangeHitPoints;
     #endregion
@@ -47,7 +43,6 @@ public class Destructible : Entity
         SetCurrentHitPoints(m_HitPoints);
         ChangeHitPoints.Invoke();
     }
-
     /// <summary>
     /// Переопределяемое событие уничтожения объекта, когда хитпоинты ниже или равны нулю.
     /// </summary>
@@ -59,26 +54,19 @@ public class Destructible : Entity
         m_EventOnDeath?.Invoke();
         Destroy(gameObject);
     }
-
-    private static HashSet<Destructible> m_AllDestructibles;
-
-    public static IReadOnlyCollection<Destructible> AllDestructibles => m_AllDestructibles;
-
     protected virtual void OnEnable()
     {
-        if (m_AllDestructibles == null) m_AllDestructibles = new HashSet<Destructible>();
-
-        m_AllDestructibles.Add(this);
+        if (AllDestructibles == null) 
+            AllDestructibles = new HashSet<Destructible>();
+        AllDestructibles.Add(this);
     }
-
     protected virtual void OnDestroy()
     {
-        m_AllDestructibles.Remove(this);
+        AllDestructibles.Remove(this);
+        NumDestroyed++;
     }
-
     [SerializeField] private UnityEvent m_EventOnDeath;
     public UnityEvent EventOnDeath => m_EventOnDeath;
-
     #endregion
 
     #region Public API
@@ -129,4 +117,12 @@ public class Destructible : Entity
     }
     #endregion
 
+    #region Statics
+    public static HashSet<Destructible> AllDestructibles { get; private set; }
+    public static int NumDestroyed { get; private set; }
+    public static void ClearNumDestroyed()
+    {
+        NumDestroyed = 0;
+    }
+    #endregion
 }

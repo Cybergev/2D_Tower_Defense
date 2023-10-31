@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ResultPanelController : MonoSingleton<ResultPanelController>
 {
+    [SerializeField] private Text m_Success;
     [SerializeField] private Text m_Score;
     [SerializeField] private Text m_Time;
-    [SerializeField] private Text m_Result;
     [SerializeField] private Text m_ButtonNextText;
 
-    private bool m_Success;
+    private LevelResult currentResult;
 
     private void Start()
     {
@@ -21,27 +18,21 @@ public class ResultPanelController : MonoSingleton<ResultPanelController>
     public void ShownResult(LevelResult result)
     {
         gameObject.SetActive(true);
+        currentResult = result;
+        m_Success.text = result.levelSuccess ? "Win" : "Lose";
         m_Score.text = result.levelScore.ToString();
         m_Time.text = result.levelTime.ToString();
-        m_Result.text = result.levelSuccess ? "Win" : "Lose";
         m_ButtonNextText.text = result.levelSuccess ? "Next" : "Restart";
-        m_Success = result.levelSuccess;
         Time.timeScale = 0;
     }
 
     public void OnButtonNextAction()
     {
         gameObject.SetActive(false);
-
         Time.timeScale = 1;
-
-        if (m_Success)
-        {
-            LevelSequenceController.Instance.AvanceLevel();
-        }
+        if (currentResult.levelSuccess)
+            LevelsController.Instance.AvanceLevel();
         else
-        {
-            LevelSequenceController.Instance.RestartLevel();
-        }
+            LevelsController.Instance.RestartLevel();
     }
 }

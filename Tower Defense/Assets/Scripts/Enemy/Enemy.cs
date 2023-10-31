@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Player.Instance.AddKill();
+        Player.Instance.ChangeScore(1);
     }
     #if UNITY_EDITOR
     [CustomEditor(typeof(Enemy))]

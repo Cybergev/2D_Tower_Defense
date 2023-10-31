@@ -7,7 +7,23 @@ public class EnemySpawner : Spawner
     [SerializeField] private EnemyAsset[] m_EnemySettings;
     [SerializeField] private Path m_Path;
     public static HashSet<Enemy> SpawnedEnemies { get; private set; }
-
+    public static HashSet<EnemySpawner> AllEnemySpawners { get; private set; }
+    protected override void Start()
+    {
+        base.Start();
+        AllEnemySpawners.Add(this);
+    }
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        if (AllEnemySpawners == null) AllEnemySpawners = new HashSet<EnemySpawner>();
+        AllEnemySpawners.Add(this);
+    }
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        AllEnemySpawners.Remove(this);
+    }
     protected override GameObject GenerateSpawnEntity()
     {
         var enemy = Instantiate(m_EnemyPrefab);

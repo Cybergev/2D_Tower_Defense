@@ -59,7 +59,6 @@ public class Projectile : MonoBehaviour
             else
                 Destroy(gameObject);
         }
-
         CheckCollision();
     }
 
@@ -71,9 +70,8 @@ public class Projectile : MonoBehaviour
     private void CheckCollision()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, m_ProjectileProperties.ImpactCheckLineLenght);
-
-        if (hit.collider)
-            Impact(hit.collider.gameObject);
+        if (hit)
+            Impact(hit.collider.transform.root.gameObject);
     }
     private void Impact(GameObject v_object)
     {
@@ -98,7 +96,6 @@ public class Projectile : MonoBehaviour
         }
         else
             Destroy(gameObject);
-
         m_ImpactEffect.Invoke();
     }
     private float CalculateAngle(Vector3 targetPosition)

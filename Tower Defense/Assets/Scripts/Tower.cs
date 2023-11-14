@@ -64,21 +64,22 @@ public class Tower : MonoBehaviour
     {
         float minDist = m_Radius;
         TurretTarget turretTarget = new TurretTarget();
-        foreach (var v in Destructible.AllDestructibles)
-        {
-            float dist = (v.transform.position - transform.position).magnitude;
-            if (dist < m_Radius && dist < minDist)
+        if (Destructible.AllDestructibles != null)
+            foreach (var v in Destructible.AllDestructibles)
             {
-                minDist = dist;
+                float dist = (v.transform.position - transform.position).magnitude;
+                if (dist < m_Radius && dist < minDist)
+                {
+                    minDist = dist;
 
-                turretTarget.targetTransform = v.transform;
-                turretTarget.targetRigit = v.GetComponent<Rigidbody2D>();
+                    turretTarget.targetTransform = v.transform;
+                    turretTarget.targetRigit = v.GetComponent<Rigidbody2D>();
+                }
+                else
+                {
+                    continue;
+                }
             }
-            else
-            {
-                continue;
-            }
-        }
         return turretTarget;
     }
     public void SetRadius(float radius)

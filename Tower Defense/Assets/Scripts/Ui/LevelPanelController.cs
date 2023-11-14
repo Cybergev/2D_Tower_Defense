@@ -22,7 +22,7 @@ public class LevelPanelController : MonoBehaviour
             }
             for (int i = 0; i < LevelResults.Length; i++)
             {
-                if (uiLevelSelectionObjects[i].Level.LevelName == LevelResults[i].levelName && LevelResults[i].levelSuccess)
+                if (uiLevelSelectionObjects[i].Level.LevelName == LevelResults[i].LevelName && LevelResults[i].LevelConditionSuccess > 0)
                     if (i + 1 < LevelResults.Length)
                         uiLevelSelectionObjects[i + 1].gameObject.SetActive(true);
             }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class ResultPanelController : MonoSingleton<ResultPanelController>
 {
+    [SerializeField] private Text m_Complete;
     [SerializeField] private Text m_Success;
     [SerializeField] private Text m_Score;
     [SerializeField] private Text m_Time;
@@ -19,10 +20,11 @@ public class ResultPanelController : MonoSingleton<ResultPanelController>
     {
         gameObject.SetActive(true);
         currentResult = result;
-        m_Success.text = result.levelSuccess ? "Win" : "Lose";
-        m_Score.text = result.levelScore.ToString();
-        m_Time.text = result.levelTime.ToString();
-        m_ButtonNextText.text = result.levelSuccess ? "Next" : "Restart";
+        m_Complete.text = result.LevelConditionSuccess > 0 ? "Win" : "Lose";
+        m_Success.text = "Condition succes: " + result.LevelConditionSuccess + "%";
+        m_Score.text = "Score: " + result.LevelScore.ToString();
+        m_Time.text = "Time: " + result.LevelTime.ToString();
+        m_ButtonNextText.text = result.LevelConditionSuccess > 0 ? "Next" : "Restart";
         Time.timeScale = 0;
     }
 
@@ -30,7 +32,7 @@ public class ResultPanelController : MonoSingleton<ResultPanelController>
     {
         gameObject.SetActive(false);
         Time.timeScale = 1;
-        if (currentResult.levelSuccess)
+        if (currentResult.LevelConditionSuccess > 0)
             LevelsController.Instance.AvanceLevel();
         else
             LevelsController.Instance.RestartLevel();

@@ -4,18 +4,29 @@ using UnityEngine.UI;
 public class LevelSelectionController : MonoBehaviour
 {
     [SerializeField] private Level m_Level;
-    [SerializeField] private Text m_LevelText;
+    [SerializeField] private RectTransform[] m_ResultShowImages;
 
     public Level Level => m_Level;
 
     private void Start()
     {
+        foreach(var image in m_ResultShowImages)
+        {
+            image.gameObject.SetActive(false);
+        }
         foreach (LevelResult result in LevelResultController.Instance.ArrayLevelResults)
         {
-            if (result.levelName == m_Level.LevelName)
+            if (result.LevelName == m_Level.LevelName)
             {
-                m_LevelText.text = $"Name:{result.levelName}\nComplete:{result.levelSuccess}";
-                break;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i == 0 && result.LevelConditionSuccess >= 50)
+                        m_ResultShowImages[i].gameObject.SetActive(true);
+                    if (i == 1 && result.LevelConditionSuccess >= 50)
+                        m_ResultShowImages[i].gameObject.SetActive(true);
+                    if (i == 2 && result.LevelConditionSuccess == 100)
+                        m_ResultShowImages[i].gameObject.SetActive(true);
+                }
             }
             else
                 continue;

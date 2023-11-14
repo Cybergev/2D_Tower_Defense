@@ -16,11 +16,11 @@ public class SelectPanelController : MonoSingleton<SelectPanelController>
         gameObject.SetActive(true);
         foreach (var result in LevelResultController.Instance.ArrayLevelResults)
         {
-            if(result.levelName == level.LevelName)
+            if(result.LevelName == level.LevelName)
             {
                 selectedLevel = level;
                 m_image.sprite = level.ScenePreviewImage;
-                m_text.text = $"Name:{result.levelName}\nComplete:{result.levelSuccess}\nScore:{result.levelScore}\nTime:{result.levelTime}";
+                m_text.text = $"Name:{result.LevelName}\nComplete:{result.LevelConditionSuccess}\nScore:{result.LevelScore}\nTime:{result.LevelTime}";
             }
         }
     }

@@ -10,11 +10,7 @@ public class Player : MonoSingleton<Player>
     [SerializeField] private UnityEvent m_EventOnShipRespawn;
     [HideInInspector] public UnityEvent EventOnShipRespawn => m_EventOnShipRespawn;
 
-    [SerializeField] private SpaceShip m_Ship;
-    [SerializeField] private GameObject m_PlayerShipPrefab;
-    public SpaceShip ActiveShip => m_Ship;
     [SerializeField] private Transform[] m_SpawnPoints;
-    private Transform m_SpawnPoint;
 
     //[SerializeField] private CameraController m_CameraController;
     //[SerializeField] private MovementController m_MovementController;
@@ -23,56 +19,17 @@ public class Player : MonoSingleton<Player>
     protected override void Awake()
     {
         base.Awake();
-        if (m_Ship)
-        {
-            Destroy(m_Ship.gameObject);
-            m_SpawnPoint = m_SpawnPoints[m_Ship.TeamId];
-            Respawn();
-        }
-        else
-        {
-
-        }
+        PlayerIni();
     }
-
     private void Update()
     {
-        CheckPlayerDataChenges();
+        CheckPlayerDataChanges();
     }
-
     private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
-        LevelsController.Instance.FinishLevel(false);
+        LevelsController.Instance.FinishLevel(0);
     }
-
-    private void OnShipDeath()
-    {
-        m_NumLives--;
-
-        m_Ship.EventOnDeath.RemoveListener(OnShipDeath);
-        if (m_NumLives > 0) 
-            Respawn();
-        else
-            LevelsController.Instance.FinishLevel(false);
-    }
-
-    private void Respawn()
-    {
-        if (LevelsController.Instance.PlayerShip != null)
-        {
-            var newPlayerShip = Instantiate(LevelsController.Instance.PlayerShip, m_SpawnPoint);
-
-            m_Ship = newPlayerShip.GetComponent<SpaceShip>();
-            m_Ship.EventOnDeath.AddListener(OnShipDeath);
-            m_Ship.SetOwner(gameObject);
-
-            //m_CameraController.SetTarget(m_Ship.transform);
-            //m_MovementController.SetTargetShip(m_Ship);
-            m_EventOnShipRespawn.Invoke();
-        }
-    }
-
     internal void TakeDamage(int damage)
     {
         if (damage <= 0)
@@ -89,33 +46,48 @@ public class Player : MonoSingleton<Player>
     #region Lives&Score&Money&Kills
     [SerializeField] private UnityEvent<int> changeLivesAmount;
     [HideInInspector] public UnityEvent<int> ChangeLivesAmount => changeLivesAmount;
-
-    [SerializeField] private UnityEvent<int> changeScoreAmount;
-    [HideInInspector] public UnityEvent<int> ChangeScoreAmount => changeScoreAmount;
-
     [SerializeField] private UnityEvent<int> changeKillsAmount;
     [HideInInspector] public UnityEvent<int> ChangeKillsAmount => changeLivesAmount;
 
     [SerializeField] private UnityEvent<int> changeGoldAmount;
     [HideInInspector] public UnityEvent<int> ChangeGoldAmount => changeGoldAmount;
 
+    [SerializeField] private UnityEvent<float> changeScoreAmount;
+    [HideInInspector] public UnityEvent<float> ChangeScoreAmount => changeScoreAmount;
 
-    [SerializeField] private int m_NumLives;
+    [SerializeField] private int m_StartLives;
+    public int StartLives => m_StartLives;
+
+    private int m_NumLives;
     public int NumLives => m_NumLives;
     public int PastNumLives { get; private set; }
-
-    public int NumScore { get; private set; }
-    public int PastNumScore { get; private set; }
-
-
-    [SerializeField] private int m_NumGold;
-    public int NumGold => m_NumGold;
-    public int PastNumGold { get; private set; }
 
     public int NumKills { get; private set; }
     public int PastNumKills { get; private set; }
 
-    private void CheckPlayerDataChenges()
+    [SerializeField] private int m_StartGold;
+    public int StartGold => m_StartGold;
+
+    private int m_NumGold;
+    public int NumGold => m_NumGold;
+    public int PastNumGold { get; private set; }
+    public int SpentGold { get; private set; }
+
+    public float NumScore
+    {
+        get
+        {
+            return (NumGold + SpentGold) * NumLives / LevelsController.Instance.LevelTime;
+        }
+    }
+    public float PastNumScore { get; private set; }
+
+    private void PlayerIni()
+    {
+        m_NumLives = m_StartLives;
+        m_NumGold = m_StartGold;
+    }
+    private void CheckPlayerDataChanges()
     {
         if (PastNumLives != NumLives)
         {
@@ -139,12 +111,10 @@ public class Player : MonoSingleton<Player>
         }
     }
 
-    public void ChangeScore(int num)
-    {
-        NumScore += num;
-    }
     public void ChangeGold(int value)
     {
+        if (value < 0)
+            SpentGold += -value;
         m_NumGold += value;
     }
     public void AddKill()

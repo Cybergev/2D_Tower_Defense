@@ -47,10 +47,6 @@ public class Enemy : MonoBehaviour
     {
         Player.Instance.ChangeGold(m_gold);
     }
-    private void OnDestroy()
-    {
-        Player.Instance.ChangeScore(1);
-    }
     #if UNITY_EDITOR
     [CustomEditor(typeof(Enemy))]
     public class EnemyInspector: Editor

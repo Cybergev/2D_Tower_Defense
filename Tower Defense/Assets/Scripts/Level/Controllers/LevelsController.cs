@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -18,48 +19,51 @@ public class LevelsController : MonoSingleton<LevelsController>
 
     [SerializeField] private UnityEvent m_EventLevelCanceled;
     [HideInInspector] public UnityEvent EventLevelCanceled => m_EventLevelCanceled;
-    public LevelConditionAsset[] LevelConditions { get; private set; }
+    public LevelCondiionAsset[] CompleteConditions { get; private set; }
+    public LevelCondiionAsset[] BonusConditions { get; private set; }
     public bool LevelIsComlpete 
     {
         get
         {
-            if (LevelConditions == null || LevelConditions.Length == 0) 
+            if (CompleteConditions == null || CompleteConditions.Length == 0) 
                 return true;
             int numCompleted = 0;
-            foreach (var v in LevelConditions)
+            foreach (var v in CompleteConditions)
+                numCompleted += v.ConditionIsComplete ? 1 : 0;
+            if (numCompleted == CompleteConditions.Length)
             {
-                numCompleted += v.LevelConditionIsCompleted ? 1 : 0;
-            }
-            if (numCompleted == LevelConditions.Length)
-            {
-                FinishLevel(true);
-                m_EventLevelCompleted?.Invoke();
+                int numBonus = 0;
+                foreach (var v in BonusConditions)
+                    numBonus += v.ConditionIsComplete ? 1 : 0;
+                float succes = numBonus / (BonusConditions.Length / 100f);
+                FinishLevel(succes);
+                m_EventLevelCompleted.Invoke();
                 return true;
             }
             return false;
         }
     }
     public float LevelTime { get; private set; }
-    public SpaceShip PlayerShip;
     #endregion
-
     private void Start()
+    {
+        LevelIni();
+    }
+    private void LevelIni()
     {
         m_EventLevelCompleted.AddListener(Destructible.ClearNumDestroyed);
         m_EventLevelCanceled.AddListener(Destructible.ClearNumDestroyed);
     }
+
     private void Update()
     {
-        if (!LevelIsComlpete)
-        {
-            LevelTime += Time.deltaTime;
-        }
+        LevelTime += !LevelIsComlpete ? Time.deltaTime : 0;
     }
 
     #region LevelControllTolls
-    public void FinishLevel(bool success)
+    public void FinishLevel(float conditionSuccess)
     {
-        LevelResult result = new LevelResult(CurrentLevel.LevelName, success, Player.Instance.NumScore, LevelTime);
+        LevelResult result = new LevelResult(CurrentLevel.LevelName, conditionSuccess, Player.Instance.NumScore, LevelTime);
         LevelResultController.Instance.HashSaveLevelResult(result);
         LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults);
         ResultPanelController.Instance.ShownResult(result);
@@ -70,7 +74,9 @@ public class LevelsController : MonoSingleton<LevelsController>
     public void StartLevel(Level level)
     {
         CurrentLevel = level;
-        LevelConditions = level.LevelCondition.Length > 0 ? level.LevelCondition : null;
+        CompleteConditions = level.LevelCompleteCondition.Length > 0 ? level.LevelCompleteCondition : null;
+        BonusConditions = level.LevelBonusCondition;
+        LevelTime = 0;
         SceneManager.LoadScene(level.SceneNumber);
     }
     public void StartLevel(string levelName)
@@ -93,19 +99,19 @@ public class LevelsController : MonoSingleton<LevelsController>
     {
         foreach (var result in LevelResultController.Instance.ArrayLevelResults)
         {
-            if (result.levelName == CurrentLevel.LevelName)
+            if (result.LevelName == CurrentLevel.LevelName)
             {
-                if (result.levelSuccess)
+                if (result.LevelConditionSuccess > 0)
                 {
                     m_EventLevelCanceled.Invoke();
                     LoadMainMenu();
                 }
                 else
                 {
-                    if (result.levelScore < Player.Instance.NumScore)
-                        result.levelScore = Player.Instance.NumScore;
-                    if (result.levelTime > LevelTime)
-                        result.levelTime = LevelTime;
+                    if (result.LevelScore < Player.Instance.NumScore)
+                        result.LevelScore = Player.Instance.NumScore;
+                    if (result.LevelTime > LevelTime)
+                        result.LevelTime = LevelTime;
                     m_EventLevelCanceled.Invoke();
                     LoadMainMenu();
                 }

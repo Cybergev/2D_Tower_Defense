@@ -1,75 +1,60 @@
+using System;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum SpawnMode
-{
-    Limit,
-    Loop
-}
-
 public abstract class Spawner : MonoBehaviour
 {
-    protected abstract GameObject GenerateSpawnEntity();
+    protected class SpawnData
+    {
+        public SpawnDataAsset CurrentSpawnData { get; private set; }
+        public int m_NumCurrentSpawnIterations;
+        public Timer m_Timer;
+        public bool SpawnIsComplete => m_NumCurrentSpawnIterations == CurrentSpawnData.NumSpawnIterations;
+        public SpawnData(SpawnDataAsset asset)
+        {
+            if (!asset)
+                return;
+            CurrentSpawnData = asset;
+        }
+    }
+    protected SpawnData[] CurrentSpawnDataArray;
     [SerializeField] private CircleArea m_Area;
-    [SerializeField] private SpawnMode m_SpawnMode;
-    [SerializeField] private float m_RespawnTime;
 
-    [SerializeField] private int m_NumSpawnObjects;
-    [SerializeField] private int m_NumSpawnIterations;
-    private int m_NumCurrentSpawnIterations = 0;
-
-    public int NumSpawnObjects => m_NumSpawnObjects;
-    public int NumSpawnIterations => m_NumSpawnIterations;
-
-    public bool SpawnIsComplete { get; private set; }
-    static public bool AllSpawnsIsComplete 
+    public bool SpawnIsComplete 
+    {
+        get
+        {
+            int numComplete = 0;
+            foreach (var spawner in CurrentSpawnDataArray)
+                numComplete += spawner.SpawnIsComplete ? 1 : 0;
+            return numComplete == CurrentSpawnDataArray.Length;
+        }
+    }
+    public static bool AllSpawnsIsComplete 
     {
         get
         {
             int numComplete = 0;
             foreach(var spawner in AllSpawners)
-            {
                 numComplete += spawner.SpawnIsComplete ? 1 : 0;
-            }
-            if(numComplete == AllSpawners.Count)
-                return true;
-            else
-                return false;
+            return numComplete == AllSpawners.Count;
         }
     }
-    public static HashSet<GameObject> SpawnedObjects { get; private set; }
-    public static HashSet<Spawner> AllSpawners { get; private set; }
-
-    private Timer m_Timer;
-
-    [SerializeField] private UnityEvent m_EventOnSpawnObject;
+    [SerializeField] protected UnityEvent m_EventOnSpawnObject;
     [HideInInspector] public UnityEvent EventOnSpawnObject => m_EventOnSpawnObject;
 
-    [SerializeField] private UnityEvent m_EventOnSpawnIteration;
+    [SerializeField] protected UnityEvent m_EventOnSpawnIteration;
     [HideInInspector] public UnityEvent EventOnSpawnIteration => m_EventOnSpawnIteration;
 
-    [SerializeField] private UnityEvent m_EventOnSpawnComplete;
+    [SerializeField] protected UnityEvent m_EventOnSpawnComplete;
     [HideInInspector] public UnityEvent EventOnSpawnComplete => m_EventOnSpawnComplete;
-
-    protected virtual void Start()
-    {
-        m_Timer = new Timer(m_RespawnTime);
-        m_NumCurrentSpawnIterations = 0;
-
-        Spawn(m_NumSpawnObjects);
-        m_NumCurrentSpawnIterations++;
-        if (m_NumCurrentSpawnIterations == m_NumSpawnIterations)
-        {
-            m_EventOnSpawnComplete.Invoke();
-            SpawnIsComplete = true;
-        }
-        else
-            SpawnIsComplete = false;
-    }
+    public static HashSet<Spawner> AllSpawners { get; protected set; }
+    public static HashSet<GameObject> SpawnedObjects { get; protected set; }
     protected virtual void OnEnable()
     {
-        if (AllSpawners == null) AllSpawners = new HashSet<Spawner>();
+        AllSpawners ??= new HashSet<Spawner>();
         AllSpawners.Add(this);
     }
     protected virtual void OnDestroy()
@@ -78,75 +63,73 @@ public abstract class Spawner : MonoBehaviour
     }
     protected virtual void Update()
     {
-        if (!m_Timer.IsFinished)
-            m_Timer.RemoveTime(Time.deltaTime);
-
-        if (m_SpawnMode == SpawnMode.Limit && m_NumCurrentSpawnIterations < m_NumSpawnIterations && m_Timer.IsFinished)
+        TrySpawn();
+    }
+    protected virtual void TrySpawn()
+    {
+        for (int i = 0; i < CurrentSpawnDataArray.Length; i++)
         {
-            Spawn(m_NumSpawnObjects);
-            m_Timer = new Timer(m_RespawnTime);
-            m_NumCurrentSpawnIterations++;
-            m_EventOnSpawnIteration.Invoke();
-            if (m_NumCurrentSpawnIterations == m_NumSpawnIterations)
+            var spawnData = CurrentSpawnDataArray[i];
+            if (spawnData.m_Timer == null)
+                spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
+            if (!spawnData.m_Timer.IsFinished)
+                spawnData.m_Timer.RemoveTime(Time.deltaTime);
+            if (spawnData.CurrentSpawnData.NumSpawnMode == SpawnDataAsset.SpawnMode.Limit && !spawnData.SpawnIsComplete && spawnData.m_Timer.IsFinished)
             {
-                m_EventOnSpawnComplete.Invoke();
-                SpawnIsComplete = true;
+                Spawn(spawnData);
+                m_EventOnSpawnObject.Invoke();
+                spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
+                spawnData.m_NumCurrentSpawnIterations++;
+                m_EventOnSpawnIteration.Invoke();
+                if (SpawnIsComplete)
+                    m_EventOnSpawnComplete.Invoke();
             }
-            else
-                SpawnIsComplete = false;
-        }
-        if (m_SpawnMode == SpawnMode.Loop && m_Timer.IsFinished)
-        {
-            Spawn(m_NumSpawnObjects);
-            m_Timer = new Timer(m_RespawnTime);
+            if (spawnData.CurrentSpawnData.NumSpawnMode == SpawnDataAsset.SpawnMode.Loop && spawnData.m_Timer.IsFinished)
+            {
+                Spawn(spawnData);
+                spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
+            }
         }
     }
-    protected virtual void Spawn(int numSpawnObjects)
+    protected virtual void Spawn(SpawnData spawnData)
     {
-        if (numSpawnObjects <= 0)
-            return;
-        for (int i = 0; i < numSpawnObjects; i++)
+        GameObject spawnObj;
+        for (int j = 0; j < spawnData.CurrentSpawnData.NumSpawnObjects; j++)
         {
-            var entity = GenerateSpawnEntity();
-            entity.transform.position = m_Area.GetRandomInsideZone();
-            if (SpawnedObjects == null) 
+            spawnObj = GenerateSpawnEntity(spawnData);
+            spawnObj.transform.position = m_Area.GetRandomInsideZone();
+            if (SpawnedObjects == null)
                 SpawnedObjects = new HashSet<GameObject>();
-            else
-                SpawnedObjects.Add(entity);
-            m_EventOnSpawnObject.Invoke();
+            SpawnedObjects.Add(spawnObj);
         }
     }
-
-    public void SetSpawnMode(string v_SpawnMode)
+    protected abstract GameObject GenerateSpawnEntity(SpawnData spawnData);
+    public virtual void SetSpawnDataArray(SpawnScenarioAsset[] data)
     {
-        if(v_SpawnMode == nameof(SpawnMode.Limit))
-            m_SpawnMode = SpawnMode.Limit;
-        if (v_SpawnMode == nameof(SpawnMode.Loop))
-            m_SpawnMode = SpawnMode.Loop;
-    }
-    public void SetRespawnTime(float v_RespawnTime)
-    {
-        if (v_RespawnTime < 0)
+        if (data == null)
             return;
-        m_RespawnTime = v_RespawnTime;
+        int newlengt = 0;
+        foreach (SpawnScenarioAsset asset in data)
+        {
+            newlengt += asset.SpawnDataAssets.Length;
+        }
+        CurrentSpawnDataArray = new SpawnData[newlengt];
+        for (int i = 0; i < data.Length; i++)
+        {
+            for (int j = 0; j < data[i].SpawnDataAssets.Length; j++)
+            {
+                CurrentSpawnDataArray[j] = new SpawnData(data[i].SpawnDataAssets[j]);
+            }
+        }
     }
-    public void SetNumSpawnObjects(int v_NumSpawnObjects)
+    public virtual void SetSpawnData(SpawnScenarioAsset data)
     {
-        if (v_NumSpawnObjects <= 0)
+        if (data == null)
             return;
-        m_NumSpawnObjects = v_NumSpawnObjects;
+        CurrentSpawnDataArray = new SpawnData[data.SpawnDataAssets.Length];
+        for (int i = 0; i < data.SpawnDataAssets.Length; i++)
+        {
+            CurrentSpawnDataArray[i] = new SpawnData(data.SpawnDataAssets[i]);
+        }
     }
-    public void SetNumSpawnIterations(int v_NumSpawnIterations)
-    {
-        if (v_NumSpawnIterations < 0)
-            return;
-        m_NumSpawnIterations = v_NumSpawnIterations;
-    }
-    public void SetNumCurrentSpawnIterations(int v_NumCurrentSpawnIterations)
-    {
-        if (v_NumCurrentSpawnIterations < 0)
-            return;
-        m_NumCurrentSpawnIterations = v_NumCurrentSpawnIterations;
-    }
-
 }

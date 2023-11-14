@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +26,7 @@ public class TowerBuyControl : MonoBehaviour
     }
     private void GoldStatusCheck(int value)
     {
-        if(value > m_towerAsset.glodCost != m_button.interactable)
+        if(value >= m_towerAsset.glodCost != m_button.interactable)
         {
             m_button.interactable = !m_button.interactable;
             m_text.color = m_button.interactable ? Color.white : Color.red;

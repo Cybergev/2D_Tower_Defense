@@ -242,6 +242,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &996515046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996515047}
+  - component: {fileID: 996515048}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &996515047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996515046}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1666665385514995562}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996515048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996515046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4b1b00288c3aa94f8db23855a6f0038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Area: {fileID: 802511231367152376}
+  m_EventOnSpawnObject:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EventOnSpawnIteration:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EventOnSpawnComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2461505543559702775}
+        m_TargetAssemblyTypeName: EnemyCamp, Assembly-CSharp
+        m_MethodName: AdviceScenario
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &7631737261749591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7a30e92a1983e4ba466799a6a95bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathType: 0
   points:
   - {fileID: 9194752546571009151}
   - {fileID: 7075041362718918196}
@@ -553,11 +620,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1122199626798626097, guid: 1030ba9766d50f842aa3ae35a5e2ce21, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.763
+      value: -2.606
       objectReference: {fileID: 0}
     - target: {fileID: 1122199626798626097, guid: 1030ba9766d50f842aa3ae35a5e2ce21, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.232
+      value: 0.82
       objectReference: {fileID: 0}
     - target: {fileID: 1122199626798626097, guid: 1030ba9766d50f842aa3ae35a5e2ce21, type: 3}
       propertyPath: m_LocalPosition.z
@@ -613,6 +680,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 996515047}
   - {fileID: 1916481797703993902}
   - {fileID: 1399219905845613156}
   m_Father: {fileID: 2222854990057254680}
@@ -674,9 +742,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1666665385514995562}
-  - component: {fileID: 7515585853202221184}
-  - component: {fileID: 5216924723021835128}
-  - component: {fileID: 7515585853202221185}
+  - component: {fileID: 2461505543559702775}
   m_Layer: 0
   m_Name: EnemyCamp
   m_TagString: Untagged
@@ -684,6 +750,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2461505543559702775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461505543559702774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4c9fd15a04b2f4caf3a774af80ad09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DoNotDestroyOnLoad: 0
+  enemySpawners:
+  - {fileID: 996515048}
+  paths:
+  - {fileID: 7631737261749591}
 --- !u!1 &2531999796971181554
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,7 +777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1399219905845613156}
   m_Layer: 0
-  m_Name: PathPoints
+  m_Name: Paths
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -927,48 +1010,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5216924723021835128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2461505543559702774}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b1b00288c3aa94f8db23855a6f0038, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Area: {fileID: 802511231367152376}
-  m_SpawnMode: 0
-  m_RespawnTime: 3
-  m_NumSpawnObjects: 2
-  m_NumSpawnIterations: 5
-  m_EventOnSpawnObject:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnIteration:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7515585853202221185}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  m_EnemyPrefab: {fileID: 5124189260132801856, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
-  m_EnemySettings:
-  - {fileID: 11400000, guid: 6a8a9acbdd11d5b488caace2ef138f52, type: 2}
-  m_Path: {fileID: 7631737261749591}
 --- !u!4 &5828174834097446403
 Transform:
   m_ObjectHideFlags: 0
@@ -1037,9 +1078,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  changeScoreAmount:
-    m_PersistentCalls:
-      m_Calls: []
   changeKillsAmount:
     m_PersistentCalls:
       m_Calls: []
@@ -1058,8 +1096,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_NumLives: 10
-  m_NumGold: 25
+  changeScoreAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartLives: 10
+  m_StartGold: 25
 --- !u!4 &6123865086949871791
 Transform:
   m_ObjectHideFlags: 0
@@ -1135,78 +1176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Radius: 0.2
---- !u!114 &7515585853202221184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2461505543559702774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b1b00288c3aa94f8db23855a6f0038, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Area: {fileID: 802511231367152376}
-  m_SpawnMode: 0
-  m_RespawnTime: 1
-  m_NumSpawnObjects: 2
-  m_NumSpawnIterations: 10
-  m_EventOnSpawnObject:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnIteration:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5216924723021835128}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  m_EnemyPrefab: {fileID: 5124189260132801856, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
-  m_EnemySettings:
-  - {fileID: 11400000, guid: e22a7053085994841ab03f4aced54876, type: 2}
-  m_Path: {fileID: 7631737261749591}
---- !u!114 &7515585853202221185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2461505543559702774}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b1b00288c3aa94f8db23855a6f0038, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Area: {fileID: 802511231367152376}
-  m_SpawnMode: 0
-  m_RespawnTime: 3
-  m_NumSpawnObjects: 1
-  m_NumSpawnIterations: 3
-  m_EventOnSpawnObject:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnIteration:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EnemyPrefab: {fileID: 5124189260132801856, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
-  m_EnemySettings:
-  - {fileID: 11400000, guid: bf3f7ee0764d5dd47a60be3e183c0d59, type: 2}
-  m_Path: {fileID: 7631737261749591}
 --- !u!4 &7771352653799690218
 Transform:
   m_ObjectHideFlags: 0

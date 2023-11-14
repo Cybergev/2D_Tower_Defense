@@ -242,68 +242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f889167d1fc7d64eaf6290e6638b359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &214724814
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 214724815}
-  - component: {fileID: 214724816}
-  m_Layer: 0
-  m_Name: Spawner (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &214724815
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214724814}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6808545652511525448}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &214724816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214724814}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b1b00288c3aa94f8db23855a6f0038, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Area: {fileID: 2627088988992347968}
-  m_SpawnMode: 0
-  m_RespawnTime: 2
-  m_NumSpawnObjects: 2
-  m_NumSpawnIterations: 10
-  m_EventOnSpawnObject:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnIteration:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnSpawnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EnemyPrefab: {fileID: 5124189260132801856, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
-  m_EnemySettings:
-  - {fileID: 11400000, guid: 3d01700eed6560b4b992f18994852fff, type: 2}
-  m_Path: {fileID: 2344920804171383895}
 --- !u!1 &341658404
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +253,7 @@ GameObject:
   - component: {fileID: 341658405}
   - component: {fileID: 341658406}
   m_Layer: 0
-  m_Name: Spawner (0)
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -329,7 +267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 341658404}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -349,10 +287,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Area: {fileID: 2627088988992347968}
-  m_SpawnMode: 0
-  m_RespawnTime: 1
-  m_NumSpawnObjects: 2
-  m_NumSpawnIterations: 20
   m_EventOnSpawnObject:
     m_PersistentCalls:
       m_Calls: []
@@ -362,10 +296,10 @@ MonoBehaviour:
   m_EventOnSpawnComplete:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 214724816}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 6808545652511525449}
+        m_TargetAssemblyTypeName: EnemyCamp, Assembly-CSharp
+        m_MethodName: AdviceScenario
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -374,10 +308,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  m_EnemyPrefab: {fileID: 5124189260132801856, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
-  m_EnemySettings:
-  - {fileID: 11400000, guid: 6a8a9acbdd11d5b488caace2ef138f52, type: 2}
-  m_Path: {fileID: 2344920804171383895}
 --- !u!4 &310701232543390872
 Transform:
   m_ObjectHideFlags: 0
@@ -1053,6 +983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7a30e92a1983e4ba466799a6a95bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathType: 0
   points:
   - {fileID: 2211594617658219627}
   - {fileID: 1272119084847580352}
@@ -1111,6 +1042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6808545652511525448}
+  - component: {fileID: 6808545652511525449}
   m_Layer: 0
   m_Name: EnemyCamp
   m_TagString: Untagged
@@ -1714,9 +1646,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  changeScoreAmount:
-    m_PersistentCalls:
-      m_Calls: []
   changeKillsAmount:
     m_PersistentCalls:
       m_Calls: []
@@ -1735,8 +1664,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_NumLives: 10
-  m_NumGold: 50
+  changeScoreAmount:
+    m_PersistentCalls:
+      m_Calls: []
+  m_StartLives: 10
+  m_StartGold: 55
 --- !u!114 &6366353328556598573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1794,7 +1726,7 @@ GameObject:
   m_Component:
   - component: {fileID: 494273417349900481}
   m_Layer: 0
-  m_Name: PathPoints
+  m_Name: Paths
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1881,12 +1813,30 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 310701232543390872}
   - {fileID: 341658405}
-  - {fileID: 214724815}
+  - {fileID: 310701232543390872}
   - {fileID: 494273417349900481}
   m_Father: {fileID: 5383321673578322708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6808545652511525449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2674601801756293307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4c9fd15a04b2f4caf3a774af80ad09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DoNotDestroyOnLoad: 0
+  enemySpawners:
+  - {fileID: 341658406}
+  spawnScenarios: []
+  paths:
+  - {fileID: 2344920804171383895}
+  - {fileID: 8232797642373848354}
 --- !u!1 &6863567231021339081
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,6 +2004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7a30e92a1983e4ba466799a6a95bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathType: 1
   points:
   - {fileID: 8455326858638619876}
   - {fileID: 3975477213095188235}

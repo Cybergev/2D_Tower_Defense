@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Path : MonoBehaviour
 {
+    public enum PathTypes { Primary, Secondary }
+    [SerializeField] private PathTypes pathType;
     [SerializeField] private AIPointPatrol[] points;
-    public int Length { get => points.Length; }
+
+    public PathTypes PathType => pathType;
+    public int Length => points.Length;
+
 
     public AIPointPatrol this[int i] { get => points[i]; }
     private void OnDrawGizmosSelected()

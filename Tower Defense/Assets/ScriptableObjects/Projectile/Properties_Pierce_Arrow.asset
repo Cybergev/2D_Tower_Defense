@@ -20,7 +20,7 @@ MonoBehaviour:
   m_MaxLinearVelocity: 10
   m_IsHoming: 1
   m_HomingAngle: 90
-  m_ImpactCheckLineLenght: 0.3
+  m_ImpactCheckLineLenght: 0.2
   m_HasImpactForce: 1
   m_ImpactForceModifier: 2
   m_Damage: 2

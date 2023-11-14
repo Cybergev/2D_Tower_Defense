@@ -10,32 +10,32 @@ public class LevelResultController : MonoSingleton<LevelResultController>
         HardLoadLevelResult(ref arrayLevelResults);
         for (int i = 0; i < arrayLevelResults.Length; i++)
         {
-            if (arrayLevelResults[i] == null || arrayLevelResults[i].levelName == null)
-                arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, false, 0, 1000);
+            if (arrayLevelResults[i] == null || arrayLevelResults[i].LevelName == null)
+                arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 1000);
         }
     }
     public void HashSaveLevelResult(LevelResult levelResult)
     {
         for (int i = 0; i < arrayLevelResults.Length; i++)
         {
-            if (arrayLevelResults[i].levelName == levelResult.levelName)
+            if (arrayLevelResults[i].LevelName == levelResult.LevelName)
             {
-                bool hasLevelResultSuccessIsFalseAndNotSame = arrayLevelResults[i].levelSuccess == false && levelResult.levelSuccess == true;
-                bool hasLevelResultSuccessIsSame = arrayLevelResults[i].levelSuccess == levelResult.levelSuccess;
+                bool hasLevelResultSuccessIsFalseAndNotSame = arrayLevelResults[i].LevelConditionSuccess == 0 && levelResult.LevelConditionSuccess > 0;
+                bool hasLevelResultSuccessIsSame = arrayLevelResults[i].LevelConditionSuccess == levelResult.LevelConditionSuccess;
 
                 if (hasLevelResultSuccessIsFalseAndNotSame)
                 {
-                    arrayLevelResults[i].levelSuccess = levelResult.levelSuccess;
-                    arrayLevelResults[i].levelScore = levelResult.levelScore;
-                    arrayLevelResults[i].levelTime = levelResult.levelTime;
+                    arrayLevelResults[i].LevelConditionSuccess = levelResult.LevelConditionSuccess;
+                    arrayLevelResults[i].LevelScore = levelResult.LevelScore;
+                    arrayLevelResults[i].LevelTime = levelResult.LevelTime;
                 }
                 if (hasLevelResultSuccessIsSame)
                 {
-                    arrayLevelResults[i].levelScore = arrayLevelResults[i].levelScore < levelResult.levelScore ? levelResult.levelScore : arrayLevelResults[i].levelScore;
-                    arrayLevelResults[i].levelTime = arrayLevelResults[i].levelTime > levelResult.levelTime ? levelResult.levelTime : arrayLevelResults[i].levelTime;
+                    arrayLevelResults[i].LevelScore = arrayLevelResults[i].LevelScore < levelResult.LevelScore ? levelResult.LevelScore : arrayLevelResults[i].LevelScore;
+                    arrayLevelResults[i].LevelTime = arrayLevelResults[i].LevelTime > levelResult.LevelTime ? levelResult.LevelTime : arrayLevelResults[i].LevelTime;
                 }
             }
-            if (arrayLevelResults[i].levelName != levelResult.levelName && i == arrayLevelResults.Length)
+            if (arrayLevelResults[i].LevelName != levelResult.LevelName && i == arrayLevelResults.Length)
             {
                 LevelResult[] ArrayLevelResultsNew = new LevelResult[arrayLevelResults.Length + 1];
                 ArrayLevelResultsNew = arrayLevelResults;
@@ -58,7 +58,7 @@ public class LevelResultController : MonoSingleton<LevelResultController>
         arrayLevelResults = new LevelResult[LevelsController.Instance.AllLevels.Length];
         for (int i = 0; i < arrayLevelResults.Length; i++)
         {
-            arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, false, 0, 1000);
+            arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 1000);
         }
         HardSaveLevelResult(arrayLevelResults);
     }
@@ -66,30 +66,30 @@ public class LevelResultController : MonoSingleton<LevelResultController>
 [Serializable]
 public class LevelResult
 {
-    public string levelName;
-    public bool levelSuccess;
-    public int levelScore;
-    public float levelTime;
+    public string LevelName;
+    public float LevelConditionSuccess;
+    public float LevelScore;
+    public float LevelTime;
     public LevelResult()
     {
     }
-    public LevelResult(string LevelName)
+    public LevelResult(string levelName)
     {
-        levelName = LevelName;
+        LevelName = levelName;
     }
-    public LevelResult(string LevelName, bool LevelSuccess) : this(LevelName)
+    public LevelResult(string levelName, float levelConditionSuccess) : this(levelName)
     {
-        levelSuccess = LevelSuccess;
+        LevelConditionSuccess = levelConditionSuccess;
     }
-    public LevelResult(string LevelName, bool LevelSuccess, int LevelScore) : this(LevelName, LevelSuccess)
+    public LevelResult(string levelName, float levelConditionSuccess, float levelScore) : this(levelName, levelConditionSuccess)
     {
-        levelScore = LevelScore;
+        LevelScore = levelScore;
     }
-    public LevelResult(string LevelName, bool LevelSuccess, int LevelScore, float LevelTime) : this(LevelName, LevelSuccess, LevelScore)
+    public LevelResult(string levelName, float levelConditionSuccess, float levelScore, float levelTime) : this(levelName, levelConditionSuccess, levelScore)
     {
-        levelTime = LevelTime;
+        LevelTime = levelTime;
     }
-    public LevelResult(LevelResult levelResult) : this(levelResult.levelName, levelResult.levelSuccess, levelResult.levelScore, levelResult.levelTime)
+    public LevelResult(LevelResult levelResult) : this(levelResult.LevelName, levelResult.LevelConditionSuccess, levelResult.LevelScore, levelResult.LevelTime)
     {
     }
 }

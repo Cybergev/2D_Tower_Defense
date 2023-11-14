@@ -56,8 +56,7 @@ public class Destructible : Entity
     }
     protected virtual void OnEnable()
     {
-        if (AllDestructibles == null) 
-            AllDestructibles = new HashSet<Destructible>();
+        AllDestructibles ??= new HashSet<Destructible>();
         AllDestructibles.Add(this);
     }
     protected virtual void OnDestroy()

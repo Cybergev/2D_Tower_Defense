@@ -61,7 +61,7 @@ public abstract class Spawner : MonoBehaviour
     {
         AllSpawners.Remove(this);
     }
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
         TrySpawn();
     }

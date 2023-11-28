@@ -45,17 +45,15 @@ public class LevelsController : MonoSingleton<LevelsController>
     }
     public float LevelTime { get; private set; }
     #endregion
-    private void Start()
+    private void EventsIni()
     {
-        LevelIni();
-    }
-    private void LevelIni()
-    {
+        m_EventLevelCompleted.RemoveAllListeners();
+        m_EventLevelCanceled.RemoveAllListeners();
         m_EventLevelCompleted.AddListener(Destructible.ClearNumDestroyed);
         m_EventLevelCanceled.AddListener(Destructible.ClearNumDestroyed);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         LevelTime += !LevelIsComlpete ? Time.deltaTime : 0;
     }
@@ -78,6 +76,7 @@ public class LevelsController : MonoSingleton<LevelsController>
         BonusConditions = level.LevelBonusCondition;
         LevelTime = 0;
         SceneManager.LoadScene(level.SceneNumber);
+        EventsIni();
     }
     public void StartLevel(string levelName)
     {

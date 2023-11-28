@@ -1,25 +1,25 @@
 public class Timer
 {
-    private float m_CurrentTime;
-    public bool IsFinished => m_CurrentTime <= 0;
+    public float CurrentTime { get; private set; }
+    public bool IsFinished => CurrentTime <= 0;
     public Timer(float startTime)
     {
-        Start(startTime);
+        StartTimer(startTime);
     }
-    public void Start(float startTime)
+    public void StartTimer(float startTime)
     {
-        m_CurrentTime = startTime;
+        CurrentTime = startTime;
     }
     public void AddTime(float time)
     {
-        if (m_CurrentTime < 0) 
+        if (CurrentTime < 0) 
             return;
-        m_CurrentTime += time;
+        CurrentTime += time;
     }
     public void RemoveTime(float deltaTime)
     {
-        if (m_CurrentTime < 0) 
+        if (CurrentTime < 0) 
             return;
-        m_CurrentTime -= deltaTime;
+        CurrentTime -= deltaTime;
     }
 }

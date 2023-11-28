@@ -10,8 +10,8 @@ public abstract class Spawner : MonoBehaviour
     {
         public SpawnDataAsset CurrentSpawnData { get; private set; }
         public int m_NumCurrentSpawnIterations;
-        public Timer m_Timer;
-        public bool SpawnIsComplete => m_NumCurrentSpawnIterations == CurrentSpawnData.NumSpawnIterations;
+        public Timer m_Timer = new Timer(0);
+        public bool SpawnIsComplete => m_NumCurrentSpawnIterations >= CurrentSpawnData.NumSpawnIterations;
         public SpawnData(SpawnDataAsset asset)
         {
             if (!asset)
@@ -26,10 +26,15 @@ public abstract class Spawner : MonoBehaviour
     {
         get
         {
-            int numComplete = 0;
-            foreach (var spawner in CurrentSpawnDataArray)
-                numComplete += spawner.SpawnIsComplete ? 1 : 0;
-            return numComplete == CurrentSpawnDataArray.Length;
+            if (CurrentSpawnDataArray != null)
+            {
+                int numComplete = 0;
+                foreach (var spawner in CurrentSpawnDataArray)
+                    numComplete += spawner.SpawnIsComplete ? 1 : 0;
+                return numComplete == CurrentSpawnDataArray.Length;
+            }
+            else
+                return true;
         }
     }
     public static bool AllSpawnsIsComplete 
@@ -67,29 +72,28 @@ public abstract class Spawner : MonoBehaviour
     }
     protected virtual void TrySpawn()
     {
-        for (int i = 0; i < CurrentSpawnDataArray.Length; i++)
-        {
-            var spawnData = CurrentSpawnDataArray[i];
-            if (spawnData.m_Timer == null)
-                spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
-            if (!spawnData.m_Timer.IsFinished)
-                spawnData.m_Timer.RemoveTime(Time.deltaTime);
-            if (spawnData.CurrentSpawnData.NumSpawnMode == SpawnDataAsset.SpawnMode.Limit && !spawnData.SpawnIsComplete && spawnData.m_Timer.IsFinished)
+        if(CurrentSpawnDataArray != null)
+            for (int i = 0; i < CurrentSpawnDataArray.Length; i++)
             {
-                Spawn(spawnData);
-                m_EventOnSpawnObject.Invoke();
-                spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
-                spawnData.m_NumCurrentSpawnIterations++;
-                m_EventOnSpawnIteration.Invoke();
-                if (SpawnIsComplete)
-                    m_EventOnSpawnComplete.Invoke();
+                var spawnData = CurrentSpawnDataArray[i];
+                if (!spawnData.m_Timer.IsFinished)
+                    spawnData.m_Timer.RemoveTime(Time.deltaTime);
+                if (spawnData.CurrentSpawnData.NumSpawnMode == SpawnDataAsset.SpawnMode.Limit && !spawnData.SpawnIsComplete && spawnData.m_Timer.IsFinished)
+                {
+                    Spawn(spawnData);
+                    m_EventOnSpawnObject.Invoke();
+                    spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
+                    spawnData.m_NumCurrentSpawnIterations++;
+                    m_EventOnSpawnIteration.Invoke();
+                    if (SpawnIsComplete)
+                        m_EventOnSpawnComplete.Invoke();
+                }
+                if (spawnData.CurrentSpawnData.NumSpawnMode == SpawnDataAsset.SpawnMode.Loop && spawnData.m_Timer.IsFinished)
+                {
+                    Spawn(spawnData);
+                    spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
+                }
             }
-            if (spawnData.CurrentSpawnData.NumSpawnMode == SpawnDataAsset.SpawnMode.Loop && spawnData.m_Timer.IsFinished)
-            {
-                Spawn(spawnData);
-                spawnData.m_Timer = new Timer(spawnData.CurrentSpawnData.NumRespawnTime);
-            }
-        }
     }
     protected virtual void Spawn(SpawnData spawnData)
     {

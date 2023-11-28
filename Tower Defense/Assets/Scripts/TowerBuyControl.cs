@@ -17,6 +17,7 @@ public class TowerBuyControl : MonoBehaviour
     private void Start()
     {
         Player.Instance.ChangeGoldAmount.AddListener(GoldStatusCheck);
+        GoldStatusCheck(Player.Instance.NumGold);
         m_text.text = m_towerAsset.glodCost.ToString();
         m_button.GetComponent<Image>().sprite = m_towerAsset.GUISprite;
     }
@@ -26,11 +27,8 @@ public class TowerBuyControl : MonoBehaviour
     }
     private void GoldStatusCheck(int value)
     {
-        if(value >= m_towerAsset.glodCost != m_button.interactable)
-        {
-            m_button.interactable = !m_button.interactable;
-            m_text.color = m_button.interactable ? Color.white : Color.red;
-        }
+        m_button.interactable = value >= m_towerAsset.glodCost;
+        m_text.color = m_button.interactable ? Color.white : Color.red;
     }
     public void TryBuild()
     {

@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c3aa96c9e57dd4a96842edf9242cf6, type: 3}
-  m_Name: Spawn_Scenario_Asset_Enemy Level_A_Wave 2
+  m_Script: {fileID: 11500000, guid: 7b631fac1ca469f459bcc6c5bfaf731d, type: 3}
+  m_Name: SpawnDataSecond_Enemy_OrcHeavy
   m_EditorClassIdentifier: 
-  spawnDataAssets:
-  - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
-  - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
+  m_EnemySetting: {fileID: 11400000, guid: 3d01700eed6560b4b992f18994852fff, type: 2}
+  m_PathType: 0

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 [CreateAssetMenu]
-public class SpawnDataSecondAsset : ScriptableObject
+public class SpawnDataSecondaryAsset : ScriptableObject
 {
     [SerializeField] private EnemyAsset m_EnemySetting;
     [SerializeField] private Path.PathTypes m_PathType;

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc182ab08b71d9e488a7520370591e97, type: 3}
-  m_Name: Spawn_Data_Second_Demon
+  m_Script: {fileID: 11500000, guid: f0827e18ed228874ead3679ba7e08be6, type: 3}
+  m_Name: SpawnScenarioSecondaryAsset Enemy Level_A_Wave 2
   m_EditorClassIdentifier: 
-  m_EnemySetting: {fileID: 11400000, guid: bf3f7ee0764d5dd47a60be3e183c0d59, type: 2}
-  m_PathType: 0
+  timeBetweenScenario: 10
+  callReaward: 30

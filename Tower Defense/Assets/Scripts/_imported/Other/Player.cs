@@ -21,10 +21,6 @@ public class Player : MonoSingleton<Player>
         base.Awake();
         PlayerIni();
     }
-    private void Update()
-    {
-        CheckPlayerDataChanges();
-    }
     private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
@@ -36,9 +32,9 @@ public class Player : MonoSingleton<Player>
             return;
         else
         {
-            m_NumLives -= damage;
+            NumLives -= damage;
 
-            if (m_NumLives <= 0)
+            if (NumLives <= 0)
                 OnPlayerDeath();
         }
     }
@@ -46,6 +42,7 @@ public class Player : MonoSingleton<Player>
     #region Lives&Score&Money&Kills
     [SerializeField] private UnityEvent<int> changeLivesAmount;
     [HideInInspector] public UnityEvent<int> ChangeLivesAmount => changeLivesAmount;
+
     [SerializeField] private UnityEvent<int> changeKillsAmount;
     [HideInInspector] public UnityEvent<int> ChangeKillsAmount => changeLivesAmount;
 
@@ -59,63 +56,71 @@ public class Player : MonoSingleton<Player>
     public int StartLives => m_StartLives;
 
     private int m_NumLives;
-    public int NumLives => m_NumLives;
-    public int PastNumLives { get; private set; }
+    public int NumLives
+    {
+        get
+        {
+            return m_NumLives;
+        }
+        private set
+        {
+            changeLivesAmount.Invoke(value);
+            m_NumLives = value;
+        }
+    }
 
-    public int NumKills { get; private set; }
-    public int PastNumKills { get; private set; }
+    private int m_NumKills;
+    public int NumKills
+    {
+        get
+        {
+            return m_NumKills;
+        }
+        private set
+        {
+            changeKillsAmount.Invoke(value);
+            m_NumKills = value;
+        }
+    }
 
     [SerializeField] private int m_StartGold;
     public int StartGold => m_StartGold;
 
     private int m_NumGold;
-    public int NumGold => m_NumGold;
-    public int PastNumGold { get; private set; }
+    public int NumGold 
+    {
+        get
+        {
+            return m_NumGold;
+        }
+        private set
+        {
+            changeGoldAmount.Invoke(value);
+            m_NumGold = value;
+        }
+    }
     public int SpentGold { get; private set; }
 
     public float NumScore
     {
         get
         {
-            return (NumGold + SpentGold) * NumLives / LevelsController.Instance.LevelTime;
+            float score = (NumGold + SpentGold) * NumLives / LevelsController.Instance.LevelTime;
+            changeScoreAmount.Invoke(score);
+            return score;
         }
     }
-    public float PastNumScore { get; private set; }
 
     private void PlayerIni()
     {
-        m_NumLives = m_StartLives;
-        m_NumGold = m_StartGold;
+        NumLives = m_StartLives;
+        NumGold = m_StartGold;
     }
-    private void CheckPlayerDataChanges()
-    {
-        if (PastNumLives != NumLives)
-        {
-            PastNumLives = NumLives;
-            changeLivesAmount.Invoke(NumLives);
-        }
-        if (PastNumScore != NumScore)
-        {
-            PastNumScore = NumScore;
-            changeScoreAmount.Invoke(NumScore);
-        }
-        if (PastNumGold != NumGold)
-        {
-            PastNumGold = NumGold;
-            changeGoldAmount.Invoke(NumGold);
-        }
-        if (PastNumKills != NumKills)
-        {
-            PastNumKills = NumKills;
-            changeKillsAmount.Invoke(NumKills);
-        }
-    }
-
     public void ChangeGold(int value)
     {
         if (value < 0)
             SpentGold += -value;
-        m_NumGold += value;
+        NumGold += value;
     }
     public void AddKill()
     {

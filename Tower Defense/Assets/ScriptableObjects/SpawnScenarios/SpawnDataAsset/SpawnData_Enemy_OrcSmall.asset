@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e082f76833d71a41a2925b0df6ef1e9, type: 3}
-  m_Name: Spawn_Data_OrcHeavy
+  m_Name: SpawnData_Enemy_OrcSmall
   m_EditorClassIdentifier: 
   m_SpawnObject: {fileID: 8984428738912032580, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
   m_SpawnMode: 0
-  m_NumSpawnObjects: 2
+  m_NumSpawnObjects: 4
   m_NumSpawnIterations: 20
-  m_RespawnTime: 3
-  spawnDataSecond: {fileID: 11400000, guid: 8b3119c71088daf489b2946e3d9eaf44, type: 2}
+  m_RespawnTime: 2
+  secondaryAsset: {fileID: 11400000, guid: 4ea112963f5cf424faafd7d0183e433b, type: 2}

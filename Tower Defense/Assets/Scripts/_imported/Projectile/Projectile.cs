@@ -13,10 +13,27 @@ public class Projectile : MonoBehaviour
     private int m_lostDamge;
     private class ProjectileTarget
     {
-        public Transform targetTransform;
-        public Rigidbody2D targetRigit;
+        private Transform targetTransform;
+        private Rigidbody2D targetRigid;
+
+        public Transform TargetTransform => targetTransform;
+        public Rigidbody2D TargetRigid => targetRigid;
+
+        public ProjectileTarget(Transform transform)
+        {
+            if (!transform)
+                return;
+            targetTransform = transform;
+        }
+        public ProjectileTarget(Transform transform, Rigidbody2D rigid) : this(transform)
+        {
+            if (!transform)
+                return;
+            if (rigid)
+                targetRigid = rigid;
+        }
     }
-    private ProjectileTarget m_Target = new ProjectileTarget();
+    private ProjectileTarget m_Target;
     private Destructible m_Parent;
 
 
@@ -33,8 +50,8 @@ public class Projectile : MonoBehaviour
         m_Rigid.gravityScale = m_ProjectileProperties.GravityScale;
         if (m_ProjectileProperties.IsHoming)
         {
-            if (m_Target.targetTransform)
-                m_Rigid.AddTorque(CalculateAngle(m_Target.targetTransform.position) * Time.fixedDeltaTime, ForceMode2D.Force);
+            if (m_Target.TargetTransform)
+                m_Rigid.AddTorque(CalculateAngle(m_Target.TargetTransform.position) * Time.fixedDeltaTime, ForceMode2D.Force);
             else
                 Destroy(gameObject);
         }
@@ -51,34 +68,34 @@ public class Projectile : MonoBehaviour
     {
         if(m_ProjectileProperties.IsHoming)
         {
-            if (m_Target.targetTransform)
+            if (m_Target.TargetTransform)
             {
-                m_Rigid.AddTorque(CalculateAngle(m_Target.targetTransform.position), ForceMode2D.Force);
-                transform.position = Vector3.MoveTowards(transform.position, m_Target.targetTransform.position, m_ProjectileProperties.MaxLinearVelocity * Time.fixedDeltaTime);
+                m_Rigid.AddTorque(CalculateAngle(m_Target.TargetTransform.position), ForceMode2D.Force);
+                transform.position = Vector3.MoveTowards(transform.position, m_Target.TargetTransform.position, m_ProjectileProperties.MaxLinearVelocity * Time.fixedDeltaTime);
             }
             else
                 Destroy(gameObject);
         }
-        CheckCollision();
     }
 
     private void OnDestroy()
     {
         m_DestroyEffect.Invoke();
     }
-
-    private void CheckCollision()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, m_ProjectileProperties.ImpactCheckLineLenght);
-        if (hit)
-            Impact(hit.collider.transform.root.gameObject);
+        if (!collision.transform.root.gameObject)
+            return;
+        Impact(collision.transform.root.gameObject);
     }
     private void Impact(GameObject v_object)
     {
         if (!v_object)
             return;
-
         var dest = v_object.transform.root.GetComponent<Destructible>();
+        var rigid = v_object.transform.root.GetComponent<Rigidbody2D>();
+        if (rigid && m_ProjectileProperties.HasImpactForce)
+            rigid.AddForce(m_Rigid.mass * m_Rigid.velocity * m_ProjectileProperties.ImpactForceModifier, ForceMode2D.Impulse);
         if (dest && dest != m_Parent)
         {
             if (m_Parent)
@@ -87,8 +104,6 @@ public class Projectile : MonoBehaviour
             }
             dest.ApplyDamage(m_ProjectileProperties.Damage - m_lostDamge);
         }
-        if (m_ProjectileProperties.HasImpactForce)
-            dest.transform.root.GetComponent<Rigidbody2D>()?.AddForceAtPosition((m_Rigid.mass * m_Rigid.velocity) * m_ProjectileProperties.ImpactForceModifier, transform.position);
         if (m_ProjectileProperties.CanBounce && m_BounceNum < m_ProjectileProperties.MaxBounceNum)
         {
             m_BounceNum++;
@@ -107,8 +122,8 @@ public class Projectile : MonoBehaviour
     }
     private Vector3 CalculateLead()
     {
-        Vector2 xk0 = m_Target.targetTransform.position;
-        Vector2 vk = m_Target.targetRigit.velocity;
+        Vector2 xk0 = m_Target.TargetTransform.position;
+        Vector2 vk = m_Target.TargetRigid.velocity;
 
         Vector2 xs0 = transform.position;
         Vector2 vs = m_Rigid.velocity;
@@ -121,9 +136,7 @@ public class Projectile : MonoBehaviour
     }
     public void SetTarget(Transform target)
     {
-        m_Target = new ProjectileTarget();
-        m_Target.targetTransform = target;
-        m_Target.targetRigit = target.GetComponent<Rigidbody2D>();
+        m_Target = new ProjectileTarget(target, target.GetComponent<Rigidbody2D>());
     }
     public void SetParentShooter(Destructible parent)
     {

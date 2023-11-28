@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca876559ddb74994bb2e189b0db17775, type: 3}
   m_Name: New Explosion Properties
   m_EditorClassIdentifier: 
-  m_ExplosionRadius: 1
-  m_Damage: 10
-  m_Lifetime: 5
+  m_Damage: 1
+  m_ImpactForce: 1
+  m_ExplosionRadius: 0.5

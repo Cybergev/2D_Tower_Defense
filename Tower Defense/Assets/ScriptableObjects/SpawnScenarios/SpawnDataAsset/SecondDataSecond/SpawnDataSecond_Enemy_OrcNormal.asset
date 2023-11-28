@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc182ab08b71d9e488a7520370591e97, type: 3}
-  m_Name: Spawn_Data_Second_OrcHeavy
+  m_Script: {fileID: 11500000, guid: 7b631fac1ca469f459bcc6c5bfaf731d, type: 3}
+  m_Name: SpawnDataSecond_Enemy_OrcNormal
   m_EditorClassIdentifier: 
-  m_EnemySetting: {fileID: 11400000, guid: 3d01700eed6560b4b992f18994852fff, type: 2}
+  m_EnemySetting: {fileID: 11400000, guid: 6a8a9acbdd11d5b488caace2ef138f52, type: 2}
   m_PathType: 0

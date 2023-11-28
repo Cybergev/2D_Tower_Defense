@@ -21,7 +21,7 @@ public class EnemySpawner : Spawner
         var data = spawnData;
         GameObject completeObject;
         completeObject = Instantiate(data.CurrentSpawnData.NumSpawnObject);
-        completeObject.GetComponent<Enemy>().UseAsset(data.CurrentSpawnData.SpawnDataSecond.EnemySetting);
+        completeObject.GetComponent<Enemy>().UseAsset(data.CurrentSpawnData.SecondaryAsset.EnemySetting);
         completeObject.GetComponent<TDPatrolController>().SetPath(CurrentPath);
         return completeObject;
     }

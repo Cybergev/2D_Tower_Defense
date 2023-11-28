@@ -106,7 +106,7 @@ public class AIController : MonoBehaviour
         {
             Vector2 newPoint = UnityEngine.Random.onUnitSphere * m_PatrolPoint.Radius + m_PatrolPoint.transform.position;
             m_MovePosition = newPoint;
-            m_RandomizeDirectionTimer.Start(m_RandomSelectMovePointTime);
+            m_RandomizeDirectionTimer.StartTimer(m_RandomSelectMovePointTime);
         }
     }
 
@@ -137,7 +137,7 @@ public class AIController : MonoBehaviour
         if (m_FindNewTargetTimer.IsFinished == true)
         {
             m_SelectedTarget = FindNearestDestructibleTarget();
-            m_FindNewTargetTimer.Start(m_FindNewTargetTime);
+            m_FindNewTargetTimer.StartTimer(m_FindNewTargetTime);
         }
     }
 
@@ -172,7 +172,7 @@ public class AIController : MonoBehaviour
                         m_SelectedTarget = target;
                         if (m_AIFireMode == AIFireMode.All || m_AIFireMode == AIFireMode.Primary) m_SpaceShip.Fire(TurretMode.Primary);
                         if (m_AIFireMode == AIFireMode.All || m_AIFireMode == AIFireMode.Secondary) m_SpaceShip.Fire(TurretMode.Secondary);
-                        m_FireTimer.Start(m_ShootDelay);
+                        m_FireTimer.StartTimer(m_ShootDelay);
                     }
                 }
             }

@@ -10,9 +10,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private TuerretProperties m_TuerretProperties;
     public TuerretProperties TuerretProperties => m_TuerretProperties;
 
-    private float m_RefireTimer;
-
-    public bool CanFire => m_RefireTimer <= 0;
+    private Timer m_RefireTimer;
 
     [SerializeField] private SpaceShip m_Ship;
 
@@ -22,15 +20,16 @@ public class Turret : MonoBehaviour
             m_Ship = transform.root.GetComponent<SpaceShip>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!CanFire)
-            m_RefireTimer -= Time.deltaTime;
+        m_RefireTimer ??= new Timer(m_TuerretProperties.RateOfFire);
+        if (!m_RefireTimer.IsFinished)
+            m_RefireTimer.RemoveTime(Time.deltaTime);
     }
 
     public void Fire(Transform target)
     {
-        if (!m_TuerretProperties || !CanFire)
+        if (!m_TuerretProperties || !m_RefireTimer.IsFinished)
             return;
 
         if (m_Ship)
@@ -45,14 +44,14 @@ public class Turret : MonoBehaviour
         projectile.SetTarget(target);
         projectile.SetParentShooter(m_Ship);
 
-        m_RefireTimer = m_TuerretProperties.RateOfFire;
+        m_RefireTimer = new Timer(m_TuerretProperties.RateOfFire);
     }
 
     public void AssignLoadut(TuerretProperties props)
     {
         if (m_Mode != props.Mode) return;
 
-        m_RefireTimer = 0;
+        m_RefireTimer = new Timer(m_TuerretProperties.RateOfFire);
         m_TuerretProperties = props;
     }
 }

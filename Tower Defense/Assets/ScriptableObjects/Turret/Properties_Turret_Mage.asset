@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Properties_Turret_Mage
   m_EditorClassIdentifier: 
   m_Mode: 0
-  m_PerojectilePrefab: {fileID: 9105682222607819861, guid: ce1f51d16994d8e4bb579c540ca64e03, type: 3}
-  m_RateOfFire: 0.5
+  m_PerojectilePrefab: {fileID: 3155338904753899919, guid: ce1f51d16994d8e4bb579c540ca64e03, type: 3}
+  m_RateOfFire: 1
   m_EnergyUsage: 0
   m_AmmoUsage: 0
   m_LaunchSFX: {fileID: 0}

@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UIUserHUDTextController : MonoBehaviour
+public class UiTextController : MonoBehaviour
 {
     [SerializeField] private Text[] targetExitText;
     [SerializeField] private string firstTextString;
     [SerializeField] private string lastTextString;
-    private void OnChangeTargetValueAmount(string value)
+    public void OnChangeTargetValueAmount(string value)
     {
         foreach (var tText in targetExitText)
         {

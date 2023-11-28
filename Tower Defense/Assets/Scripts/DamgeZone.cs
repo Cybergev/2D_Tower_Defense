@@ -5,31 +5,15 @@ using UnityEngine;
 public class DamgeZone : MonoBehaviour
 {
     [SerializeField] private int damage;
-    [SerializeField] private float damageRate;
-
-    private Destructible destructible;
-    private Timer m_Timer;
-
-    private void Update()
+    [SerializeField] private float damageRadius;
+    private void Start()
     {
-        if (!destructible) 
-            return;
-        if (!m_Timer.IsFinished)
-            m_Timer.RemoveTime(Time.deltaTime);
-        if (destructible)
+        foreach (var dest in Destructible.AllDestructibles)
         {
-            destructible.ApplyDamage(damage);
-            m_Timer = new Timer(damageRate);
+            float dist = (dest.transform.position - transform.position).magnitude;
+            if (dist <= damageRadius)
+                dest.ApplyDamage(damage);
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        destructible = collision.transform.root.GetComponent<Destructible>();
-        m_Timer = new Timer(damageRate);
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.root.GetComponent<Destructible>() == destructible) 
-            destructible = null;
+        Destroy(gameObject);
     }
 }

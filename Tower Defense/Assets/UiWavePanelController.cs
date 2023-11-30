@@ -21,17 +21,11 @@ public class UiWavePanelController : MonoSingleton<UiWavePanelController>
         string text;
         bool complete = EnemyCamp.Instance.ScenarioIsComplete;
         if (complete)
-        {
             text = $"Wave:{wave}\nTime:{time}\nCall:+{reward}G";
-            uiPanelTextUpdate.Invoke(text);
-            callButton.gameObject.SetActive(complete);
-        }
         else
-        {
             text = $"Wave:{wave}";
-            uiPanelTextUpdate.Invoke(text);
-            callButton.gameObject.SetActive(complete);
-        }
+        uiPanelTextUpdate.Invoke(text);
+        callButton.gameObject.SetActive(complete);
     }
     public void WaveStringUpdate(int w)
     {

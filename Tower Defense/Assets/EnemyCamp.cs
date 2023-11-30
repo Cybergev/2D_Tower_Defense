@@ -17,7 +17,7 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
         private set
         {
             scenarioIndex = value;
-            waveIndexUpdate.Invoke(value + 1);
+            waveIndexUpdate.Invoke(value);
         }
     }
     public SpawnScenarioAsset[] SpawnScenarios { get; private set; }
@@ -32,7 +32,7 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
     public UnityEvent ScenariosCompleteEvent => scenariosCompleteEvent;
 
 
-    public Timer Timer { get; private set; }
+    public Timer Timer { get; private set; } = new Timer(0);
     private int curentGoldReward;
     public int CurrentGoldReward 
     {
@@ -62,17 +62,29 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
     {
         get
         {
-            bool check = numSpawnCompleted == enemySpawners.Length;
-            if (check && !scenarioIsComplete)
+            bool check = numSpawnCompleted == enemySpawners.Length || CurrentSpawnScenario == null;
+            if (check)
             {
-                scenarioIsComplete = check;
-                scenarioCompleteEvent.Invoke();
-                if (ScenarionIndex + 1 < SpawnScenarios.Length)
-                    Timer ??= new Timer(SpawnScenarios[ScenarionIndex + 1].SecondaryAsset.TimeBetweenScenario);
-                return check;
+                if (check != scenarioIsComplete)
+                {
+                    scenarioIsComplete = check;
+                    scenarioCompleteEvent.Invoke();
+                    Timer = new Timer(CheckNextScenario() ? CheckNextScenario().TimeBetweenScenario : 0);
+                    return check;
+                }
+                else
+                    return check;
             }
             else
-                return check;
+            {
+                if (check != scenarioIsComplete)
+                {
+                    scenarioIsComplete = check;
+                    return check;
+                }
+                else
+                    return check;
+            }
         }
     }
     private bool scenarioIsComplete;
@@ -94,53 +106,43 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
 
     private void Start()
     {
-        GetScenarios(LevelsController.Instance.CurrentLevel.LevelSpawnScenarios);
+        SetScenarios(LevelsController.Instance.CurrentLevel.LevelSpawnScenarios);
         foreach (var spawner in enemySpawners)
-        {
             if (spawner.SpawnIsComplete)
                 SpawnComplete();
-        }
         waveIndexUpdate.Invoke(scenarioIndex + 1);
-        waveCallTimerUpdate.Invoke(Timer != null ? Timer.CurrentTime : 0);
-        waveCallGoldRewardUpdate.Invoke(CurrentGoldReward);
+        waveCallTimerUpdate.Invoke(Timer.CurrentTime);
+        CurrentGoldReward = (int)(Timer.CurrentTime * 2);
     }
     private void FixedUpdate()
     {
-        if (ScenarioIsComplete && !ScenariosAllComplete)
+        if (ScenarioIsComplete)
         {
-            if (Timer != null)
+            if (!Timer.IsFinished)
             {
-                if (Timer.IsFinished)
-                {
-                    CurrentGoldReward = 0;
-                    Timer = null;
-                    AdviceScenario();
-                }
-                else
-                {
-                    Timer.RemoveTime(Time.deltaTime);
-                    waveCallTimerUpdate.Invoke(Timer.CurrentTime);
-                    CurrentGoldReward = (int)(Timer.CurrentTime * 2);
-                }
+                Timer.RemoveTime(Time.deltaTime);
+                waveCallTimerUpdate.Invoke(Timer.CurrentTime);
+                CurrentGoldReward = (int)(Timer.CurrentTime * 2);
+            }
+            else
+            {
+                AdviceScenario();
+                waveCallTimerUpdate.Invoke(Timer.CurrentTime);
+                CurrentGoldReward = (int)(Timer.CurrentTime * 2);
             }
         }
     }
-    public void GetScenarios(SpawnScenarioAsset[] scenarios)
+    public void SetScenarios(SpawnScenarioAsset[] scenarios)
     {
         if (scenarios == null)
             return;
-        SpawnScenarios = new SpawnScenarioAsset[scenarios.Length];
-        for (int i = 0; i < scenarios.Length; i++)
-        {
-            var scenario = scenarios[i];
-            SpawnScenarios[i] = scenario;
-        }
+        SpawnScenarios = scenarios;
     }
-    public void SetScenarios(SpawnScenarioAsset scenarios)
+    public void SetCurrentScenario(SpawnScenarioAsset scenario)
     {
-        if (scenarios == null)
+        if (scenario == null)
             return;
-        CurrentSpawnScenario = scenarios;
+        CurrentSpawnScenario = scenario;
         foreach (var path in paths)
             foreach (var dataAsset in CurrentSpawnScenario.SpawnDataAssets)
                 if (path.PathType == dataAsset.SecondaryAsset.PathType)
@@ -153,20 +155,22 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
         foreach (var spawner in enemySpawners)
             spawner.SetSpawnScenario(CurrentSpawnScenario, CurrentPath);
     }
-    public void AdviceScenario()
+    public SpawnScenarioAsset CheckNextScenario()
     {
-        if (CurrentSpawnScenario == null)
-            SetScenarios(SpawnScenarios[ScenarionIndex]);
+        SpawnScenarioAsset result = null;
+        if (CurrentSpawnScenario == result)
+            result = SpawnScenarios[0];
         else
             for (int i = 0; i < SpawnScenarios.Length; i++)
-            {
-                var scenario = SpawnScenarios[i];
-                if (CurrentSpawnScenario == scenario && i + 1 < SpawnScenarios.Length)
-                {
-                    ScenarionIndex = i + 1;
-                    SetScenarios(SpawnScenarios[ScenarionIndex]);
-                }
-            }
+                if (CurrentSpawnScenario == SpawnScenarios[i] && i + 1 < SpawnScenarios.Length)
+                    result = SpawnScenarios[i + 1];
+        return result;
+    }
+    public void AdviceScenario()
+    {
+        SetCurrentScenario(CheckNextScenario());
+        ScenarionIndex++;
+        Timer = new Timer(0);
     }
     public void AdviceScenarioWithBonus()
     {

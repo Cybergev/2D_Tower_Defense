@@ -4,30 +4,37 @@ using UnityEngine;
 
 public class SaveController<T>
 {
-    private static string Path(string filename)
+    private static string GetFilename(string filename)
+    {
+        return $"{filename}.dat";
+    }
+    private static string GetPath(string filename)
     {
         return $"{Application.persistentDataPath}/{filename}";
     }
-    public static void TryLoad(string filename, ref T data)
+    public static T TryLoad(string loadFilename)
     {
-        var path = Path(filename);
-        if (File.Exists(path))
-        {
-            var dataString = File.ReadAllText(path);
-            var wrapper = JsonUtility.FromJson<Save<T>>(dataString);
-            data = wrapper.saveData;
-        }
+        string filename = GetFilename(loadFilename);
+        string path = GetPath(filename);
+        if (loadFilename == null || File.Exists(path) == false)
+            return default;
+        string dataString = File.ReadAllText(path);
+        SaveData<T> wrapper = JsonUtility.FromJson<SaveData<T>>(dataString);
+        return wrapper.saveData;
     }
-    public static void Save(string filename, T data)
+    public static void Save(string saveFilename, T data)
     {
-        var wrapper = new Save<T> { saveData = data };
+        string filename = GetFilename(saveFilename);
+        string path = GetPath(filename);
+        if (saveFilename == null || data == null)
+            return;
+        var wrapper = new SaveData<T> { saveData = data };
         var dataString = JsonUtility.ToJson(wrapper);
-        File.WriteAllText(Path(filename), dataString);
+        File.WriteAllText(path, dataString);
     }
 }
 [Serializable]
-public class Save<T>
+public class SaveData<T>
 {
-    public const string filename = nameof(Save<T>) + ".dat";
     public T saveData;
 }

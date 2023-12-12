@@ -4,9 +4,11 @@ using UnityEngine.UI;
 public class LevelSelectionController : MonoBehaviour
 {
     [SerializeField] private Level m_Level;
+    [SerializeField] private Button m_Button;
     [SerializeField] private RectTransform[] m_ResultShowImages;
 
     public Level Level => m_Level;
+    public Button Button => m_Button;
 
     private void Start()
     {
@@ -14,22 +16,18 @@ public class LevelSelectionController : MonoBehaviour
         {
             image.gameObject.SetActive(false);
         }
-        foreach (LevelResult result in LevelResultController.Instance.ArrayLevelResults)
+        var result = LevelResultController.Instance.GetLevelResult(m_Level.LevelName);
+        if (result != null)
         {
-            if (result.LevelName == m_Level.LevelName)
+            for (int i = 0; i < 3; i++)
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (i == 0 && result.LevelConditionSuccess >= 50)
-                        m_ResultShowImages[i].gameObject.SetActive(true);
-                    if (i == 1 && result.LevelConditionSuccess >= 50)
-                        m_ResultShowImages[i].gameObject.SetActive(true);
-                    if (i == 2 && result.LevelConditionSuccess == 100)
-                        m_ResultShowImages[i].gameObject.SetActive(true);
-                }
+                if (i == 0 && result.LevelConditionSuccess >= 25f)
+                    m_ResultShowImages[i].gameObject.SetActive(true);
+                if (i == 1 && result.LevelConditionSuccess >= 50f)
+                    m_ResultShowImages[i].gameObject.SetActive(true);
+                if (i == 2 && result.LevelConditionSuccess == 100f)
+                    m_ResultShowImages[i].gameObject.SetActive(true);
             }
-            else
-                continue;
         }
     }
 

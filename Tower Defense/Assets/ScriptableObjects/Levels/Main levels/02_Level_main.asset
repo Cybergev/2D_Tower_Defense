@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c945ee59fdd3b8045b0831fc01b4ebb9, type: 3}
+  m_Name: 02_Level_main
+  m_EditorClassIdentifier: 
+  m_SceneName: main_scene 2
+  m_SceneNumber: 2
+  m_ScenePreviewImage: {fileID: 21300000, guid: f98c76f3a6fa42a448c281439469f905, type: 3}
+  m_LevelName: Level main 2
+  m_LevelAccessConditions:
+  - {fileID: 11400000, guid: 312467c4691c63047b39b95f84a21110, type: 2}
+  m_LevelCompleteConditions:
+  - {fileID: 11400000, guid: 140f327192135b54abb506c552bbe50d, type: 2}
+  - {fileID: 11400000, guid: 75d8c4dd2de33fe41b71fd6693e9c9ad, type: 2}
+  m_LevelBonusConditions:
+  - {fileID: 11400000, guid: bb0fef15fcb92ec42bda801e1f6940a6, type: 2}
+  m_LevelSpawnScenarios:
+  - {fileID: 11400000, guid: 3271e9727a61c664f899dbdc7b81bf7b, type: 2}
+  - {fileID: 11400000, guid: ae6d5f929037a0743927e2f3ef3332ca, type: 2}
+  - {fileID: 11400000, guid: 2cfe89b47876f0142a040a1a27c3e7ee, type: 2}
+  m_PrevLevel: {fileID: 11400000, guid: 806b40d03966c6f4392311dc0b7cb780, type: 2}
+  m_NextLevel: {fileID: 0}
+  m_StartLive: 10
+  m_StartGold: 40

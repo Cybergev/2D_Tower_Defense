@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c945ee59fdd3b8045b0831fc01b4ebb9, type: 3}
+  m_Name: 00_Level_main Menu
+  m_EditorClassIdentifier: 
+  m_SceneName: main_menu
+  m_SceneNumber: 0
+  m_ScenePreviewImage: {fileID: 0}
+  m_LevelName: Main Menu
+  m_LevelAccessConditions: []
+  m_LevelCompleteConditions: []
+  m_LevelBonusConditions: []
+  m_LevelSpawnScenarios: []
+  m_PrevLevel: {fileID: 0}
+  m_NextLevel: {fileID: 0}
+  m_StartLive: 0
+  m_StartGold: 0

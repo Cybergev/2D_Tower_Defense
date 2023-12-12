@@ -1,28 +1,24 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
 
 public class LevelResultController : MonoSingleton<LevelResultController>
 {
-    private LevelResult[] arrayLevelResults;
-    public LevelResult[] ArrayLevelResults => arrayLevelResults;
+    private List<LevelResult> arrayLevelResults;
+    public List<LevelResult> ArrayLevelResults => arrayLevelResults;
     private void Start()
     {
-        arrayLevelResults = new LevelResult[LevelsController.Instance.AllLevels.Length];
-        HardLoadLevelResult(ref arrayLevelResults);
-        for (int i = 0; i < arrayLevelResults.Length; i++)
-        {
-            if (arrayLevelResults[i] == null || arrayLevelResults[i].LevelName == null)
-                arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 1000);
-        }
+        LevelResultIni();
     }
     public void HashSaveLevelResult(LevelResult levelResult)
     {
-        for (int i = 0; i < arrayLevelResults.Length; i++)
+        for (int i = 0; i < arrayLevelResults.Count; i++)
         {
             if (arrayLevelResults[i].LevelName == levelResult.LevelName)
             {
                 bool hasLevelResultSuccessIsFalseAndNotSame = arrayLevelResults[i].LevelConditionSuccess == 0 && levelResult.LevelConditionSuccess > 0;
                 bool hasLevelResultSuccessIsSame = arrayLevelResults[i].LevelConditionSuccess == levelResult.LevelConditionSuccess;
-
                 if (hasLevelResultSuccessIsFalseAndNotSame)
                 {
                     arrayLevelResults[i].LevelConditionSuccess = levelResult.LevelConditionSuccess;
@@ -35,32 +31,79 @@ public class LevelResultController : MonoSingleton<LevelResultController>
                     arrayLevelResults[i].LevelTime = arrayLevelResults[i].LevelTime > levelResult.LevelTime ? levelResult.LevelTime : arrayLevelResults[i].LevelTime;
                 }
             }
-            if (arrayLevelResults[i].LevelName != levelResult.LevelName && i == arrayLevelResults.Length)
+            if (arrayLevelResults[i].LevelName != levelResult.LevelName && i == arrayLevelResults.Count)
             {
-                LevelResult[] ArrayLevelResultsNew = new LevelResult[arrayLevelResults.Length + 1];
-                ArrayLevelResultsNew = arrayLevelResults;
-                arrayLevelResults = new LevelResult[ArrayLevelResultsNew.Length];
-                arrayLevelResults = ArrayLevelResultsNew;
-                arrayLevelResults[i + 1] = levelResult;
+                arrayLevelResults.Add(levelResult);
             }
         }
     }
+    public void HasSaveLevelResult(LevelResult[] levelResults)
+    {
+        if (levelResults == null)
+            return;
+        foreach(var result in levelResults)
+            HashSaveLevelResult(result);
+    }
+    public void HardSaveLevelResult(LevelResult levelResult)
+    {
+        if (levelResult == null)
+            return;
+        SaveController<LevelResult>.Save(levelResult.LevelName, levelResult);
+    }
     public void HardSaveLevelResult(LevelResult[] levelResult)
     {
-        SaveController<LevelResult[]>.Save(Save<LevelResult>.filename, levelResult);
+        if (levelResult == null)
+            return;
+        foreach(var result in levelResult)
+            SaveController<LevelResult>.Save(result.LevelName, result);
     }
-    public void HardLoadLevelResult(ref LevelResult[] levelResult)
+    public LevelResult HardLoadLevelResult(string levelName)
     {
-        SaveController<LevelResult[]>.TryLoad(Save<LevelResult>.filename, ref levelResult);
+        if (levelName == null)
+            return null;
+        LevelResult levelResult = SaveController<LevelResult>.TryLoad(levelName);
+        return levelResult == null ? new LevelResult(levelName, 0, 0, 1000) : new LevelResult(levelResult);
+    }
+    public LevelResult[] HardLoadLevelResult(string[] levelNames)
+    {
+        List<LevelResult> levelResults = new List<LevelResult>();
+        foreach (var v in levelNames)
+        {
+            LevelResult result = HardLoadLevelResult(v);
+            levelResults.Add(result == null ? new LevelResult(v, 0, 0, 1000) : new LevelResult(result));
+        }
+        return levelResults.ToArray();
+    }
+    public LevelResult GetLevelResult(string LevelName)
+    {
+        foreach (var result in arrayLevelResults)
+        {
+            if (result.LevelName == LevelName)
+                return result;
+        }
+        return null;
+    }
+    public LevelResult[] GetLevelResult(string[] LevelNames)
+    {
+        List<LevelResult> LevelResults = new List<LevelResult>();
+        foreach (var name in LevelNames)
+        {
+            LevelResults.Add(GetLevelResult(name));
+        }
+        return LevelResults.ToArray();
     }
     public void ClearAllResults()
     {
-        arrayLevelResults = new LevelResult[LevelsController.Instance.AllLevels.Length];
-        for (int i = 0; i < arrayLevelResults.Length; i++)
-        {
-            arrayLevelResults[i] = new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 1000);
-        }
-        HardSaveLevelResult(arrayLevelResults);
+        arrayLevelResults.Clear();
+        for (int i = 0; i < LevelsController.Instance.AllLevels.Length; i++)
+            arrayLevelResults.Add(new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 1000));
+        HardSaveLevelResult(arrayLevelResults.ToArray());
+    }
+    private void LevelResultIni()
+    {
+        arrayLevelResults = new List<LevelResult>();
+        foreach(var level in LevelsController.Instance.AllLevels)
+            arrayLevelResults.Add(HardLoadLevelResult(level.LevelName));
     }
 }
 [Serializable]

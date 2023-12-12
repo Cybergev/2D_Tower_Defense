@@ -32,9 +32,9 @@ public class Player : MonoSingleton<Player>
             return;
         else
         {
-            NumLives -= damage;
+            NumLive -= damage;
 
-            if (NumLives <= 0)
+            if (NumLive <= 0)
                 OnPlayerDeath();
         }
     }
@@ -52,20 +52,17 @@ public class Player : MonoSingleton<Player>
     [SerializeField] private UnityEvent<float> changeScoreAmount;
     [HideInInspector] public UnityEvent<float> ChangeScoreAmount => changeScoreAmount;
 
-    [SerializeField] private int m_StartLives;
-    public int StartLives => m_StartLives;
-
-    private int m_NumLives;
-    public int NumLives
+    private int m_NumLive;
+    public int NumLive
     {
         get
         {
-            return m_NumLives;
+            return m_NumLive;
         }
         private set
         {
             changeLivesAmount.Invoke(value);
-            m_NumLives = value;
+            m_NumLive = value;
         }
     }
 
@@ -82,9 +79,6 @@ public class Player : MonoSingleton<Player>
             m_NumKills = value;
         }
     }
-
-    [SerializeField] private int m_StartGold;
-    public int StartGold => m_StartGold;
 
     private int m_NumGold;
     public int NumGold 
@@ -105,7 +99,7 @@ public class Player : MonoSingleton<Player>
     {
         get
         {
-            float score = (NumGold + SpentGold) * NumLives / LevelsController.Instance.LevelTime;
+            float score = (NumGold + SpentGold) * NumLive / LevelsController.Instance.LevelTime;
             changeScoreAmount.Invoke(score);
             return score;
         }
@@ -113,8 +107,8 @@ public class Player : MonoSingleton<Player>
 
     private void PlayerIni()
     {
-        NumLives = m_StartLives;
-        NumGold = m_StartGold;
+        NumLive = LevelsController.Instance.CurrentLevel.StartLive;
+        NumGold = LevelsController.Instance.CurrentLevel.StartGold;
     }
     public void ChangeGold(int value)
     {

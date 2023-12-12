@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -7,9 +8,23 @@ public class LevelsController : MonoSingleton<LevelsController>
 {
     #region LevelData
     [SerializeField] private Level m_MainMenuLevel;
-    [SerializeField] private Level[] m_AllLevels;
+    [SerializeField] private Level[] m_MainLevels;
+    [SerializeField] private Level[] m_BranchLevels;
     public Level MainMenuLevel => m_MainMenuLevel;
-    public Level[] AllLevels => m_AllLevels;
+    public Level[] MainLevels => m_MainLevels;
+    public Level[] BranchLevels => m_BranchLevels;
+    public Level[] AllLevels
+    {
+        get
+        {
+            List<Level> levels = new List<Level>();
+            foreach (Level level in m_MainLevels)
+                levels.Add(level);
+            foreach (Level level in m_BranchLevels)
+                levels.Add(level);
+            return levels.ToArray();
+        }
+    }
     public Level CurrentLevel { get; private set; }
     #endregion
 
@@ -19,8 +34,8 @@ public class LevelsController : MonoSingleton<LevelsController>
 
     [SerializeField] private UnityEvent m_EventLevelCanceled;
     [HideInInspector] public UnityEvent EventLevelCanceled => m_EventLevelCanceled;
-    public LevelCondiionAsset[] CompleteConditions { get; private set; }
-    public LevelCondiionAsset[] BonusConditions { get; private set; }
+    public ConditionAsset[] CompleteConditions { get; private set; }
+    public ConditionAsset[] BonusConditions { get; private set; }
     public bool LevelIsComlpete 
     {
         get
@@ -63,7 +78,7 @@ public class LevelsController : MonoSingleton<LevelsController>
     {
         LevelResult result = new LevelResult(CurrentLevel.LevelName, conditionSuccess, Player.Instance.NumScore, LevelTime);
         LevelResultController.Instance.HashSaveLevelResult(result);
-        LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults);
+        LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults.ToArray());
         ResultPanelController.Instance.ShownResult(result);
     }
     #endregion
@@ -72,26 +87,26 @@ public class LevelsController : MonoSingleton<LevelsController>
     public void StartLevel(Level level)
     {
         CurrentLevel = level;
-        CompleteConditions = level.LevelCompleteCondition.Length > 0 ? level.LevelCompleteCondition : null;
-        BonusConditions = level.LevelBonusCondition;
+        CompleteConditions = level.LevelCompleteConditions.Length > 0 ? level.LevelCompleteConditions : null;
+        BonusConditions = level.LevelBonusConditions;
         LevelTime = 0;
         SceneManager.LoadScene(level.SceneNumber);
         EventsIni();
     }
     public void StartLevel(string levelName)
     {
-        for (int i = 0; i < m_AllLevels.Length; i++)
+        for (int i = 0; i < m_MainLevels.Length; i++)
         {
-            if (m_AllLevels[i].name == levelName)
-                StartLevel(m_AllLevels[i]);
+            if (m_MainLevels[i].name == levelName)
+                StartLevel(m_MainLevels[i]);
         }
     }
     public void StartLevel(int leveNumber)
     {
-        for (int i = 0; i < m_AllLevels.Length; i++)
+        for (int i = 0; i < m_MainLevels.Length; i++)
         {
-            if (m_AllLevels[i].SceneNumber == leveNumber)
-                StartLevel(m_AllLevels[i]);
+            if (m_MainLevels[i].SceneNumber == leveNumber)
+                StartLevel(m_MainLevels[i]);
         }
     }
     public void CancelLevel()
@@ -124,8 +139,8 @@ public class LevelsController : MonoSingleton<LevelsController>
     }
     public void AvanceLevel()
     {
-        if (CurrentLevel.SceneNumber + 1 < SceneManager.sceneCountInBuildSettings)
-            StartLevel(CurrentLevel.SceneNumber + 1);
+        if (CurrentLevel.NextLevel != null)
+            StartLevel(CurrentLevel.NextLevel);
         else
             LoadMainMenu();
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 [CreateAssetMenu]
-public class LevelConditionLife : LevelCondiionAsset
+public class LevelConditionLife : ConditionAsset
 {
     [SerializeField] private int levelConditionLife = 1;
-    public override bool ConditionIsComplete => levelConditionLife <= Player.Instance.NumLives;
+    public override bool ConditionIsComplete => levelConditionLife <= Player.Instance.NumLive;
 }

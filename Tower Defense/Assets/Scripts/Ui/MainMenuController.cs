@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class MainMenuController : MonoSingleton<MainMenuController>
 {
-    [SerializeField] private SpaceShip m_DefaultSpaceShip;
     [SerializeField] private GameObject m_EpisodeSelection;
-    [SerializeField] private GameObject m_ShipSelection;
     public void OnButtonStartNew()
     {
         m_EpisodeSelection.gameObject.SetActive(true);

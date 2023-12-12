@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e082f76833d71a41a2925b0df6ef1e9, type: 3}
   m_Name: SpawnData_Enemy_OrcHeavy
   m_EditorClassIdentifier: 
-  m_SpawnObject: {fileID: 8984428738912032580, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
   m_SpawnMode: 0
+  m_SpawnObject: {fileID: 8984428738912032580, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
   m_NumSpawnObjects: 2
-  m_NumSpawnIterations: 20
+  m_NumSpawnIterations: 10
   m_RespawnTime: 3
   secondaryAsset: {fileID: 11400000, guid: dfa351f5ac8715e4db8887475242135f, type: 2}

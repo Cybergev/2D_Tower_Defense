@@ -1,6 +1,6 @@
 using UnityEngine;
 [CreateAssetMenu]
-public class LevelConditionEnemyDestroyed : LevelCondiionAsset
+public class LevelConditionEnemyDestroyed : ConditionAsset
 {
     [SerializeField] private string levelConditionEnemyDestroyed = "All";
     public override bool ConditionIsComplete

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78a71f0e6e3584e9a6597242916205, type: 3}
   m_Name: Tower_Archer
   m_EditorClassIdentifier: 
-  towerSprite: {fileID: 21300000, guid: 0d1dc428e29b59d4da665429794be749, type: 3}
-  GUISprite: {fileID: 21300000, guid: ef25b92a8e4b2644b8420de820e6c11f, type: 3}
-  tuerretProperties: {fileID: 11400000, guid: eab74a5c9b9582141842ac720d8d15dc, type: 2}
+  type: 0
   towerRadius: 1
+  tuerretProperties: {fileID: 11400000, guid: eab74a5c9b9582141842ac720d8d15dc, type: 2}
+  towerSprite: {fileID: 21300000, guid: 0d1dc428e29b59d4da665429794be749, type: 3}
+  GuiSprite: {fileID: 21300000, guid: ef25b92a8e4b2644b8420de820e6c11f, type: 3}
   glodCost: 10

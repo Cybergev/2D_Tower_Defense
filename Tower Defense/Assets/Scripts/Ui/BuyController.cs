@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuyControl : MonoBehaviour
+public class BuyController : MonoBehaviour
 {
     [SerializeField] private RectTransform m_rectTransform;
     private void Start()
@@ -31,7 +31,7 @@ public class BuyControl : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        foreach (var tbc in GetComponentsInChildren<TowerBuyControl>())
+        foreach (var tbc in GetComponentsInChildren<TowerBuyController>())
         {
             tbc.SetBuildSite(target);
         }

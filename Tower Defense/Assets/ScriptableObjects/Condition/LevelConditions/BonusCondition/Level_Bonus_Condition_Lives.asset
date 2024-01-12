@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 891831f1a4ff24b44998665c217d9243, type: 3}
   m_Name: Level_Bonus_Condition_Lives
   m_EditorClassIdentifier: 
-  levelConditionLife: 10
+  levelConditionLife: Full

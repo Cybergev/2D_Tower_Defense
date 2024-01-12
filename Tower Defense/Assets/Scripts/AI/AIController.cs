@@ -170,8 +170,8 @@ public class AIController : MonoBehaviour
                     if (target != null)
                     {
                         m_SelectedTarget = target;
-                        if (m_AIFireMode == AIFireMode.All || m_AIFireMode == AIFireMode.Primary) m_SpaceShip.Fire(TurretMode.Primary);
-                        if (m_AIFireMode == AIFireMode.All || m_AIFireMode == AIFireMode.Secondary) m_SpaceShip.Fire(TurretMode.Secondary);
+                        if (m_AIFireMode == AIFireMode.All || m_AIFireMode == AIFireMode.Primary) m_SpaceShip.Fire(TuerretProperties.TurretMode.Primary);
+                        if (m_AIFireMode == AIFireMode.All || m_AIFireMode == AIFireMode.Secondary) m_SpaceShip.Fire(TuerretProperties.TurretMode.Secondary);
                         m_FireTimer.StartTimer(m_ShootDelay);
                     }
                 }

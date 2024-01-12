@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using SaveSystem;
 
 public class LevelResultController : MonoSingleton<LevelResultController>
 {
@@ -22,6 +23,7 @@ public class LevelResultController : MonoSingleton<LevelResultController>
                 if (hasLevelResultSuccessIsFalseAndNotSame)
                 {
                     arrayLevelResults[i].LevelConditionSuccess = levelResult.LevelConditionSuccess;
+                    arrayLevelResults[i].LevelReward = levelResult.LevelReward;
                     arrayLevelResults[i].LevelScore = levelResult.LevelScore;
                     arrayLevelResults[i].LevelTime = levelResult.LevelTime;
                 }
@@ -96,7 +98,7 @@ public class LevelResultController : MonoSingleton<LevelResultController>
     {
         arrayLevelResults.Clear();
         for (int i = 0; i < LevelsController.Instance.AllLevels.Length; i++)
-            arrayLevelResults.Add(new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 1000));
+            arrayLevelResults.Add(new LevelResult(LevelsController.Instance.AllLevels[i].LevelName, 0, 0, 0, 1000));
         HardSaveLevelResult(arrayLevelResults.ToArray());
     }
     private void LevelResultIni()
@@ -111,6 +113,7 @@ public class LevelResult
 {
     public string LevelName;
     public float LevelConditionSuccess;
+    public int LevelReward;
     public float LevelScore;
     public float LevelTime;
     public LevelResult()
@@ -120,19 +123,20 @@ public class LevelResult
     {
         LevelName = levelName;
     }
-    public LevelResult(string levelName, float levelConditionSuccess) : this(levelName)
+    public LevelResult(string levelName, float levelConditionSuccess, int levelReward) : this(levelName)
     {
         LevelConditionSuccess = levelConditionSuccess;
+        LevelReward = levelReward;
     }
-    public LevelResult(string levelName, float levelConditionSuccess, float levelScore) : this(levelName, levelConditionSuccess)
+    public LevelResult(string levelName, float levelConditionSuccess, int levelReward, float levelScore) : this(levelName, levelConditionSuccess, levelReward)
     {
         LevelScore = levelScore;
     }
-    public LevelResult(string levelName, float levelConditionSuccess, float levelScore, float levelTime) : this(levelName, levelConditionSuccess, levelScore)
+    public LevelResult(string levelName, float levelConditionSuccess, int levelReward, float levelScore, float levelTime) : this(levelName, levelConditionSuccess, levelReward, levelScore)
     {
         LevelTime = levelTime;
     }
-    public LevelResult(LevelResult levelResult) : this(levelResult.LevelName, levelResult.LevelConditionSuccess, levelResult.LevelScore, levelResult.LevelTime)
+    public LevelResult(LevelResult levelResult) : this(levelResult.LevelName, levelResult.LevelConditionSuccess,  levelResult.LevelReward, levelResult.LevelScore, levelResult.LevelTime)
     {
     }
 }

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78a71f0e6e3584e9a6597242916205, type: 3}
   m_Name: Tower_Mage
   m_EditorClassIdentifier: 
-  towerSprite: {fileID: 21300000, guid: 298636722737c4b41816506cd4bc994f, type: 3}
-  GUISprite: {fileID: 21300000, guid: 1ff55c4a74fcf9b429b49b787ead3395, type: 3}
-  tuerretProperties: {fileID: 11400000, guid: 2c5dc5b484b97384fb57e9d8671a90f0, type: 2}
+  type: 2
   towerRadius: 2
+  tuerretProperties: {fileID: 11400000, guid: 2c5dc5b484b97384fb57e9d8671a90f0, type: 2}
+  towerSprite: {fileID: 21300000, guid: 298636722737c4b41816506cd4bc994f, type: 3}
+  GuiSprite: {fileID: 21300000, guid: 1ff55c4a74fcf9b429b49b787ead3395, type: 3}
   glodCost: 50

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de78a71f0e6e3584e9a6597242916205, type: 3}
   m_Name: Tower_PiercingArcher
   m_EditorClassIdentifier: 
-  towerSprite: {fileID: 21300000, guid: 961542bf834d173448be6e9b235a3b66, type: 3}
-  GUISprite: {fileID: 21300000, guid: 06b3b764465972e4c85071e9bac4296c, type: 3}
-  tuerretProperties: {fileID: 11400000, guid: 918a867e63f042e48898c36d25cc98a7, type: 2}
+  type: 1
   towerRadius: 2
+  tuerretProperties: {fileID: 11400000, guid: 918a867e63f042e48898c36d25cc98a7, type: 2}
+  towerSprite: {fileID: 21300000, guid: 961542bf834d173448be6e9b235a3b66, type: 3}
+  GuiSprite: {fileID: 21300000, guid: 06b3b764465972e4c85071e9bac4296c, type: 3}
   glodCost: 20

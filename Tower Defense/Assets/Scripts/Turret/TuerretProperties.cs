@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TurretMode
-{
-    Primary,
-    Secondary
-}
 
 [CreateAssetMenu]
 public sealed class TuerretProperties : ScriptableObject
 {
+    public enum TurretMode
+    {
+        Primary,
+        Secondary
+    }
     [SerializeField] private TurretMode m_Mode;
     public TurretMode Mode => m_Mode;
 

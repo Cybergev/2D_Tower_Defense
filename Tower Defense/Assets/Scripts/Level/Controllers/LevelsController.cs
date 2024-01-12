@@ -51,7 +51,8 @@ public class LevelsController : MonoSingleton<LevelsController>
                 foreach (var v in BonusConditions)
                     numBonus += v.ConditionIsComplete ? 1 : 0;
                 float succes = numBonus / (BonusConditions.Length / 100f);
-                FinishLevel(succes);
+                int reward = numCompleted + numBonus;
+                FinishLevel(succes, reward);
                 m_EventLevelCompleted.Invoke();
                 return true;
             }
@@ -74,9 +75,9 @@ public class LevelsController : MonoSingleton<LevelsController>
     }
 
     #region LevelControllTolls
-    public void FinishLevel(float conditionSuccess)
+    public void FinishLevel(float conditionSuccess, int reward)
     {
-        LevelResult result = new LevelResult(CurrentLevel.LevelName, conditionSuccess, Player.Instance.NumScore, LevelTime);
+        LevelResult result = new LevelResult(CurrentLevel.LevelName, conditionSuccess, reward, Player.Instance.NumScore, LevelTime);
         LevelResultController.Instance.HashSaveLevelResult(result);
         LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults.ToArray());
         ResultPanelController.Instance.ShownResult(result);

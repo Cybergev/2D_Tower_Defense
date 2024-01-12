@@ -20,6 +20,10 @@ public class MainMenuController : MonoSingleton<MainMenuController>
         LevelResultController.Instance.ClearAllResults();
         LevelsController.Instance.LoadMainMenu();
     }
+    public void OnButtonClearItems()
+    {
+        ItemController.Instance.ClearItems();
+    }
     public void OnButtonExit()
     {
         Application.Quit();

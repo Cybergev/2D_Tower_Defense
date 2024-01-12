@@ -15,7 +15,7 @@ public class ProjectileProperties : ScriptableObject
     [SerializeField] private float m_HomingAngle = 45;
     [SerializeField] private float m_ImpactCheckLineLenght;
     [SerializeField] private bool m_HasImpactForce = true;
-    [SerializeField] [Range(0.0f, 2.0f)] private float m_ImpactForceModifier = 1;
+    [SerializeField, Range(0.0f, 2.0f)] private float m_ImpactForceModifier = 1;
     public float Mass => m_Mass;
     public float LinearDrag => m_LinearDrag;
     public float AngularDrag => m_AngularDrag;

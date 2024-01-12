@@ -15,6 +15,8 @@ public class Player : MonoSingleton<Player>
     //[SerializeField] private CameraController m_CameraController;
     //[SerializeField] private MovementController m_MovementController;
 
+    private UpgradeAsset liveUpgrade;
+    private UpgradeAsset goldUpgrade;
 
     protected override void Awake()
     {
@@ -24,7 +26,7 @@ public class Player : MonoSingleton<Player>
     private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
-        LevelsController.Instance.FinishLevel(0);
+        LevelsController.Instance.FinishLevel(0, 0);
     }
     internal void TakeDamage(int damage)
     {
@@ -65,6 +67,7 @@ public class Player : MonoSingleton<Player>
             m_NumLive = value;
         }
     }
+    public int NumStartLive { get; private set; }
 
     private int m_NumKills;
     public int NumKills
@@ -81,7 +84,7 @@ public class Player : MonoSingleton<Player>
     }
 
     private int m_NumGold;
-    public int NumGold 
+    public int NumGold
     {
         get
         {
@@ -93,6 +96,7 @@ public class Player : MonoSingleton<Player>
             m_NumGold = value;
         }
     }
+    public int NumStartGold { get; private set; }
     public int SpentGold { get; private set; }
 
     public float NumScore
@@ -107,8 +111,20 @@ public class Player : MonoSingleton<Player>
 
     private void PlayerIni()
     {
-        NumLive = LevelsController.Instance.CurrentLevel.StartLive;
-        NumGold = LevelsController.Instance.CurrentLevel.StartGold;
+        foreach (var item in ItemController.Instance.Items)
+        {
+            UpgradeAsset asset = item as UpgradeAsset;
+            if (asset != null && asset.Type == UpgradeAsset.UpgradeType.Player)
+            {
+                liveUpgrade = asset.PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Live ? asset : null;
+                goldUpgrade = asset.PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Gold ? asset : null;
+                break;
+            }
+        }
+        NumStartLive = LevelsController.Instance.CurrentLevel.StartLive + (liveUpgrade != null ? liveUpgrade.LiveUpgrade : 0);
+        NumStartGold = LevelsController.Instance.CurrentLevel.StartGold + (goldUpgrade != null ? goldUpgrade.GoldUpgrade : 0);
+        NumLive = NumStartLive;
+        NumGold = NumStartGold;
     }
     public void ChangeGold(int value)
     {

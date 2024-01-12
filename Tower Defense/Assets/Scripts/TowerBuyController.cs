@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerBuyControl : MonoBehaviour
+public class TowerBuyController : MonoBehaviour
 {
     [SerializeField] private Tower m_towerPrefab;
     [SerializeField] private TowerAsset m_towerAsset;
@@ -18,7 +18,7 @@ public class TowerBuyControl : MonoBehaviour
     {
         Player.Instance.ChangeGoldAmount.AddListener(GoldStatusCheck);
         GoldStatusCheck(Player.Instance.NumGold);
-        m_text.text = m_towerAsset.glodCost.ToString();
+        m_text.text = m_towerAsset.GlodCost.ToString();
         m_button.GetComponent<Image>().sprite = m_towerAsset.GUISprite;
     }
     private void OnDestroy()
@@ -27,19 +27,15 @@ public class TowerBuyControl : MonoBehaviour
     }
     private void GoldStatusCheck(int value)
     {
-        m_button.interactable = value >= m_towerAsset.glodCost;
+        m_button.interactable = value >= m_towerAsset.GlodCost;
         m_text.color = m_button.interactable ? Color.white : Color.red;
     }
     public void TryBuild()
     {
-        Player.Instance.ChangeGold(-m_towerAsset.glodCost);
+        Player.Instance.ChangeGold(-m_towerAsset.GlodCost);
         var towerObject = Instantiate(m_towerPrefab, m_buildSiteTransfom.position, Quaternion.identity);
-        var towerTurret = towerObject.GetComponentInChildren<Turret>();
-        var tower = towerObject.GetComponentInChildren<Tower>();
-
-        towerObject.GetComponentInChildren<SpriteRenderer>().sprite = m_towerAsset.towerSprite;
-        towerTurret.AssignLoadut(m_towerAsset.tuerretProperties);
-        tower.SetRadius(m_towerAsset.towerRadius);
+        towerObject.AssignTowerAsset(m_towerAsset);
+        towerObject.GetComponentInChildren<SpriteRenderer>().sprite = m_towerAsset.TowerSprite;
 
         Destroy(m_buildSiteTransfom.gameObject);
         BuildSite.HideControls();

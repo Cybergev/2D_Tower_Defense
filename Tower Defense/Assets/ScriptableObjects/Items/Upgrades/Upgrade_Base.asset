@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f67813f900bcf40a7b8a0489aba79b, type: 3}
+  m_Name: Upgrade_Base
+  m_EditorClassIdentifier: 
+  itemName: Upgrade Base
+  itemDescription: 
+  itemImage: {fileID: 0}
+  cost: 0
+  type: 2
+  upgradeLevel: 0
+  towerUpgradeTarget: 0
+  damageModifier: 1
+  fireRateModifier: 1
+  fireRadiusModifier: 1
+  playerUpgradeTarget: 0
+  liveUpgrade: 0
+  goldUpgrade: 0

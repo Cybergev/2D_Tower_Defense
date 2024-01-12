@@ -18,7 +18,7 @@ public class ResultPanelController : MonoSingleton<ResultPanelController>
         gameObject.SetActive(true);
         currentResult = result;
         m_CompleteText.text = result.LevelConditionSuccess > 0 ? "Win" : "Lose";
-        m_ResultText.text = $"Condition succes:{result.LevelConditionSuccess}%\nLevel score:{result.LevelScore}\nLevel time:{result.LevelTime}";
+        m_ResultText.text = $"Condition succes:{result.LevelConditionSuccess}%\nLevel score:{result.LevelScore}\nLevel time:{result.LevelTime}\n\nReward:{result.LevelReward}";
         m_ButtonNextText.text = result.LevelConditionSuccess > 0 ? "Next" : "Restart";
         Time.timeScale = 0;
     }

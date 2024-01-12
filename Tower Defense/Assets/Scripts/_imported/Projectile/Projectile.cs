@@ -7,10 +7,30 @@ using UnityEngine.Events;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private ProjectileProperties m_ProjectileProperties;
-
     [SerializeField] private Rigidbody2D m_Rigid;
     private int m_BounceNum;
     private int m_lostDamge;
+    private UpgradeAsset upgrade;
+
+    #region
+    private float mass => m_ProjectileProperties.Mass;
+    private float linearDrag => m_ProjectileProperties.LinearDrag;
+    private float angularDrag => m_ProjectileProperties.AngularDrag;
+    private float gravityScale => m_ProjectileProperties.GravityScale;
+    private float thrustForce => m_ProjectileProperties.ThrustForce;
+    private float maxLinearVelocity => m_ProjectileProperties.MaxLinearVelocity;
+    private bool isHoming => m_ProjectileProperties.IsHoming;
+    private float homingAngle => m_ProjectileProperties.HomingAngle;
+    private float impactCheckLineLenght => m_ProjectileProperties.ImpactCheckLineLenght;
+    private bool hasImpactForce => m_ProjectileProperties.HasImpactForce;
+    private float ImpactForceModifier => m_ProjectileProperties.ImpactForceModifier;
+    private int damage => (int)(m_ProjectileProperties.Damage * (upgrade != null ? upgrade.DamageModifier : 1));
+    private float lifetime => m_ProjectileProperties.Lifetime;
+    private bool canBounce => m_ProjectileProperties.CanBounce;
+    private int maxBounceNum => m_ProjectileProperties.MaxBounceNum;
+    private int damadeLossPerBounce => m_ProjectileProperties.DamadeLossPerBounce;
+    #endregion
+
     private class ProjectileTarget
     {
         private Transform targetTransform;
@@ -45,10 +65,10 @@ public class Projectile : MonoBehaviour
         if (!m_Rigid)
             transform.root.GetComponent<Rigidbody2D>();
 
-        m_Rigid.mass = m_ProjectileProperties.Mass;
-        m_Rigid.angularDrag = m_ProjectileProperties.AngularDrag;
-        m_Rigid.gravityScale = m_ProjectileProperties.GravityScale;
-        if (m_ProjectileProperties.IsHoming)
+        m_Rigid.mass = mass;
+        m_Rigid.angularDrag = angularDrag;
+        m_Rigid.gravityScale = gravityScale;
+        if (isHoming)
         {
             if (m_Target.TargetTransform)
                 m_Rigid.AddTorque(CalculateAngle(m_Target.TargetTransform.position) * Time.fixedDeltaTime, ForceMode2D.Force);
@@ -57,21 +77,21 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            Vector2 stepLenght = (m_ProjectileProperties.ThrustForce / m_ProjectileProperties.MaxLinearVelocity) * Time.fixedDeltaTime * transform.up;
+            Vector2 stepLenght = (thrustForce / maxLinearVelocity) * Time.fixedDeltaTime * transform.up;
             m_Rigid.AddForce(stepLenght, ForceMode2D.Impulse);
         }
 
-        Destroy(gameObject, m_ProjectileProperties.Lifetime);
+        Destroy(gameObject, lifetime);
     }
 
     private void FixedUpdate()
     {
-        if(m_ProjectileProperties.IsHoming)
+        if(isHoming)
         {
             if (m_Target.TargetTransform)
             {
                 m_Rigid.AddTorque(CalculateAngle(m_Target.TargetTransform.position), ForceMode2D.Force);
-                transform.position = Vector3.MoveTowards(transform.position, m_Target.TargetTransform.position, m_ProjectileProperties.MaxLinearVelocity * Time.fixedDeltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, m_Target.TargetTransform.position, maxLinearVelocity * Time.fixedDeltaTime);
             }
             else
                 Destroy(gameObject);
@@ -94,20 +114,20 @@ public class Projectile : MonoBehaviour
             return;
         var dest = v_object.transform.root.GetComponent<Destructible>();
         var rigid = v_object.transform.root.GetComponent<Rigidbody2D>();
-        if (rigid && m_ProjectileProperties.HasImpactForce)
-            rigid.AddForce(m_Rigid.mass * m_Rigid.velocity * m_ProjectileProperties.ImpactForceModifier, ForceMode2D.Impulse);
+        if (rigid && hasImpactForce)
+            rigid.AddForce(m_Rigid.mass * m_Rigid.velocity * ImpactForceModifier, ForceMode2D.Impulse);
         if (dest && dest != m_Parent)
         {
             if (m_Parent)
             {
                 dest.GetComponent<SpaceShip>()?.SetLastDamger(m_Parent.gameObject);
             }
-            dest.ApplyDamage(m_ProjectileProperties.Damage - m_lostDamge);
+            dest.ApplyDamage(damage - m_lostDamge);
         }
-        if (m_ProjectileProperties.CanBounce && m_BounceNum < m_ProjectileProperties.MaxBounceNum)
+        if (canBounce && m_BounceNum < maxBounceNum)
         {
             m_BounceNum++;
-            m_lostDamge -= m_ProjectileProperties.DamadeLossPerBounce;
+            m_lostDamge -= damadeLossPerBounce;
         }
         else
             Destroy(gameObject);
@@ -117,7 +137,7 @@ public class Projectile : MonoBehaviour
     {
         Vector2 localTargetPosition = transform.InverseTransformPoint(targetPosition);
         float angle = Vector3.SignedAngle(localTargetPosition, Vector3.up, Vector3.forward);
-        angle = Mathf.Clamp(angle, -m_ProjectileProperties.HomingAngle, m_ProjectileProperties.HomingAngle) / m_ProjectileProperties.HomingAngle;
+        angle = Mathf.Clamp(angle, -homingAngle, homingAngle) / homingAngle;
         return -angle;
     }
     private Vector3 CalculateLead()
@@ -133,6 +153,12 @@ public class Projectile : MonoBehaviour
 
 
         return X;
+    }
+    public void SetUpgrade(UpgradeAsset asset)
+    {
+        if (asset == null)
+            return;
+        upgrade = asset;
     }
     public void SetTarget(Transform target)
     {

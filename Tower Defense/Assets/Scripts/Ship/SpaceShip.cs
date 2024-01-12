@@ -197,7 +197,7 @@ public class SpaceShip : Destructible
     {
         return true;
     }
-    public void Fire(TurretMode mode)
+    public void Fire(TuerretProperties.TurretMode mode)
     {
         return;
     }

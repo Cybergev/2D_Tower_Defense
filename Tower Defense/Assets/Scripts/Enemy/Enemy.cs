@@ -1,43 +1,58 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+
+public enum DamageType
+{
+    Physical,
+    Piercing,
+    Magical
+}
 
 [RequireComponent(typeof(TDPatrolController))]
-public class Enemy : MonoBehaviour
+public class Enemy : SpaceShip
 {
-    [SerializeField] private string m_visualObjectName = "Visual";
     [Header("")]
+    [SerializeField] private SpriteRenderer m_visual;
+    [SerializeField] private Animator m_animator;
+    [SerializeField] private int m_physArmor;
+    [SerializeField] private int m_piercArmor;
+    [SerializeField] private int m_magicArmor;
     [SerializeField] private int m_damage = 1;
     [SerializeField] private int m_gold = 1;
-    public void UseAsset(EnemyAsset asset)
+    public override void UseAsset(EnemyAsset asset)
     {
-        var sprite = transform.Find(m_visualObjectName).GetComponent<SpriteRenderer>();
-
         if (asset.collorIsRandom)
-            sprite.color = asset.colorsRandomArray[Random.Range(0, asset.colorsRandomArray.Length)];
+            m_visual.color = asset.colorsRandomArray[Random.Range(0, asset.colorsRandomArray.Length)];
         else
-            sprite.color = asset.color;
+            m_visual.color = asset.color;
 
         if (asset.scaleIsRandom)
         {
             float size = Random.Range(asset.scaleRandomRange.x, asset.scaleRandomRange.y);
-            sprite.transform.localScale = new Vector2(size, size);
+            m_visual.transform.localScale = new Vector2(size, size);
         }
         else
-            sprite.transform.localScale = asset.spriteScale;
+            m_visual.transform.localScale = asset.spriteScale;
 
         if (asset.animationIsRandom)
-            sprite.GetComponent<Animator>().runtimeAnimatorController = asset.animationsRandomArray[Random.Range(0, asset.animationsRandomArray.Length)];
+            m_animator.runtimeAnimatorController = asset.animationsRandomArray[Random.Range(0, asset.animationsRandomArray.Length)];
         else
-            sprite.GetComponent<Animator>().runtimeAnimatorController = asset.animation;
+            m_animator.runtimeAnimatorController = asset.animation;
 
+        m_physArmor = asset.physArmor;
+        m_piercArmor = asset.piercArmor;
+        m_magicArmor = asset.magicArmor;
         m_damage = asset.damage;
         m_gold = asset.gold;
 
-        GetComponent<SpaceShip>().UseAsset(asset);
+        base.UseAsset(asset);
+    }
+    public void ApplyDamage(int damage, DamageType type)
+    {
+        int dmg = 0;
+        dmg += type == DamageType.Physical ? Mathf.Max(1, damage - m_physArmor) : 0;
+        dmg += type == DamageType.Piercing ? Mathf.Max(1, damage - m_piercArmor) : 0;
+        dmg += type == DamageType.Magical ? Mathf.Max(1, damage - m_magicArmor) : 0;
+        ApplyDamage(dmg);
     }
     public void DamagePlayer()
     {
@@ -47,19 +62,4 @@ public class Enemy : MonoBehaviour
     {
         Player.Instance.ChangeGold(m_gold);
     }
-    #if UNITY_EDITOR
-    [CustomEditor(typeof(Enemy))]
-    public class EnemyInspector: Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-            EnemyAsset a = EditorGUILayout.ObjectField(null, typeof(EnemyAsset), false) as EnemyAsset;
-            if (a)
-            {
-                (target as Enemy).UseAsset(a);
-            }
-        }
-    }
-    #endif
 }

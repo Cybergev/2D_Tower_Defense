@@ -55,7 +55,7 @@ public class SpaceShip : Destructible
     #endregion
 
     #region Public API
-    public void UseAsset(EnemyAsset asset)
+    public virtual void UseAsset(EnemyAsset asset)
     {
         SetIndestructible(asset.isIndestructible);
         SetIndamageble(asset.isIndamageble);

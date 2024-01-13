@@ -14,27 +14,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isIndestructible: 0
   isIndamageble: 0
-  healthPoints: 10
   healthPointsIsRandom: 0
+  healthPoints: 10
   healthPointsRandomRange: {x: 1, y: 10}
-  damage: 5
+  armorIsRandom: 0
+  physArmor: 2
+  piercArmor: 1
+  magicArmor: 0
+  physArmorRandomRange: {x: 1, y: 10}
+  piercArmorRandomRange: {x: 1, y: 10}
+  magicArmorRandomRange: {x: 1, y: 10}
   damageIsRandom: 0
+  damage: 5
   damageRandomRange: {x: 1, y: 10}
-  gold: 10
   goldIsRandom: 0
+  gold: 10
   goldRandomRange: {x: 1, y: 10}
-  score: 0
   scoreIsRandom: 0
+  score: 0
   scoreRandomRange: {x: 1, y: 10}
-  color: {r: 1, g: 1, b: 1, a: 1}
   collorIsRandom: 0
+  color: {r: 1, g: 1, b: 1, a: 1}
   colorsRandomArray: []
-  spriteScale: {x: 3, y: 3}
   scaleIsRandom: 0
+  spriteScale: {x: 3, y: 3}
   scaleRandomRange: {x: 1, y: 10}
-  animation: {fileID: 9100000, guid: b882fc41f3cbc0746810d732dd764b32, type: 2}
   animationIsRandom: 0
+  animation: {fileID: 9100000, guid: b882fc41f3cbc0746810d732dd764b32, type: 2}
   animationsRandomArray: []
-  moveSpeed: 0.5
   moveSpeedIsRandom: 0
+  moveSpeed: 0.5
   moveSpeedRandomRange: {x: 1, y: 10}

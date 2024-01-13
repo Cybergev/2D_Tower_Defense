@@ -113,16 +113,14 @@ public class Player : MonoSingleton<Player>
     {
         foreach (var item in ItemController.Instance.Items)
         {
-            UpgradeAsset asset = item as UpgradeAsset;
-            if (asset != null && asset.Type == UpgradeAsset.UpgradeType.Player)
+            if ((item as UpgradeAsset) != null && (item as UpgradeAsset).Type == UpgradeAsset.UpgradeType.Player)
             {
-                liveUpgrade = asset.PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Live ? asset : null;
-                goldUpgrade = asset.PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Gold ? asset : null;
-                break;
+                liveUpgrade = (item as UpgradeAsset).PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Live ? (item as UpgradeAsset) : null;
+                goldUpgrade = (item as UpgradeAsset).PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Gold ? (item as UpgradeAsset) : null;
             }
         }
-        NumStartLive = LevelsController.Instance.CurrentLevel.StartLive + (liveUpgrade != null ? liveUpgrade.LiveUpgrade : 0);
-        NumStartGold = LevelsController.Instance.CurrentLevel.StartGold + (goldUpgrade != null ? goldUpgrade.GoldUpgrade : 0);
+        NumStartLive = LevelsController.Instance.CurrentLevel.StartLive + (liveUpgrade ? liveUpgrade.LiveUpgrade : 0);
+        NumStartGold = LevelsController.Instance.CurrentLevel.StartGold + (goldUpgrade ? goldUpgrade.GoldUpgrade : 0);
         NumLive = NumStartLive;
         NumGold = NumStartGold;
     }

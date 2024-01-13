@@ -10,6 +10,15 @@ using UnityEditor;
 [CreateAssetMenu]
 public sealed class EnemyAsset : DestructibleAsset
 {
+    [Header("Armor Settings")]
+    public bool armorIsRandom = false;
+    public int physArmor;
+    public int piercArmor;
+    public int magicArmor;
+    public Vector2Int physArmorRandomRange = new Vector2Int(1, 10);
+    public Vector2Int piercArmorRandomRange = new Vector2Int(1, 10);
+    public Vector2Int magicArmorRandomRange = new Vector2Int(1, 10);
+
     [Header("Damage Settings")]
     public bool damageIsRandom = false;
     public int damage;
@@ -45,21 +54,32 @@ public sealed class EnemyAsset : DestructibleAsset
     public float moveSpeed = 1;
     public Vector2 moveSpeedRandomRange = new Vector2(1, 10);
     #region Editor
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [CustomEditor(typeof(EnemyAsset))]
     public class EnemyAssetInspector : Editor
     {
         private EnemyAsset enemyAsset;
-
-
         private void OnEnable()
         {
             enemyAsset = (EnemyAsset)target;
         }
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.armorIsRandom)));
+            if (!enemyAsset.damageIsRandom)
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.physArmor)));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.piercArmor)));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.magicArmor)));
+            }
+            else
+            {
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.physArmorRandomRange)));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.piercArmorRandomRange)));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.magicArmorRandomRange)));
+            }
+
             EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.damageIsRandom)));
             if (!enemyAsset.damageIsRandom)
                 EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(enemyAsset.damage)));
@@ -98,6 +118,6 @@ public sealed class EnemyAsset : DestructibleAsset
             serializedObject.ApplyModifiedProperties();
         }
     }
-    #endif
+#endif
     #endregion
 }

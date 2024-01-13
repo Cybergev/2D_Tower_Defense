@@ -25,6 +25,7 @@ public class Projectile : MonoBehaviour
     private bool hasImpactForce => m_ProjectileProperties.HasImpactForce;
     private float ImpactForceModifier => m_ProjectileProperties.ImpactForceModifier;
     private int damage => (int)(m_ProjectileProperties.Damage * (upgrade != null ? upgrade.DamageModifier : 1));
+    private DamageType damageType => m_ProjectileProperties.DamageType;
     private float lifetime => m_ProjectileProperties.Lifetime;
     private bool canBounce => m_ProjectileProperties.CanBounce;
     private int maxBounceNum => m_ProjectileProperties.MaxBounceNum;
@@ -86,7 +87,7 @@ public class Projectile : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isHoming)
+        if (isHoming)
         {
             if (m_Target.TargetTransform)
             {
@@ -122,7 +123,10 @@ public class Projectile : MonoBehaviour
             {
                 dest.GetComponent<SpaceShip>()?.SetLastDamger(m_Parent.gameObject);
             }
-            dest.ApplyDamage(damage - m_lostDamge);
+            if (dest is Enemy)
+                (dest as Enemy).ApplyDamage(damage - m_lostDamge, damageType);
+            else
+                dest.ApplyDamage(damage - m_lostDamge);
         }
         if (canBounce && m_BounceNum < maxBounceNum)
         {

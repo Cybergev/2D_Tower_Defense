@@ -177,7 +177,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5549828615449727490}
   - component: {fileID: 4191130790077246705}
-  - component: {fileID: 5093773514396591118}
   - component: {fileID: 5406221510824506376}
   - component: {fileID: 5124189260132801856}
   m_Layer: 0
@@ -230,49 +229,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5093773514396591118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8984428738912032580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7ffebe1ac50774a9e8517a7a68fe25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Nickname: Enemy
-  m_Indestructible: 0
-  m_Indamageble: 0
-  m_HitPoints: 5
-  m_CurrentHitPoints: 5
-  m_ChangeHitPoints:
-    m_PersistentCalls:
-      m_Calls: []
-  m_EventOnDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5124189260132801856}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: GivePlayerGold
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_PreviewImage: {fileID: 0}
-  m_Mass: 1
-  m_Thrust: 1000
-  m_Mobility: 1000
-  m_MaxLinearVelocity: 1
-  m_MaxAngularVelocity: 360
-  m_TeamId: 2
-  m_ScoreValue: 1
 --- !u!114 &5406221510824506376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +279,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9c30b1305b4ab42997dd000f59680f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_visualObjectName: Visual
+  m_Nickname: 
+  m_Indestructible: 0
+  m_Indamageble: 0
+  m_HitPoints: 5
+  m_CurrentHitPoints: 5
+  m_ChangeHitPoints:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EventOnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5124189260132801856}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: GivePlayerGold
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_PreviewImage: {fileID: 0}
+  m_Mass: 1
+  m_Thrust: 1000
+  m_Mobility: 1000
+  m_MaxLinearVelocity: 1
+  m_MaxAngularVelocity: 360
+  m_TeamId: 2
+  m_ScoreValue: 1
+  m_visual: {fileID: 5486806228370658535}
+  m_animator: {fileID: 9094812043858278764}
+  m_armor: 1
   m_damage: 1
   m_gold: 1

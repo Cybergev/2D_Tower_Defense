@@ -24,6 +24,7 @@ MonoBehaviour:
   m_HasImpactForce: 0
   m_ImpactForceModifier: 0
   m_Damage: 0
+  m_DamageType: 2
   m_Lifetime: 2
   m_CanBounce: 0
   m_MaxBounceNum: 0

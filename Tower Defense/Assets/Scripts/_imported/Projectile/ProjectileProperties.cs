@@ -28,10 +28,12 @@ public class ProjectileProperties : ScriptableObject
     public bool HasImpactForce => m_HasImpactForce;
     public float ImpactForceModifier => m_ImpactForceModifier;
 
-
+    [Header("")]
     [SerializeField] private int m_Damage;
+    [SerializeField] private DamageType m_DamageType;
     [SerializeField] private float m_Lifetime;
     public int Damage => m_Damage;
+    public DamageType DamageType => m_DamageType;
     public float Lifetime => m_Lifetime;
 
 

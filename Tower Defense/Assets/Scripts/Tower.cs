@@ -1,18 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Tower : MonoBehaviour
+public class Tower : BuildSite
 {
     private class TurretTarget
     {
         public Transform targetTransform;
         public Rigidbody2D targetRigit;
     }
-    [SerializeField] private TowerAsset towerAsset;
-    [SerializeField] private UpgradeAsset upgrade;
-    private Turret[] turrets;
+    [SerializeField] private TowerAsset currentTowerAsset;
+    [SerializeField] private UpgradeAsset currentUpgradeAsset;
+    [SerializeField] private Turret[] turrets;
+    [SerializeField] private Image image;
+    public TowerAsset CurrentTowerAsset => currentTowerAsset;
+    public UpgradeAsset CurrentUpgradeAsset => currentUpgradeAsset;
+    public Turret[] Turrets => turrets;
+    public Image Image => image;
+
+
     private TurretTarget turretTarget = new TurretTarget();
 
-    private float radius => towerAsset.TowerRadius * (upgrade != null && upgrade.Type == UpgradeAsset.UpgradeType.Tower ? upgrade.FireRadiusModifier : 1);
+    private float radius => currentTowerAsset.TowerRadius * (currentUpgradeAsset != null && currentUpgradeAsset.Type == UpgradeAsset.UpgradeType.Tower ? currentUpgradeAsset.FireRadiusModifier : 1);
 
     private void Start()
     {
@@ -66,36 +74,35 @@ public class Tower : MonoBehaviour
     }
     private void TowerIni()
     {
-        if (towerAsset == null)
+        if (currentTowerAsset == null)
             return;
-        if (upgrade == null || upgrade.Type != UpgradeAsset.UpgradeType.Tower || upgrade.TowerUpgradeTarget != towerAsset.Type)
-        {
-            foreach (var item in ItemController.Instance.Items)
-            {
-                UpgradeAsset asset = item as UpgradeAsset;
-                if (asset != null && asset.TowerUpgradeTarget == towerAsset.Type)
-                    upgrade = asset;
-            }
-        }
-        turrets ??= GetComponentsInChildren<Turret>();
         foreach (var turret in turrets)
         {
-            turret.AssignLoadut(towerAsset.TuerretProperties);
-            turret.AssignUpgrade(upgrade);
+            turret.AssignLoadut(currentTowerAsset.TuerretProperties);
+            turret.AssignUpgrade(currentUpgradeAsset);
         }
-
+        image.sprite = image ? currentTowerAsset.TowerSprite : null;
     }
     public void AssignTowerAsset(TowerAsset asset)
     {
         if (asset == null)
             return;
-        towerAsset = asset;
+        currentTowerAsset = asset;
+        TowerIni();
     }
     public void AssignUpgradeAsset(UpgradeAsset asset)
     {
-        if (asset == null || asset.Type != UpgradeAsset.UpgradeType.Tower || asset.TowerUpgradeTarget != towerAsset.Type)
+        if (asset == null || asset.Type != UpgradeAsset.UpgradeType.Tower || asset.TowerUpgradeTarget != currentTowerAsset.Type)
             return;
-        upgrade = asset;
+        currentUpgradeAsset = asset;
+        TowerIni();
+    }
+    public void AssignAssets(TowerAsset towerAsset, UpgradeAsset upgradeAsset)
+    {
+        if (!towerAsset || !upgradeAsset)
+            return;
+        AssignTowerAsset(towerAsset);
+        AssignUpgradeAsset(upgradeAsset);
     }
     private void OnDrawGizmosSelected()
     {

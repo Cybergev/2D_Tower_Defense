@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.Events;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-public class UiWavePanelController : MonoSingleton<UiWavePanelController>
+public class UiWavePanelController : UiTextController
 {
     [SerializeField] private GameObject callButton;
-    [SerializeField] private UnityEvent<string> uiPanelTextUpdate;
-    public UnityEvent<string> UiWavePanelUpdate => uiPanelTextUpdate;
+    [SerializeField] private string waveCompleteText = "Waves complete!";
 
-    int wave;
-    float time;
-    int reward;
+    private int wave;
+    private float time;
+    private int reward;
     private void FixedUpdate()
     {
         UiUpdate();
@@ -24,7 +22,7 @@ public class UiWavePanelController : MonoSingleton<UiWavePanelController>
         bool scenariosComplete = EnemyCamp.Instance.ScenariosAllComplete;
         if (scenariosComplete)
         {
-            text = "Waves complete!";
+            text = waveCompleteText;
         }
         else
         {
@@ -32,9 +30,9 @@ public class UiWavePanelController : MonoSingleton<UiWavePanelController>
                 text = $"Wave:{wave}\nTime:{time}\nIf call:+{reward}G";
             else
                 text = $"Wave:{wave}";
-            callButton.gameObject.SetActive(scenarioComplete);
+            callButton.SetActive(scenarioComplete);
         }
-        uiPanelTextUpdate.Invoke(text);
+        Text = text;
     }
     public void WaveStringUpdate(int w)
     {
@@ -58,4 +56,37 @@ public class UiWavePanelController : MonoSingleton<UiWavePanelController>
     {
         EnemyCamp.Instance.AdviceScenarioWithBonus();
     }
+    public override void OnChangeTargetValueAmount(string value)
+    {
+        return;
+    }
+    public override void OnChangeTargetValueAmount(int iValue)
+    {
+        return;
+    }
+    public override void OnChangeTargetValueAmount(float fValue)
+    {
+        return;
+    }
+    #region Editor
+#if UNITY_EDITOR
+    [CustomEditor(typeof(UiWavePanelController))]
+    public class UiWavePanelControllerInspector : Editor
+    {
+        private UiWavePanelController wavePanel;
+        private void OnEnable()
+        {
+            wavePanel = (UiWavePanelController)target;
+        }
+        public override void OnInspectorGUI()
+        {
+            serializedObject.Update();
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(wavePanel.targetExitText)));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(wavePanel.callButton)));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(wavePanel.waveCompleteText)));
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+    #endif
+    #endregion
 }

@@ -225,8 +225,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5900732899341593302}
-        m_TargetAssemblyTypeName: TowerBuyControl, Assembly-CSharp
-        m_MethodName: Buy
+        m_TargetAssemblyTypeName: TowerBuyController, Assembly-CSharp
+        m_MethodName: TryBuild
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 6680121858859540715}
   - component: {fileID: 5900732899341593302}
   m_Layer: 5
-  m_Name: TowerBuyControl
+  m_Name: BuildController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -349,7 +349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -20}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2218641674341147745
@@ -427,10 +427,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55adcef73cfaa24991d40af01e129dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_towerAsset: {fileID: 11400000, guid: 2ea103ef3bf161344bd9068eab5cfef2, type: 2}
   m_button: {fileID: 7690180113224777662}
   m_text: {fileID: 8516461538958284378}
-  m_buildSiteTransfom: {fileID: 0}
+  m_buildSitePref: {fileID: 3418675612859447738, guid: 1030ba9766d50f842aa3ae35a5e2ce21, type: 3}
+  m_destruckterGUI: {fileID: 21300000, guid: 31ea17c3916f75e4ca05adbab4ed2498, type: 3}
 --- !u!1 &4842237099668119628
 GameObject:
   m_ObjectHideFlags: 0

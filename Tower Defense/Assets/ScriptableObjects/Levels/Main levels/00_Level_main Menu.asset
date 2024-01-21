@@ -17,7 +17,8 @@ MonoBehaviour:
   m_ScenePreviewImage: {fileID: 0}
   m_LevelName: Main Menu
   m_LevelAccessConditions: []
-  m_LevelCompleteConditions: []
+  m_LevelCompleteConditions:
+  - {fileID: 11400000, guid: d4cd0b140a498af4cb44b3b8684a8dcc, type: 2}
   m_LevelBonusConditions: []
   m_LevelSpawnScenarios: []
   m_PrevLevel: {fileID: 0}

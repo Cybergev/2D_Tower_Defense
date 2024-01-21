@@ -1282,7 +1282,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 348866158454582469, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
       propertyPath: items.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 348866158454582469, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
       propertyPath: item.Array.data[0]
@@ -1290,6 +1290,10 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0b007bedb1f67d54b9eb0092eb20bc55, type: 2}
     - target: {fileID: 348866158454582469, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
       propertyPath: items.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 210a7cb9cfcbf32479b7b6a832ca8420, type: 2}
+    - target: {fileID: 348866158454582469, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
+      propertyPath: items.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 0b007bedb1f67d54b9eb0092eb20bc55, type: 2}
     - target: {fileID: 1549116982958825576, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
@@ -1371,6 +1375,10 @@ PrefabInstance:
     - target: {fileID: 1549116982958825576, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3612212232527575012, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5646636044234656031, guid: 6ef231cfe0f61274795fcbe3617f33f3, type: 3}
       propertyPath: m_Name
@@ -3483,6 +3491,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 122205471}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: OnButtonClearItems
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1645562144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5190,32 +5210,68 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: a018d2934e7ce90448b1ca28765749d6, type: 2}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.size
-      value: 5
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: baseItemAssets.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: c72687d610a55554ca76bb4b4cae47d3, type: 2}
+      objectReference: {fileID: 11400000, guid: f145ddd01c7e7064a884a5c190005727, type: 2}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 0b007bedb1f67d54b9eb0092eb20bc55, type: 2}
+      objectReference: {fileID: 11400000, guid: 1355e1992655e694aa1754d5134b5a05, type: 2}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: f974032f03908c941b81dba22f356ab9, type: 2}
+      objectReference: {fileID: 11400000, guid: 210a7cb9cfcbf32479b7b6a832ca8420, type: 2}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 56a8faf78755b7c43b89ec59e3c5681f, type: 2}
+      objectReference: {fileID: 11400000, guid: c72687d610a55554ca76bb4b4cae47d3, type: 2}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 32872c39246ba3e4e814489482d28a4a, type: 2}
+      objectReference: {fileID: 11400000, guid: 0b007bedb1f67d54b9eb0092eb20bc55, type: 2}
     - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: allItemAssets.Array.data[5]
       value: 
+      objectReference: {fileID: 11400000, guid: f974032f03908c941b81dba22f356ab9, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: allItemAssets.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 56a8faf78755b7c43b89ec59e3c5681f, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: allItemAssets.Array.data[7]
+      value: 
       objectReference: {fileID: 11400000, guid: 32872c39246ba3e4e814489482d28a4a, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: baseItemAssets.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f145ddd01c7e7064a884a5c190005727, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: baseItemAssets.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1355e1992655e694aa1754d5134b5a05, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: baseItemAssets.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1355e1992655e694aa1754d5134b5a05, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: starterItemAssets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: starterItemAssets.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f145ddd01c7e7064a884a5c190005727, type: 2}
+    - target: {fileID: 3828186666186234016, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
+      propertyPath: starterItemAssets.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1355e1992655e694aa1754d5134b5a05, type: 2}
     - target: {fileID: 4531112209605038504, guid: 2bcae285d58741a42b3d2e2114f20c87, type: 3}
       propertyPath: m_Name
       value: UpgradeController

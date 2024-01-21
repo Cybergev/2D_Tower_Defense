@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tower_Archer
   m_EditorClassIdentifier: 
   type: 0
+  towerPref: {fileID: 4346942766804586214, guid: da1fad4f4348f47409ddd8e9752022a9, type: 3}
   towerRadius: 1
   tuerretProperties: {fileID: 11400000, guid: eab74a5c9b9582141842ac720d8d15dc, type: 2}
   towerSprite: {fileID: 21300000, guid: 0d1dc428e29b59d4da665429794be749, type: 3}

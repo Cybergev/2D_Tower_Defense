@@ -1,16 +1,26 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class BuildSite : MonoBehaviour, IPointerDownHandler
+public class BuildSite : MonoBehaviour
 {
-    public static event Action<Transform> OnClickEvent;
+    public enum BuildType
+    {
+        None,
+        Normal,
+        Large
+    }
+    public static event Action<BuildSite> OnClickAction;
+    [SerializeField] private BuildType buildSiteType;
+    public BuildType BuildSiteType => buildSiteType;
     public static void HideControls()
     {
-        OnClickEvent(null);
+        OnClickAction(null);
     }
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public void OnClick()
     {
-        OnClickEvent(transform.root);
+        OnClickAction(this);
     }
 }

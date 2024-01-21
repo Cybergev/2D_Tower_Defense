@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tower_PiercingArcher
   m_EditorClassIdentifier: 
   type: 1
+  towerPref: {fileID: 4346942766804586214, guid: a397ce9d6b5251741935562fbf5ee81c, type: 3}
   towerRadius: 2
   tuerretProperties: {fileID: 11400000, guid: 918a867e63f042e48898c36d25cc98a7, type: 2}
   towerSprite: {fileID: 21300000, guid: 961542bf834d173448be6e9b235a3b66, type: 3}

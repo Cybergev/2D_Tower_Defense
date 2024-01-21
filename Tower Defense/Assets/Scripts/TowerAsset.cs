@@ -10,6 +10,8 @@ public class TowerAsset : ScriptableObject
         Mage
     }
     [SerializeField] private TowerType type;
+    [SerializeField] private BuildSite.BuildType buildType;
+    [SerializeField] private Tower towerPref;
     [SerializeField] private float towerRadius;
     [SerializeField] private TuerretProperties tuerretProperties;
 
@@ -18,6 +20,8 @@ public class TowerAsset : ScriptableObject
     [SerializeField] private int glodCost = 15;
 
     public TowerType Type => type;
+    public BuildSite.BuildType BuildType => buildType;
+    public Tower TowerPref => towerPref;
     public float TowerRadius => towerRadius;
     public TuerretProperties TuerretProperties => tuerretProperties;
 

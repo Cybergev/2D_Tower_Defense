@@ -49,9 +49,9 @@ public class Enemy : SpaceShip
     public void ApplyDamage(int damage, DamageType type)
     {
         int dmg = 0;
-        dmg += type == DamageType.Physical ? Mathf.Max(1, damage - m_physArmor) : 0;
-        dmg += type == DamageType.Piercing ? Mathf.Max(1, damage - m_piercArmor) : 0;
-        dmg += type == DamageType.Magical ? Mathf.Max(1, damage - m_magicArmor) : 0;
+        dmg += type == DamageType.Physical ? Mathf.Max(0, damage - m_physArmor) : 0;
+        dmg += type == DamageType.Piercing ? Mathf.Max(0, damage - m_piercArmor) : 0;
+        dmg += type == DamageType.Magical ? Mathf.Max(0, damage - m_magicArmor) : 0;
         ApplyDamage(dmg);
     }
     public void DamagePlayer()

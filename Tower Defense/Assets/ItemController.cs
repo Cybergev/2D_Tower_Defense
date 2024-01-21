@@ -7,12 +7,12 @@ using UnityEditor.VersionControl;
 
 public class ItemController : MonoSingleton<ItemController>
 {
-    [SerializeField] private ItemAsset baseItemAsset;
+    [SerializeField] private ItemAsset[] baseItemAssets;
+
     [SerializeField] private ItemAsset[] allItemAssets;
     public ItemAsset[] AllItemAssets => allItemAssets;
 
     private List<ItemAsset> items;
-
     public List<ItemAsset> Items => items;
 
     protected override void Awake()
@@ -67,7 +67,7 @@ public class ItemController : MonoSingleton<ItemController>
     }
     private void LoadItems()
     {
-        items = new List<ItemAsset> { baseItemAsset };
+        items = new List<ItemAsset>();
         var itemNames = SaveController<string[]>.TryLoad(nameof(Items));
         if (itemNames.Length == 0)
             SaveItems();
@@ -79,7 +79,7 @@ public class ItemController : MonoSingleton<ItemController>
     }
     public void ClearItems()
     {
-        items = new List<ItemAsset> { baseItemAsset };
+        items = new List<ItemAsset>(baseItemAssets);
         SaveItems();
     }
 }

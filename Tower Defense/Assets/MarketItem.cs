@@ -11,6 +11,8 @@ public class MarketItem : MonoBehaviour
     [SerializeField] private Button UIBuyButton;
     [SerializeField] private Text UIButtonText;
     [SerializeField] private Sprite UINullImage;
+
+    private ItemAsset currentItem;
     private List<ItemAsset> currentItems;
     private void SetMarketItem(ItemAsset item)
     {
@@ -21,6 +23,7 @@ public class MarketItem : MonoBehaviour
                 UIItemDescText.text = "Empty";
                 UIBuyButton.interactable = false;
                 UIButtonText.text = "Empty";
+                currentItem = null;
                 break;
             default:
                 bool isSold = false;
@@ -30,7 +33,7 @@ public class MarketItem : MonoBehaviour
                     if (soldI != null && soldI.ItemName == item.ItemName)
                     {
                         isSold = true;
-                        currentItems.Remove(item);
+                        currentItem = null;
                     }
                 }
                 if (isSold)
@@ -41,11 +44,32 @@ public class MarketItem : MonoBehaviour
                 UIItemDescText.text = item.ItemDescription;
                 UIBuyButton.interactable = MarketController.Instance.Money >= item.Cost;
                 UIButtonText.text = item.Cost.ToString();
+                currentItem = item;
                 break;
         }
     }
+    private void UpdateItem()
+    {
+        for (int i = 0; i < currentItems.Count && currentItem == null; i++)
+            SetMarketItem(currentItems[i]);
+    }
+    public void MoneyStatusChekc()
+    {
+        if (!currentItem)
+            UIBuyButton.interactable = false;
+        else
+            UIBuyButton.interactable = MarketController.Instance.Money >= currentItem.Cost;
+    }
+    public void MoneyStatusChekc(int money)
+    {
+        if (!currentItem)
+            UIBuyButton.interactable = false;
+        else
+            UIBuyButton.interactable = money >= currentItem.Cost;
+    }
     public void MarketitemIni()
     {
+        MarketController.Instance.MoneyUpdate.AddListener(MoneyStatusChekc);
         currentItems = new List<ItemAsset>();
         for (int i = 0; i < MarketController.Instance.SoldItems.Count; i++)
         {
@@ -56,14 +80,12 @@ public class MarketItem : MonoBehaviour
                     currentItems.Add(items[j]);
             }
         }
-        SetMarketItem(currentItems.Count > 0 && currentItems[0] != null ? currentItems[0] : null);
+        UpdateItem();
     }
     public void OnBuyButton()
     {
-        MarketController.Instance.BuyItem(currentItems[0]);
-        currentItems.RemoveAt(0);
-        SetMarketItem(currentItems.Count > 0 && currentItems[0] != null ? currentItems[0] : null);
-        if (UIItemDescText.text == "Empty" && currentItems.Count > 0 && currentItems[0] != null)
-            SetMarketItem(currentItems[0]);
+        MarketController.Instance.BuyItem(currentItem);
+        currentItem = null;
+        UpdateItem();
     }
 }

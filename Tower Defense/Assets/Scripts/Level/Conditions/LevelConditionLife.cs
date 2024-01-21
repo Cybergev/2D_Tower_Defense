@@ -6,13 +6,10 @@ public class LevelConditionLife : ConditionAsset
     public override bool ConditionIsComplete
     {
         get
-        { 
+        {
             if (levelConditionLife == null)
                 return false;
-            if (levelConditionLife == "Full" || levelConditionLife == "full")
-                return Player.Instance.NumLive >= Player.Instance.NumStartLive;
-            else
-                return Player.Instance.NumLive >= int.Parse(levelConditionLife);
+            return levelConditionLife == "Full" || levelConditionLife == "full" ? Player.Instance.NumLive >= Player.Instance.NumStartLive : Player.Instance.NumLive >= int.Parse(levelConditionLife);
         }
     }
 }

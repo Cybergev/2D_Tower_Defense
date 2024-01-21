@@ -1,25 +1,28 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UiTextController : MonoBehaviour
 {
-    [SerializeField] private Text[] targetExitText;
-    [SerializeField] private string firstTextString;
-    [SerializeField] private string lastTextString;
-    public void OnChangeTargetValueAmount(string value)
+    [SerializeField] protected Text[] targetExitText;
+    [SerializeField] protected string firstTextString;
+    [SerializeField] protected string lastTextString;
+    protected string Text
     {
-        foreach (var tText in targetExitText)
+        set
         {
-            tText.text = $"{firstTextString}{value}{lastTextString}";
+            foreach (var tText in targetExitText)
+                tText.text = $"{firstTextString}{value}{lastTextString}";
         }
     }
-    public void OnChangeTargetValueAmount(int iValue)
+    public virtual void OnChangeTargetValueAmount(string value)
+    {
+        Text = value;
+    }
+    public virtual void OnChangeTargetValueAmount(int iValue)
     {
         OnChangeTargetValueAmount(iValue.ToString());
     }
-    public void OnChangeTargetValueAmount(float fValue)
+    public virtual void OnChangeTargetValueAmount(float fValue)
     {
         OnChangeTargetValueAmount(fValue.ToString());
     }

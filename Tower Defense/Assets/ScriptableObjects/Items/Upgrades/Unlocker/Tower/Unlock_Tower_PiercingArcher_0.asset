@@ -9,19 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17f67813f900bcf40a7b8a0489aba79b, type: 3}
-  m_Name: Upgrade_Base
+  m_Script: {fileID: 11500000, guid: 0ab6bdbadd76e7b40b23c7bb92b84465, type: 3}
+  m_Name: Unlock_Tower_PiercingArcher_0
   m_EditorClassIdentifier: 
-  itemName: Upgrade Base
-  itemDescription: 
+  itemName: Unlock_Tower_PiercingArcher_0
+  itemDescription: PiercingArcher:0
   itemImage: {fileID: 0}
   cost: 0
-  type: 2
-  upgradeLevel: 0
-  towerUpgradeTarget: 0
-  damageModifier: 1
-  fireRateModifier: 1
-  fireRadiusModifier: 1
-  playerUpgradeTarget: 0
-  liveUpgrade: 0
-  goldUpgrade: 0
+  unlockTarget: 1
+  unlockTowerAsset: {fileID: 11400000, guid: 43f894bd4f5e8e84db63cad7c481df77, type: 2}

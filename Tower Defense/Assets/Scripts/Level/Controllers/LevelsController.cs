@@ -34,14 +34,20 @@ public class LevelsController : MonoSingleton<LevelsController>
 
     [SerializeField] private UnityEvent m_EventLevelCanceled;
     [HideInInspector] public UnityEvent EventLevelCanceled => m_EventLevelCanceled;
+
+    [SerializeField] private UnityEvent m_EventLevelRestarted;
+    [HideInInspector] public UnityEvent EventLevelRestarted => m_EventLevelRestarted;
+
+    [SerializeField] private UnityEvent m_EventLevelStarted;
+    [HideInInspector] public UnityEvent EventLevelStarted => m_EventLevelStarted;
     public ConditionAsset[] CompleteConditions { get; private set; }
     public ConditionAsset[] BonusConditions { get; private set; }
-    public bool LevelIsComlpete 
+    public bool LevelIsComplete
     {
         get
         {
-            if (CompleteConditions == null || CompleteConditions.Length == 0) 
-                return true;
+            if (CompleteConditions == null || CompleteConditions.Length == 0)
+                return false;
             int numCompleted = 0;
             foreach (var v in CompleteConditions)
                 numCompleted += v.ConditionIsComplete ? 1 : 0;
@@ -50,10 +56,9 @@ public class LevelsController : MonoSingleton<LevelsController>
                 int numBonus = 0;
                 foreach (var v in BonusConditions)
                     numBonus += v.ConditionIsComplete ? 1 : 0;
-                float succes = numBonus / (BonusConditions.Length / 100f);
+                float succes = (numCompleted + numBonus) / ((CompleteConditions.Length + BonusConditions.Length) / 100f);
                 int reward = numCompleted + numBonus;
                 FinishLevel(succes, reward);
-                m_EventLevelCompleted.Invoke();
                 return true;
             }
             return false;
@@ -61,17 +66,10 @@ public class LevelsController : MonoSingleton<LevelsController>
     }
     public float LevelTime { get; private set; }
     #endregion
-    private void EventsIni()
-    {
-        m_EventLevelCompleted.RemoveAllListeners();
-        m_EventLevelCanceled.RemoveAllListeners();
-        m_EventLevelCompleted.AddListener(Destructible.ClearNumDestroyed);
-        m_EventLevelCanceled.AddListener(Destructible.ClearNumDestroyed);
-    }
 
     private void FixedUpdate()
     {
-        LevelTime += !LevelIsComlpete ? Time.deltaTime : 0;
+        LevelTime += !LevelIsComplete ? Time.deltaTime : 0;
     }
 
     #region LevelControllTolls
@@ -81,18 +79,35 @@ public class LevelsController : MonoSingleton<LevelsController>
         LevelResultController.Instance.HashSaveLevelResult(result);
         LevelResultController.Instance.HardSaveLevelResult(LevelResultController.Instance.ArrayLevelResults.ToArray());
         ResultPanelController.Instance.ShownResult(result);
+        m_EventLevelCompleted.Invoke();
     }
     #endregion
 
     #region LevelSequenceTools
+    private void EventsIni(UnityAction action)
+    {
+        m_EventLevelCompleted.RemoveAllListeners();
+        m_EventLevelCanceled.RemoveAllListeners();
+        m_EventLevelRestarted.RemoveAllListeners();
+        m_EventLevelStarted.RemoveAllListeners();
+        m_EventLevelCompleted.AddListener(action);
+        m_EventLevelCanceled.AddListener(action);
+        m_EventLevelRestarted.AddListener(action);
+        m_EventLevelStarted.AddListener(action);
+    }
     public void StartLevel(Level level)
     {
+        if (!level)
+            return;
         CurrentLevel = level;
+        CompleteConditions = null;
         CompleteConditions = level.LevelCompleteConditions.Length > 0 ? level.LevelCompleteConditions : null;
+        BonusConditions = null;
         BonusConditions = level.LevelBonusConditions;
         LevelTime = 0;
         SceneManager.LoadScene(level.SceneNumber);
-        EventsIni();
+        EventsIni(Destructible.ClearNumDestroyed);
+        m_EventLevelStarted.Invoke();
     }
     public void StartLevel(string levelName)
     {
@@ -116,7 +131,7 @@ public class LevelsController : MonoSingleton<LevelsController>
         {
             if (result.LevelName == CurrentLevel.LevelName)
             {
-                if (result.LevelConditionSuccess > 0)
+                if (result.LevelConditionSuccess <= 0)
                 {
                     m_EventLevelCanceled.Invoke();
                     LoadMainMenu();
@@ -135,7 +150,7 @@ public class LevelsController : MonoSingleton<LevelsController>
     }
     public void RestartLevel()
     {
-        m_EventLevelCanceled.Invoke();
+        m_EventLevelRestarted.Invoke();
         StartLevel(CurrentLevel);
     }
     public void AvanceLevel()

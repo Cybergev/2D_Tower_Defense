@@ -65,8 +65,8 @@ public class ItemController : MonoSingleton<ItemController>
     private void LoadItems()
     {
         items = new List<ItemAsset>();
-        var itemNames = SaveController<string[]>.TryLoad(nameof(Items));
-        if (itemNames.Length == 0)
+        string[] itemNames = SaveController<string[]>.TryLoad(nameof(Items));
+        if (itemNames != null)
             SaveItems();
         else
             foreach (var name in itemNames)

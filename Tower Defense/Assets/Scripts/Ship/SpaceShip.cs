@@ -26,11 +26,13 @@ public class SpaceShip : Destructible
     /// </summary>
     [SerializeField] private float m_MaxLinearVelocity;
     public float MaxLinearVelocity => m_MaxLinearVelocity;
+    private float velocityMidifier = 1;
     /// <summary>
     /// Максимальная вращательная скорость. В градус/сек
     /// </summary>
     [SerializeField] private float m_MaxAngularVelocity;
     public float MaxAngularVelocity => m_MaxAngularVelocity;
+    private float angularMidifier = 1;
     /// <summary>
     /// Сохраненная ссылка на ригид.
     /// </summary>
@@ -57,34 +59,34 @@ public class SpaceShip : Destructible
     #region Public API
     public virtual void UseAsset(EnemyAsset asset)
     {
-        SetIndestructible(asset.isIndestructible);
-        SetIndamageble(asset.isIndamageble);
-        if (asset.healthPointsIsRandom)
+        SetIndestructible(asset.IsIndestructible);
+        SetIndamageble(asset.IsIndamageble);
+        if (asset.HealthPointsIsRandom)
         {
-            int hitPoints = (int)Random.Range(asset.healthPointsRandomRange.x, asset.healthPointsRandomRange.y);
+            int hitPoints = Random.Range(asset.HealthPointsRandomRange.x, asset.HealthPointsRandomRange.y);
             SetMaxHitPoints(hitPoints);
             SetCurrentHitPoints(hitPoints);
         }
         else
         {
-            SetMaxHitPoints(asset.healthPoints);
-            SetCurrentHitPoints(asset.healthPoints);
+            SetMaxHitPoints(asset.HealthPoints);
+            SetCurrentHitPoints(asset.HealthPoints);
         }
 
         if (asset.moveSpeedIsRandom)
-            m_MaxLinearVelocity = Random.Range(asset.healthPointsRandomRange.x, asset.healthPointsRandomRange.y);
+            m_MaxLinearVelocity = Random.Range(asset.HealthPointsRandomRange.x, asset.HealthPointsRandomRange.y);
         else
-            m_MaxLinearVelocity = asset.moveSpeed;
+            m_MaxLinearVelocity = asset.MoveSpeed;
 
-        if (asset.goldIsRandom)
-            SetScoreValue((int)Random.Range(asset.goldRandomRange.x, asset.goldRandomRange.y));
+        if (asset.GoldIsRandom)
+            SetScoreValue(Random.Range(asset.GoldRandomRange.x, asset.GoldRandomRange.y));
         else
-            SetScoreValue(asset.gold);
+            SetScoreValue(asset.Gold);
 
-        if (asset.scoreIsRandom)
-            SetScoreValue((int)Random.Range(asset.scoreRandomRange.x, asset.scoreRandomRange.y));
+        if (asset.ScoreIsRandom)
+            SetScoreValue(Random.Range(asset.ScoreRandomRange.x, asset.ScoreRandomRange.y));
         else
-            SetScoreValue(asset.score);
+            SetScoreValue(asset.Score);
 
     }
     public void SetOwner(GameObject v_gameObject)
@@ -99,8 +101,19 @@ public class SpaceShip : Destructible
     }
     public void SetScoreValue(int v_scoreValue)
     {
-        if (v_scoreValue <= 0) return;
-        m_ScoreValue = v_scoreValue;
+        if (v_scoreValue > 0)
+            m_ScoreValue = v_scoreValue;
+    }
+
+    public void ChangeVelocity(float v_velocity)
+    {
+        if (v_velocity < 0)
+            return;
+        velocityMidifier = v_velocity;
+    }
+    public void BackupVelocity()
+    {
+        velocityMidifier = 1;
     }
     /// <summary>
     /// Управление линейной тягой. -1.0 до +1.0
@@ -163,11 +176,11 @@ public class SpaceShip : Destructible
     /// </summary>
     private void UpdateRigitBody()
     {
-        m_Rigid.AddForce(ThrustControl * m_Thrust * transform.up * Time.fixedDeltaTime, ForceMode2D.Force);
+        m_Rigid.AddForce(ThrustControl * m_Thrust * transform.up * velocityMidifier * Time.fixedDeltaTime, ForceMode2D.Force);
 
         m_Rigid.AddForce(-m_Rigid.velocity * (m_Thrust / m_MaxLinearVelocity) * Time.fixedDeltaTime, ForceMode2D.Force);
 
-        m_Rigid.AddTorque(TorqueControl * m_Mobility * Time.fixedDeltaTime, ForceMode2D.Force);
+        m_Rigid.AddTorque(TorqueControl * m_Mobility * angularMidifier * Time.fixedDeltaTime, ForceMode2D.Force);
 
         m_Rigid.AddTorque(-m_Rigid.angularVelocity * (m_Mobility / m_MaxAngularVelocity) * Time.fixedDeltaTime, ForceMode2D.Force);
     }

@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class MarketItem : MonoBehaviour
 {
     [SerializeField] private List<ItemAsset> items;
+    [SerializeField] private Button UIBuyButton;
     [SerializeField] private Image UIImage;
     [SerializeField] private Text UIItemDescText;
-    [SerializeField] private Button UIBuyButton;
-    [SerializeField] private Text UIButtonText;
+    [SerializeField] private Text UICostText;
     [SerializeField] private Sprite UINullImage;
+    [SerializeField] private string UICostTextPef = "Cost";
 
     private ItemAsset currentItem;
     private List<ItemAsset> currentItems;
@@ -22,7 +22,7 @@ public class MarketItem : MonoBehaviour
                 UIImage.overrideSprite = UINullImage;
                 UIItemDescText.text = "Empty";
                 UIBuyButton.interactable = false;
-                UIButtonText.text = "Empty";
+                UICostText.text = UICostTextPef + "Empty";
                 currentItem = null;
                 break;
             default:
@@ -43,7 +43,7 @@ public class MarketItem : MonoBehaviour
                 UIImage.overrideSprite = item.ItemImage;
                 UIItemDescText.text = item.ItemDescription;
                 UIBuyButton.interactable = MarketController.Instance.Money >= item.Cost;
-                UIButtonText.text = item.Cost.ToString();
+                UICostText.text = UICostTextPef + item.Cost.ToString();
                 currentItem = item;
                 break;
         }

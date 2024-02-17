@@ -45,3 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DoNotDestroyOnLoad: 1
+  baseItemAssets:
+  - {fileID: 11400000, guid: f145ddd01c7e7064a884a5c190005727, type: 2}
+  - {fileID: 11400000, guid: 1355e1992655e694aa1754d5134b5a05, type: 2}
+  allItemAssets:
+  - {fileID: 11400000, guid: f145ddd01c7e7064a884a5c190005727, type: 2}
+  - {fileID: 11400000, guid: 1355e1992655e694aa1754d5134b5a05, type: 2}
+  - {fileID: 11400000, guid: 210a7cb9cfcbf32479b7b6a832ca8420, type: 2}
+  - {fileID: 11400000, guid: c72687d610a55554ca76bb4b4cae47d3, type: 2}
+  - {fileID: 11400000, guid: 0b007bedb1f67d54b9eb0092eb20bc55, type: 2}
+  - {fileID: 11400000, guid: f974032f03908c941b81dba22f356ab9, type: 2}
+  - {fileID: 11400000, guid: 56a8faf78755b7c43b89ec59e3c5681f, type: 2}
+  - {fileID: 11400000, guid: 32872c39246ba3e4e814489482d28a4a, type: 2}

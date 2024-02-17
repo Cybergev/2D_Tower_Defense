@@ -14,27 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isIndestructible: 0
   isIndamageble: 0
-  healthPoints: 2
   healthPointsIsRandom: 0
+  healthPoints: 2
   healthPointsRandomRange: {x: 1, y: 10}
-  damage: 1
+  physArmorIsRandom: 0
+  piercArmorIsRandom: 0
+  magicArmorIsRandom: 0
+  physArmor: 0
+  piercArmor: 0
+  magicArmor: 0
+  physArmorRandomRange: {x: 1, y: 10}
+  piercArmorRandomRange: {x: 1, y: 10}
+  magicArmorRandomRange: {x: 1, y: 10}
   damageIsRandom: 0
+  damage: 1
   damageRandomRange: {x: 1, y: 10}
-  gold: 2
   goldIsRandom: 0
+  gold: 2
   goldRandomRange: {x: 1, y: 10}
-  score: 0
   scoreIsRandom: 0
+  score: 0
   scoreRandomRange: {x: 1, y: 10}
+  colorIsRandom: 0
   color: {r: 1, g: 1, b: 1, a: 1}
-  collorIsRandom: 0
   colorsRandomArray: []
+  spriteScaleIsRandom: 0
   spriteScale: {x: 1, y: 1}
-  scaleIsRandom: 0
-  scaleRandomRange: {x: 1, y: 10}
-  animation: {fileID: 9100000, guid: b882fc41f3cbc0746810d732dd764b32, type: 2}
+  spriteScaleRandomRange: {x: 1, y: 10}
   animationIsRandom: 0
+  animation: {fileID: 9100000, guid: b882fc41f3cbc0746810d732dd764b32, type: 2}
   animationsRandomArray: []
-  moveSpeed: 1.2
+  soundDieIsRandom: 0
+  soundWinIsRandom: 0
+  soundDie: 6
+  soundWin: 7
+  soundDieRandomArray: 
+  soundWinRandomArray: 
   moveSpeedIsRandom: 0
+  moveSpeed: 1.2
   moveSpeedRandomRange: {x: 1, y: 10}

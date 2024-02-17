@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -49,6 +47,9 @@ public abstract class Spawner : MonoBehaviour
     }
     [SerializeField] protected UnityEvent m_EventOnSpawnObject;
     [HideInInspector] public UnityEvent EventOnSpawnObject => m_EventOnSpawnObject;
+
+    [SerializeField] protected UnityEvent<GameObject> m_EventOnSpawnObjectRef;
+    [HideInInspector] public UnityEvent<GameObject> EventOnSpawnObjectRef => m_EventOnSpawnObjectRef;
 
     [SerializeField] protected UnityEvent m_EventOnSpawnIteration;
     [HideInInspector] public UnityEvent EventOnSpawnIteration => m_EventOnSpawnIteration;

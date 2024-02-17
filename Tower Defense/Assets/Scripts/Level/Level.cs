@@ -26,6 +26,7 @@ public class Level : ScriptableObject
     #region GameplayData
     [Header("Gameplay Data")]
     [SerializeField] private int m_StartLive;
+    [SerializeField] private int m_StartMage;
     [SerializeField] private int m_StartGold;
     #endregion
 
@@ -51,6 +52,7 @@ public class Level : ScriptableObject
 
     #region GameplayData
     public int StartLive => m_StartLive;
+    public int StartMage => m_StartMage;
     public int StartGold => m_StartGold;
     #endregion
 

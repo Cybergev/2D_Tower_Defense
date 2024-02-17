@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,6 +15,7 @@ public class Player : MonoSingleton<Player>
     //[SerializeField] private MovementController m_MovementController;
 
     private UpgradeAsset liveUpgrade;
+    private UpgradeAsset mageUpgrade;
     private UpgradeAsset goldUpgrade;
 
     protected override void Awake()
@@ -23,12 +23,16 @@ public class Player : MonoSingleton<Player>
         base.Awake();
         PlayerIni();
     }
+    protected virtual void FixedUpdate()
+    {
+        NumMage += NumMage < NumStartMage ? 0.1f : 0;
+    }
     private void OnPlayerDeath()
     {
         m_EventOnPlayerDeath.Invoke();
         LevelsController.Instance.FinishLevel(0, 0);
     }
-    internal void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         if (damage <= 0)
             return;
@@ -41,9 +45,12 @@ public class Player : MonoSingleton<Player>
         }
     }
 
-    #region Lives&Score&Money&Kills
+    #region Lives&Mage&Score&Money&Kills
     [SerializeField] private UnityEvent<int> changeLivesAmount;
     [HideInInspector] public UnityEvent<int> ChangeLivesAmount => changeLivesAmount;
+
+    [SerializeField] private UnityEvent<float> changeMageAmount;
+    [HideInInspector] public UnityEvent<float> ChangeMageAmount => changeMageAmount;
 
     [SerializeField] private UnityEvent<int> changeKillsAmount;
     [HideInInspector] public UnityEvent<int> ChangeKillsAmount => changeLivesAmount;
@@ -63,11 +70,26 @@ public class Player : MonoSingleton<Player>
         }
         private set
         {
-            changeLivesAmount.Invoke(value);
             m_NumLive = value;
+            changeLivesAmount.Invoke(m_NumLive);
         }
     }
     public int NumStartLive { get; private set; }
+
+    private float m_NumMage;
+    public float NumMage
+    {
+        get
+        {
+            return m_NumMage;
+        }
+        private set
+        {
+            m_NumMage = value;
+            changeMageAmount.Invoke(m_NumMage);
+        }
+    }
+    public float NumStartMage { get; private set; }
 
     private int m_NumKills;
     public int NumKills
@@ -78,8 +100,8 @@ public class Player : MonoSingleton<Player>
         }
         private set
         {
-            changeKillsAmount.Invoke(value);
             m_NumKills = value;
+            changeKillsAmount.Invoke(m_NumKills);
         }
     }
 
@@ -92,8 +114,8 @@ public class Player : MonoSingleton<Player>
         }
         private set
         {
-            changeGoldAmount.Invoke(value);
             m_NumGold = value;
+            changeGoldAmount.Invoke(m_NumGold);
         }
     }
     public int NumStartGold { get; private set; }
@@ -113,15 +135,18 @@ public class Player : MonoSingleton<Player>
     {
         foreach (var item in ItemController.Instance.Items)
         {
-            if ((item as UpgradeAsset) != null && (item as UpgradeAsset).Type == UpgradeAsset.UpgradeType.Player)
+            if ((item as UpgradeAsset) != null && (item as UpgradeAsset).UpgradeTarget == UpgradeAsset.UpgradeType.Player)
             {
                 liveUpgrade = (item as UpgradeAsset).PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Live ? (item as UpgradeAsset) : null;
+                mageUpgrade = (item as UpgradeAsset).PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Mage ? (item as UpgradeAsset) : null;
                 goldUpgrade = (item as UpgradeAsset).PlayerUpgradeTaget == UpgradeAsset.PlayerUpgrade.Gold ? (item as UpgradeAsset) : null;
             }
         }
         NumStartLive = LevelsController.Instance.CurrentLevel.StartLive + (liveUpgrade ? liveUpgrade.LiveUpgrade : 0);
+        NumStartMage = LevelsController.Instance.CurrentLevel.StartMage + (liveUpgrade ? mageUpgrade.MageUpgrade : 0);
         NumStartGold = LevelsController.Instance.CurrentLevel.StartGold + (goldUpgrade ? goldUpgrade.GoldUpgrade : 0);
         NumLive = NumStartLive;
+        NumMage = NumStartMage;
         NumGold = NumStartGold;
     }
     public void ChangeGold(int value)
@@ -129,6 +154,10 @@ public class Player : MonoSingleton<Player>
         if (value < 0)
             SpentGold += -value;
         NumGold += value;
+    }
+    public void ChangeMage(float value)
+    {
+        NumMage += value;
     }
     public void AddKill()
     {

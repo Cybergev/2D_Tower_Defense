@@ -20,7 +20,7 @@ public class Tower : BuildSite
 
     private TurretTarget turretTarget = new TurretTarget();
 
-    private float radius => currentTowerAsset.TowerRadius * (currentUpgradeAsset != null && currentUpgradeAsset.Type == UpgradeAsset.UpgradeType.Tower ? currentUpgradeAsset.FireRadiusModifier : 1);
+    private float radius => currentTowerAsset.TowerRadius * (currentUpgradeAsset != null && currentUpgradeAsset.UpgradeTarget == UpgradeAsset.UpgradeType.Tower ? currentUpgradeAsset.FireRadiusModifier : 1);
 
     private void Start()
     {
@@ -92,15 +92,13 @@ public class Tower : BuildSite
     }
     public void AssignUpgradeAsset(UpgradeAsset asset)
     {
-        if (asset == null || asset.Type != UpgradeAsset.UpgradeType.Tower || asset.TowerUpgradeTarget != currentTowerAsset.Type)
+        if (asset == null || asset.UpgradeTarget != UpgradeAsset.UpgradeType.Tower || asset.TowerUpgradeTarget != currentTowerAsset.Type)
             return;
         currentUpgradeAsset = asset;
         TowerIni();
     }
     public void AssignAssets(TowerAsset towerAsset, UpgradeAsset upgradeAsset)
     {
-        if (!towerAsset || !upgradeAsset)
-            return;
         AssignTowerAsset(towerAsset);
         AssignUpgradeAsset(upgradeAsset);
     }

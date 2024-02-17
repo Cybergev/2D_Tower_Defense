@@ -1,9 +1,6 @@
-using System.Collections;
+using SaveSystem;
 using System.Collections.Generic;
 using UnityEngine;
-using SaveSystem;
-using System.Linq;
-using UnityEditor.VersionControl;
 
 public class ItemController : MonoSingleton<ItemController>
 {

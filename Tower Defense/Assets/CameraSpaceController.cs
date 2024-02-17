@@ -1,10 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CameraSpaceController : MonoBehaviour, IPointerDownHandler
+public class CameraSpaceController : MonoSingleton<CameraSpaceController>, IPointerDownHandler
 {
+    public event Action<PointerEventData> PointerDown;
     public void OnPointerDown(PointerEventData eventData)
     {
-        BuildSite.HideControls();
+        PointerDown?.Invoke(eventData);
     }
 }

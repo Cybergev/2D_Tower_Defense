@@ -29,4 +29,5 @@ MonoBehaviour:
   m_PrevLevel: {fileID: 0}
   m_NextLevel: {fileID: 11400000, guid: e3e0f9b05a994df48aadec58ea62d8ef, type: 2}
   m_StartLive: 10
+  m_StartMage: 100
   m_StartGold: 20

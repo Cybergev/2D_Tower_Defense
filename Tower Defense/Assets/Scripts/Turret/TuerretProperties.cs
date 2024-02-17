@@ -26,6 +26,6 @@ public sealed class TuerretProperties : ScriptableObject
     [SerializeField] private int m_AmmoUsage;
     public int AmmoUsage => m_AmmoUsage;
 
-    [SerializeField] private AudioClip m_LaunchSFX;
-    public AudioClip LaunchSFX => m_LaunchSFX;
+    [SerializeField] private Sound m_LaunchSFX;
+    public Sound LaunchSFX => m_LaunchSFX;
 }

@@ -17,7 +17,9 @@ MonoBehaviour:
   healthPointsIsRandom: 0
   healthPoints: 10
   healthPointsRandomRange: {x: 1, y: 10}
-  armorIsRandom: 0
+  physArmorIsRandom: 0
+  piercArmorIsRandom: 0
+  magicArmorIsRandom: 0
   physArmor: 2
   piercArmor: 1
   magicArmor: 0
@@ -33,15 +35,21 @@ MonoBehaviour:
   scoreIsRandom: 0
   score: 0
   scoreRandomRange: {x: 1, y: 10}
-  collorIsRandom: 0
+  colorIsRandom: 0
   color: {r: 1, g: 1, b: 1, a: 1}
   colorsRandomArray: []
-  scaleIsRandom: 0
+  spriteScaleIsRandom: 0
   spriteScale: {x: 3, y: 3}
-  scaleRandomRange: {x: 1, y: 10}
+  spriteScaleRandomRange: {x: 1, y: 10}
   animationIsRandom: 0
   animation: {fileID: 9100000, guid: b882fc41f3cbc0746810d732dd764b32, type: 2}
   animationsRandomArray: []
+  soundDieIsRandom: 0
+  soundWinIsRandom: 0
+  soundDie: 6
+  soundWin: 7
+  soundDieRandomArray: 
+  soundWinRandomArray: 
   moveSpeedIsRandom: 0
   moveSpeed: 0.5
   moveSpeedRandomRange: {x: 1, y: 10}

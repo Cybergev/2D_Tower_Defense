@@ -87,6 +87,6 @@ public class UiWavePanelController : UiTextController
             serializedObject.ApplyModifiedProperties();
         }
     }
-    #endif
+#endif
     #endregion
 }

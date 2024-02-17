@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab6bdbadd76e7b40b23c7bb92b84465, type: 3}
+  m_Name: Unlock_Tower_Archer_0
+  m_EditorClassIdentifier: 
+  itemName: Unlock_Tower_Archer_0
+  itemDescription: Archer tower
+  itemImage: {fileID: 21300000, guid: ef25b92a8e4b2644b8420de820e6c11f, type: 3}
+  cost: 0
+  unlockTarget: 1
+  unlockTowerAsset: {fileID: 11400000, guid: be9f0c434aadbbf4a80054c1274e0f25, type: 2}
+  unlockAbilityAsset: {fileID: 0}

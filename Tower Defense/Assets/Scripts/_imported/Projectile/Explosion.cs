@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
 public class Explosion : MonoBehaviour
 {
     [SerializeField] private ExplosionProperties m_ExplosionProperties;
@@ -12,26 +9,37 @@ public class Explosion : MonoBehaviour
     {
         m_DestroyEffect.Invoke();
     }
-    public void Explode()
+    private void Impact(GameObject obj, float dist, ExplosionProperties prop)
+    {
+        if (!obj)
+            return;
+        var dest = obj.transform.root.GetComponent<Destructible>();
+        if (dest)
+        {
+            dest.ApplyDamage(prop.Damage);
+            Vector2 force = (dest.transform.position - transform.position).normalized * prop.ImpactForce * (dist / prop.ExplosionRadius);
+            dest.transform.root.GetComponent<Rigidbody2D>()?.AddForce(force, ForceMode2D.Impulse);
+        }
+    }
+    public void Explode(ExplosionProperties prop)
     {
         foreach (var dest in Destructible.AllDestructibles)
         {
             float dist = (dest.transform.position - transform.position).magnitude;
-            if (dist <= m_ExplosionProperties.ExplosionRadius)
-                Impact(dest.gameObject, dist);
+            if (dist <= prop.ExplosionRadius)
+                Impact(dest.gameObject, dist, prop);
         }
+        SoundController.Instance.Play(prop.Sound);
         m_ExplosionEffect.Invoke();
     }
-    private void Impact(GameObject v_object, float dist)
+    public void Explode()
     {
-        if (!v_object)
-            return;
-        var dest = v_object.transform.root.GetComponent<Destructible>();
-        if (dest)
-        {
-            dest.ApplyDamage(m_ExplosionProperties.Damage);
-            Vector2 force = (dest.transform.position - transform.position).normalized * m_ExplosionProperties.ImpactForce * (dist / m_ExplosionProperties.ExplosionRadius);
-            dest.transform.root.GetComponent<Rigidbody2D>()?.AddForce(force, ForceMode2D.Impulse);
-        }
+        Explode(m_ExplosionProperties);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position, (m_ExplosionProperties ? m_ExplosionProperties.ExplosionRadius : 0));
     }
 }

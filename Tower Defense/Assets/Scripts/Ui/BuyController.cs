@@ -18,7 +18,7 @@ public class BuyController : MonoSingleton<BuyController>
                 if ((item as UnlockerAsset).UnlockTarget == UnlockerAsset.UnlockerType.Tower)
                     m_unlockAssets.Add(item as UnlockerAsset);
             if (item is UpgradeAsset)
-                if ((item as UpgradeAsset).Type == UpgradeAsset.UpgradeType.Tower)
+                if ((item as UpgradeAsset).UpgradeTarget == UpgradeAsset.UpgradeType.Tower)
                     m_upgradeAssets.Add(item as UpgradeAsset);
         }
         BuildSite.OnClickAction += MoveToTransform;
@@ -107,9 +107,12 @@ public class BuyController : MonoSingleton<BuyController>
             m_buildControllers.Clear();
         }
     }
-    public void UpdateListenActions()
+    public void RemoveListeningActions()
     {
         BuildSite.OnClickAction -= MoveToTransform;
+    }
+    public void AddListeningActions()
+    {
         BuildSite.OnClickAction += MoveToTransform;
     }
 }

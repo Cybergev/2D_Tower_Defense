@@ -105,6 +105,7 @@ public class LevelsController : MonoSingleton<LevelsController>
         BonusConditions = null;
         BonusConditions = level.LevelBonusConditions;
         LevelTime = 0;
+        Destructible.ClearNumDestroyed();
         SceneManager.LoadScene(level.SceneNumber);
         EventsIni(Destructible.ClearNumDestroyed);
         m_EventLevelStarted.Invoke();

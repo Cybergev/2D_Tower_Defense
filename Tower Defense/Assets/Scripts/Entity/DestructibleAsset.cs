@@ -9,11 +9,20 @@ using UnityEditor;
 public class DestructibleAsset : ScriptableObject
 {
     [Header("Health Settings")]
-    public bool isIndestructible = false;
-    public bool isIndamageble = false;
-    public bool healthPointsIsRandom = false;
-    public int healthPoints = 1;
-    public Vector2Int healthPointsRandomRange = new Vector2Int(1, 10);
+    [SerializeField] private bool isIndestructible = false;
+    [SerializeField] private bool isIndamageble = false;
+    [SerializeField] private bool healthPointsIsRandom = false;
+    [SerializeField] private int healthPoints = 1;
+    [SerializeField] private Vector2Int healthPointsRandomRange = new Vector2Int(1, 10);
+    #region Public
+    public bool IsIndestructible => isIndestructible;
+    public bool IsIndamageble => isIndamageble;
+    public bool HealthPointsIsRandom => healthPointsIsRandom;
+    public int HealthPoints => healthPoints;
+    public Vector2Int HealthPointsRandomRange => healthPointsRandomRange;
+    #endregion
+
+    #region Editor
 #if UNITY_EDITOR
     [CustomEditor(typeof(DestructibleAsset))]
     public class DestructibleAssetInspector : Editor
@@ -28,15 +37,15 @@ public class DestructibleAsset : ScriptableObject
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            destructibleAsset.isIndestructible = EditorGUILayout.Toggle(nameof(destructibleAsset.isIndestructible), destructibleAsset.isIndestructible);
-            destructibleAsset.isIndamageble = EditorGUILayout.Toggle(nameof(destructibleAsset.isIndamageble), destructibleAsset.isIndamageble);
-            destructibleAsset.healthPointsIsRandom = EditorGUILayout.Toggle(nameof(destructibleAsset.healthPointsIsRandom), destructibleAsset.healthPointsIsRandom);
-            if (!destructibleAsset.healthPointsIsRandom)
-                destructibleAsset.healthPoints = EditorGUILayout.IntField(nameof(destructibleAsset.healthPoints), destructibleAsset.healthPoints);
-            else
-                destructibleAsset.healthPointsRandomRange = EditorGUILayout.Vector2IntField(nameof(destructibleAsset.healthPointsRandomRange), destructibleAsset.healthPointsRandomRange);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(destructibleAsset.isIndestructible)));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(destructibleAsset.isIndamageble)));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(destructibleAsset.healthPointsIsRandom)));
+            EditorGUILayout.PropertyField(
+                !destructibleAsset.healthPointsIsRandom ? serializedObject.FindProperty(nameof(destructibleAsset.healthPoints)) : serializedObject.FindProperty(nameof(destructibleAsset.healthPointsRandomRange))
+            );
             serializedObject.ApplyModifiedProperties();
         }
     }
-#endif
+    #endif
+    #endregion
 }

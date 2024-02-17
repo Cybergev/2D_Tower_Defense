@@ -14,15 +14,6 @@ public class Turret : MonoBehaviour
 
     private float fireRate => m_TuerretProperties.RateOfFire * (upgrade != null ? upgrade.FireRateModifier : 1);
 
-
-    [SerializeField] private SpaceShip m_Ship;
-
-    private void Start()
-    {
-        if (m_Ship != null)
-            m_Ship = transform.root.GetComponent<SpaceShip>();
-    }
-
     private void FixedUpdate()
     {
         m_RefireTimer ??= new Timer(fireRate);
@@ -35,16 +26,12 @@ public class Turret : MonoBehaviour
         if (!m_TuerretProperties || !m_RefireTimer.IsFinished)
             return;
 
-        if (m_Ship)
-            if (!m_Ship.DrawEnergy(m_TuerretProperties.EnergyUsage) || !m_Ship.DrawAmmo(m_TuerretProperties.AmmoUsage))
-                return;
-
         Projectile projectile = Instantiate(m_TuerretProperties.PerojectilePrefab).GetComponent<Projectile>();
         projectile.transform.position = transform.position;
         projectile.transform.rotation = transform.rotation;
         projectile.SetUpgrade(upgrade);
         projectile.SetTarget(target);
-        projectile.SetParentShooter(m_Ship);
+        SoundController.Instance.Play(m_TuerretProperties.LaunchSFX);
 
         m_RefireTimer = new Timer(fireRate);
     }
@@ -58,7 +45,7 @@ public class Turret : MonoBehaviour
     }
     public void AssignUpgrade(UpgradeAsset asset)
     {
-        if (asset == null || asset.Type != UpgradeAsset.UpgradeType.Tower) 
+        if (asset == null || asset.UpgradeTarget != UpgradeAsset.UpgradeType.Tower) 
             return;
         upgrade = asset;
     }

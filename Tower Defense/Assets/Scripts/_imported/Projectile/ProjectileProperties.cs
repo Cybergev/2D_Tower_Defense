@@ -16,6 +16,7 @@ public class ProjectileProperties : ScriptableObject
     [SerializeField] private float m_ImpactCheckLineLenght;
     [SerializeField] private bool m_HasImpactForce = true;
     [SerializeField, Range(0.0f, 2.0f)] private float m_ImpactForceModifier = 1;
+    [SerializeField] private Sound m_ImpactSFX;
     public float Mass => m_Mass;
     public float LinearDrag => m_LinearDrag;
     public float AngularDrag => m_AngularDrag;
@@ -27,6 +28,7 @@ public class ProjectileProperties : ScriptableObject
     public float ImpactCheckLineLenght => m_ImpactCheckLineLenght;
     public bool HasImpactForce => m_HasImpactForce;
     public float ImpactForceModifier => m_ImpactForceModifier;
+    public Sound ImpactSFX => m_ImpactSFX;
 
     [Header("")]
     [SerializeField] private int m_Damage;

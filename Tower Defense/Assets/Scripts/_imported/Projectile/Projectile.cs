@@ -8,30 +8,6 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private ProjectileProperties m_ProjectileProperties;
     [SerializeField] private Rigidbody2D m_Rigid;
-    private int m_BounceNum;
-    private int m_lostDamge;
-    private UpgradeAsset upgrade;
-
-    #region
-    private float mass => m_ProjectileProperties.Mass;
-    private float linearDrag => m_ProjectileProperties.LinearDrag;
-    private float angularDrag => m_ProjectileProperties.AngularDrag;
-    private float gravityScale => m_ProjectileProperties.GravityScale;
-    private float thrustForce => m_ProjectileProperties.ThrustForce;
-    private float maxLinearVelocity => m_ProjectileProperties.MaxLinearVelocity;
-    private bool isHoming => m_ProjectileProperties.IsHoming;
-    private float homingAngle => m_ProjectileProperties.HomingAngle;
-    private float impactCheckLineLenght => m_ProjectileProperties.ImpactCheckLineLenght;
-    private bool hasImpactForce => m_ProjectileProperties.HasImpactForce;
-    private float ImpactForceModifier => m_ProjectileProperties.ImpactForceModifier;
-    private int damage => (int)(m_ProjectileProperties.Damage * (upgrade != null ? upgrade.DamageModifier : 1));
-    private DamageType damageType => m_ProjectileProperties.DamageType;
-    private float lifetime => m_ProjectileProperties.Lifetime;
-    private bool canBounce => m_ProjectileProperties.CanBounce;
-    private int maxBounceNum => m_ProjectileProperties.MaxBounceNum;
-    private int damadeLossPerBounce => m_ProjectileProperties.DamadeLossPerBounce;
-    #endregion
-
     private class ProjectileTarget
     {
         private Transform targetTransform;
@@ -56,6 +32,29 @@ public class Projectile : MonoBehaviour
     }
     private ProjectileTarget m_Target;
     private Destructible m_Parent;
+    private int m_BounceNum;
+    private int m_lostDamge;
+    private UpgradeAsset upgrade;
+    #region
+    private float mass => m_ProjectileProperties.Mass;
+    private float linearDrag => m_ProjectileProperties.LinearDrag;
+    private float angularDrag => m_ProjectileProperties.AngularDrag;
+    private float gravityScale => m_ProjectileProperties.GravityScale;
+    private float thrustForce => m_ProjectileProperties.ThrustForce;
+    private float maxLinearVelocity => m_ProjectileProperties.MaxLinearVelocity;
+    private bool isHoming => m_ProjectileProperties.IsHoming;
+    private float homingAngle => m_ProjectileProperties.HomingAngle;
+    private float impactCheckLineLenght => m_ProjectileProperties.ImpactCheckLineLenght;
+    private bool hasImpactForce => m_ProjectileProperties.HasImpactForce;
+    private float impactForceModifier => m_ProjectileProperties.ImpactForceModifier;
+    private Sound impactSFX => m_ProjectileProperties.ImpactSFX;
+    private int damage => (int)(m_ProjectileProperties.Damage * (upgrade != null ? upgrade.DamageModifier : 1));
+    private DamageType damageType => m_ProjectileProperties.DamageType;
+    private float lifetime => m_ProjectileProperties.Lifetime;
+    private bool canBounce => m_ProjectileProperties.CanBounce;
+    private int maxBounceNum => m_ProjectileProperties.MaxBounceNum;
+    private int damadeLossPerBounce => m_ProjectileProperties.DamadeLossPerBounce;
+    #endregion
 
 
     [SerializeField] private UnityEvent m_ImpactEffect;
@@ -63,8 +62,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        if (!m_Rigid)
-            transform.root.GetComponent<Rigidbody2D>();
+        m_Rigid ??= transform.root.GetComponent<Rigidbody2D>();
 
         m_Rigid.mass = mass;
         m_Rigid.angularDrag = angularDrag;
@@ -116,7 +114,7 @@ public class Projectile : MonoBehaviour
         var dest = v_object.transform.root.GetComponent<Destructible>();
         var rigid = v_object.transform.root.GetComponent<Rigidbody2D>();
         if (rigid && hasImpactForce)
-            rigid.AddForce(m_Rigid.mass * m_Rigid.velocity * ImpactForceModifier, ForceMode2D.Impulse);
+            rigid.AddForce(m_Rigid.mass * m_Rigid.velocity * impactForceModifier, ForceMode2D.Impulse);
         if (dest && dest != m_Parent)
         {
             if (m_Parent)
@@ -134,7 +132,10 @@ public class Projectile : MonoBehaviour
             m_lostDamge -= damadeLossPerBounce;
         }
         else
+        {
+            SoundController.Instance.Play(impactSFX);
             Destroy(gameObject);
+        }
         m_ImpactEffect.Invoke();
     }
     private float CalculateAngle(Vector3 targetPosition)

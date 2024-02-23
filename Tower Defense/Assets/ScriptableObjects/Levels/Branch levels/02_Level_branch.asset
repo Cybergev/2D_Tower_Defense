@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c945ee59fdd3b8045b0831fc01b4ebb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1038bc8a17009b74295842bc4c0cad01, type: 3}
   m_Name: 02_Level_branch
   m_EditorClassIdentifier: 
   m_SceneName: branch_scene 2
-  m_SceneNumber: 4
   m_ScenePreviewImage: {fileID: 21300000, guid: 3595a333bafecb34e94ff8b1f8c6d140, type: 3}
   m_LevelName: Level branch 2
   m_LevelAccessConditions:
@@ -24,10 +23,10 @@ MonoBehaviour:
   m_LevelBonusConditions:
   - {fileID: 11400000, guid: bb0fef15fcb92ec42bda801e1f6940a6, type: 2}
   m_LevelSpawnScenarios:
-  - {fileID: 11400000, guid: eee8b0d7768f45a4f93e173e44efc035, type: 2}
-  - {fileID: 11400000, guid: 2ae1d2b743f3e7f429d6a4dec406bb65, type: 2}
-  - {fileID: 11400000, guid: cc41d38e4a86f3e4d952e2f84a0d7fcb, type: 2}
-  m_PrevLevel: {fileID: 0}
+  - {fileID: 11400000, guid: e6083aaa296033349b730e505c479edd, type: 2}
+  - {fileID: 11400000, guid: 580882e023159fb40be1c48c13d6e446, type: 2}
+  - {fileID: 11400000, guid: 5a2c60250fc3e5a4793ee454bad5a447, type: 2}
+  m_PrevLevel: {fileID: 11400000, guid: e3e0f9b05a994df48aadec58ea62d8ef, type: 2}
   m_NextLevel: {fileID: 0}
   m_StartLive: 10
   m_StartMage: 100

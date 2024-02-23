@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c3aa96c9e57dd4a96842edf9242cf6, type: 3}
+  m_Name: SpawnScenarioAsset Enemy Level_2_Wave 1
+  m_EditorClassIdentifier: 
+  spawnDataAssets:
+  - {fileID: 11400000, guid: ae00f8f0dcaa34043bb54d99ab503eef, type: 2}
+  - {fileID: 11400000, guid: d9b8039ed71995e429136f91025ff706, type: 2}
+  - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
+  - {fileID: 11400000, guid: 45421c330c96dab42a019c1d0a3daa14, type: 2}
+  timeBetweenScenario: 10
+  secondaryAsset: {fileID: 11400000, guid: 7be430b57f03ba14db2f74aa24b348d0, type: 2}

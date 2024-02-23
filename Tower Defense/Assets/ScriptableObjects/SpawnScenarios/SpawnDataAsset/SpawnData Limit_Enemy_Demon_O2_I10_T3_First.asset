@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e082f76833d71a41a2925b0df6ef1e9, type: 3}
+  m_Name: SpawnData Limit_Enemy_Demon_O2_I10_T3_First
+  m_EditorClassIdentifier: 
+  m_SpawnObject: {fileID: 8984428738912032580, guid: 51685923923c9ea48a97a13974f79f69, type: 3}
+  m_SpawnMode: 0
+  m_NumSpawnObjects: 2
+  m_NumSpawnIterations: 10
+  m_RespawnTime: 3
+  secondaryAsset: {fileID: 11400000, guid: 16ba4eefc3dd5a84d96aed19002cc9a7, type: 2}

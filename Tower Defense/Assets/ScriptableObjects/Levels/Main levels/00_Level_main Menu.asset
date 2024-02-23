@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c945ee59fdd3b8045b0831fc01b4ebb9, type: 3}
+  m_Script: {fileID: 11500000, guid: 1038bc8a17009b74295842bc4c0cad01, type: 3}
   m_Name: 00_Level_main Menu
   m_EditorClassIdentifier: 
   m_SceneName: main_menu
@@ -24,4 +24,5 @@ MonoBehaviour:
   m_PrevLevel: {fileID: 0}
   m_NextLevel: {fileID: 0}
   m_StartLive: 0
+  m_StartMage: 0
   m_StartGold: 0

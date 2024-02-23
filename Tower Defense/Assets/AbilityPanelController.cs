@@ -5,6 +5,7 @@ using UnityEngine;
 public class AbilityPanelController : MonoBehaviour
 {
     [SerializeField] private Ability abilityPrefab;
+    [SerializeField] private bool invertOffsetValue;
     private List<UnlockerAsset> unlockAssets = new List<UnlockerAsset>();
     private List<UpgradeAsset> upgradeAssets = new List<UpgradeAsset>();
     private List<Ability> abilities = new List<Ability>();
@@ -34,7 +35,7 @@ public class AbilityPanelController : MonoBehaviour
             {
                 for (int i = 0; i < abilities.Count; i++)
                 {
-                    var offset = abilities[i].GetComponent<RectTransform>().rect.width * i;
+                    var offset = abilities[i].GetComponent<RectTransform>().rect.width * ( invertOffsetValue ? -i : i);
                     abilities[i].transform.position += new Vector3(offset, 0, 0);
                 }
             }

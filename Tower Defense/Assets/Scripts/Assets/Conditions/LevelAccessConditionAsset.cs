@@ -8,7 +8,7 @@ public class LevelAccessConditionAsset : ConditionAsset
     /// <summary>
     /// Уровень, который должен быть выполнен
     /// </summary>
-    [SerializeField] private Level targetLevel;
+    [SerializeField] private LevelAsset targetLevel;
     [SerializeField] private float targetLevelSuccess;
     [SerializeField] private float targetLevelScore;
     [SerializeField] private float targetLevelTime;

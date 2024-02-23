@@ -9,7 +9,7 @@ public class EnemySpawner : Spawner
 
     [SerializeField] protected UnityEvent<Enemy> m_EventOnSpawnEnemyRef;
     [HideInInspector] public UnityEvent<Enemy> EventOnSpawnEnemyRef => m_EventOnSpawnEnemyRef;
-    public Path CurrentPath { get; private set; }
+    public Path[] Paths { get; private set; }
     public static HashSet<EnemySpawner> AllEnemySpawners { get; private set; }
     protected override void OnEnable()
     {
@@ -25,19 +25,33 @@ public class EnemySpawner : Spawner
     protected override GameObject GenerateSpawnEntity(SpawnData spawnData)
     {
         var data = spawnData;
+        Path curPath = null;
+        foreach (var path in Paths)
+        {
+            if (path != null && path.PathType == spawnData.CurrentSpawnData.SecondaryAsset.PathType)
+            {
+                curPath = path;
+                break;
+            }
+        }
         GameObject completeObject;
         completeObject = Instantiate(data.CurrentSpawnData.NumSpawnObject);
         completeObject.GetComponent<Enemy>().UseAsset(data.CurrentSpawnData.SecondaryAsset.EnemySetting);
-        completeObject.GetComponent<TDPatrolController>().SetPath(CurrentPath);
+        completeObject.GetComponent<TDPatrolController>().SetPath(curPath);
         m_EventOnSpawnEnemy.Invoke();
         m_EventOnSpawnEnemyRef.Invoke(completeObject.GetComponent<Enemy>());
         return completeObject;
     }
-    public void SetSpawnScenario(SpawnScenarioAsset scenarios, Path path)
+    public void SetSpawnScenario(SpawnScenarioAsset scenarios)
     {
-        if (!scenarios || !path)
+        if (!scenarios)
             return;
         SetSpawnData(scenarios);
-        CurrentPath = path;
+    }
+    public void SetPaths(Path[] paths)
+    {
+        if (paths == null)
+            return;
+        Paths = paths;
     }
 }

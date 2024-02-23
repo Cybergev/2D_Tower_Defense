@@ -6,12 +6,12 @@ public class SelectPanelController : MonoSingleton<SelectPanelController>
     [SerializeField] private Image m_image;
     [SerializeField] private Text m_text;
 
-    private Level selectedLevel;
+    private LevelAsset selectedLevel;
     private void Start()
     {
         gameObject.SetActive(false);
     }
-    public void ShowSlectedLevel (Level level)
+    public void ShowSlectedLevel (LevelAsset level)
     {
         gameObject.SetActive(true);
         foreach (var result in LevelResultController.Instance.ArrayLevelResults)

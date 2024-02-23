@@ -22,7 +22,6 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
     }
     public SpawnScenarioAsset[] SpawnScenarios { get; private set; }
     public SpawnScenarioAsset CurrentSpawnScenario { get; private set; }
-    public Path CurrentPath { get; private set; }
 
 
     [SerializeField] private UnityEvent scenarioCompleteEvent;
@@ -158,17 +157,16 @@ public class EnemyCamp : MonoSingleton<EnemyCamp>
         if (scenario == null)
             return;
         CurrentSpawnScenario = scenario;
-        foreach (var path in paths)
-            foreach (var dataAsset in CurrentSpawnScenario.SpawnDataAssets)
-                if (path.PathType == dataAsset.SecondaryAsset.PathType)
-                    CurrentPath = path;
         numSpawnCompleted = 0;
         SetCurrentScnearioToSpawners();
     }
     public void SetCurrentScnearioToSpawners()
     {
         foreach (var spawner in enemySpawners)
-            spawner.SetSpawnScenario(CurrentSpawnScenario, CurrentPath);
+        {
+            spawner.SetSpawnScenario(CurrentSpawnScenario);
+            spawner.SetPaths(paths);
+        }
     }
     public SpawnScenarioAsset CheckNextScenario()
     {

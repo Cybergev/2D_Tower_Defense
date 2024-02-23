@@ -17,7 +17,7 @@ public class Path : MonoBehaviour
     {
         Gizmos.color = Color.green;
 
-        foreach(var point in points)
+        foreach (var point in points)
             Gizmos.DrawSphere(point.transform.position, point.Radius);
     }
 }

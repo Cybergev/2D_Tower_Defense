@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class LevelSelectionController : MonoBehaviour
 {
-    [SerializeField] private Level m_Level;
+    [SerializeField] private LevelAsset m_Level;
     [SerializeField] private Button m_Button;
     [SerializeField] private RectTransform[] m_ResultShowImages;
 
-    public Level Level => m_Level;
+    public LevelAsset Level => m_Level;
     public Button Button => m_Button;
 
     private void Start()

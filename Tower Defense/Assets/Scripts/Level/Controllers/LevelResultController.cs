@@ -70,10 +70,7 @@ public class LevelResultController : MonoSingleton<LevelResultController>
     {
         List<LevelResult> levelResults = new List<LevelResult>();
         foreach (var v in levelNames)
-        {
-            LevelResult result = HardLoadLevelResult(v);
-            levelResults.Add(result == null ? new LevelResult(v, 0, 0, 1000) : new LevelResult(result));
-        }
+            levelResults.Add(HardLoadLevelResult(v));
         return levelResults.ToArray();
     }
     public LevelResult GetLevelResult(string LevelName)

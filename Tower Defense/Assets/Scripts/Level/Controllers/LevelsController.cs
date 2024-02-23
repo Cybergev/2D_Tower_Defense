@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -7,25 +8,25 @@ using UnityEngine.SceneManagement;
 public class LevelsController : MonoSingleton<LevelsController>
 {
     #region LevelData
-    [SerializeField] private Level m_MainMenuLevel;
-    [SerializeField] private Level[] m_MainLevels;
-    [SerializeField] private Level[] m_BranchLevels;
-    public Level MainMenuLevel => m_MainMenuLevel;
-    public Level[] MainLevels => m_MainLevels;
-    public Level[] BranchLevels => m_BranchLevels;
-    public Level[] AllLevels
+    [SerializeField] private LevelAsset m_MainMenuLevel;
+    [SerializeField] private LevelAsset[] m_MainLevels;
+    [SerializeField] private LevelAsset[] m_BranchLevels;
+    public LevelAsset MainMenuLevel => m_MainMenuLevel;
+    public LevelAsset[] MainLevels => m_MainLevels;
+    public LevelAsset[] BranchLevels => m_BranchLevels;
+    public LevelAsset[] AllLevels
     {
         get
         {
-            List<Level> levels = new List<Level>();
-            foreach (Level level in m_MainLevels)
+            List<LevelAsset> levels = new List<LevelAsset>();
+            foreach (LevelAsset level in m_MainLevels)
                 levels.Add(level);
-            foreach (Level level in m_BranchLevels)
+            foreach (LevelAsset level in m_BranchLevels)
                 levels.Add(level);
             return levels.ToArray();
         }
     }
-    public Level CurrentLevel { get; private set; }
+    public LevelAsset CurrentLevel { get; private set; }
     #endregion
 
     #region LevelControllData
@@ -47,7 +48,7 @@ public class LevelsController : MonoSingleton<LevelsController>
         get
         {
             if (CompleteConditions == null || CompleteConditions.Length == 0)
-                return false;
+                return true;
             int numCompleted = 0;
             foreach (var v in CompleteConditions)
                 numCompleted += v.ConditionIsComplete ? 1 : 0;
@@ -67,6 +68,10 @@ public class LevelsController : MonoSingleton<LevelsController>
     public float LevelTime { get; private set; }
     #endregion
 
+    private void Start()
+    {
+        m_EventLevelStarted.AddListener(Destructible.ClearNumDestroyed);
+    }
     private void FixedUpdate()
     {
         LevelTime += !LevelIsComplete ? Time.deltaTime : 0;
@@ -84,18 +89,7 @@ public class LevelsController : MonoSingleton<LevelsController>
     #endregion
 
     #region LevelSequenceTools
-    private void EventsIni(UnityAction action)
-    {
-        m_EventLevelCompleted.RemoveAllListeners();
-        m_EventLevelCanceled.RemoveAllListeners();
-        m_EventLevelRestarted.RemoveAllListeners();
-        m_EventLevelStarted.RemoveAllListeners();
-        m_EventLevelCompleted.AddListener(action);
-        m_EventLevelCanceled.AddListener(action);
-        m_EventLevelRestarted.AddListener(action);
-        m_EventLevelStarted.AddListener(action);
-    }
-    public void StartLevel(Level level)
+    public void StartLevel(LevelAsset level)
     {
         if (!level)
             return;
@@ -105,9 +99,7 @@ public class LevelsController : MonoSingleton<LevelsController>
         BonusConditions = null;
         BonusConditions = level.LevelBonusConditions;
         LevelTime = 0;
-        Destructible.ClearNumDestroyed();
-        SceneManager.LoadScene(level.SceneNumber);
-        EventsIni(Destructible.ClearNumDestroyed);
+        SceneManager.LoadScene(level.SceneName);
         m_EventLevelStarted.Invoke();
     }
     public void StartLevel(string levelName)
@@ -115,14 +107,6 @@ public class LevelsController : MonoSingleton<LevelsController>
         for (int i = 0; i < m_MainLevels.Length; i++)
         {
             if (m_MainLevels[i].name == levelName)
-                StartLevel(m_MainLevels[i]);
-        }
-    }
-    public void StartLevel(int leveNumber)
-    {
-        for (int i = 0; i < m_MainLevels.Length; i++)
-        {
-            if (m_MainLevels[i].SceneNumber == leveNumber)
                 StartLevel(m_MainLevels[i]);
         }
     }

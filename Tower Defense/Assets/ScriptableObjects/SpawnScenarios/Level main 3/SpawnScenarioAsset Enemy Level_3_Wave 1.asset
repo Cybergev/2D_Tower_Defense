@@ -15,7 +15,7 @@ MonoBehaviour:
   spawnDataAssets:
   - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
   - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
-  - {fileID: 11400000, guid: 45421c330c96dab42a019c1d0a3daa14, type: 2}
+  - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
   - {fileID: 11400000, guid: 45421c330c96dab42a019c1d0a3daa14, type: 2}
   timeBetweenScenario: 10
   secondaryAsset: {fileID: 11400000, guid: 7be430b57f03ba14db2f74aa24b348d0, type: 2}

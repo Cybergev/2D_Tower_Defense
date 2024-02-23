@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65c3aa96c9e57dd4a96842edf9242cf6, type: 3}
-  m_Name: SpawnScenarioAsset Level_branch_3 Wave
+  m_Name: SpawnScenarioAsset Level_branch_3 Wave 3
   m_EditorClassIdentifier: 
   spawnDataAssets:
   - {fileID: 11400000, guid: 40e4e62ef4c458e4897749cf39871e70, type: 2}
-  - {fileID: 11400000, guid: 40e4e62ef4c458e4897749cf39871e70, type: 2}
-  - {fileID: 11400000, guid: 40e4e62ef4c458e4897749cf39871e70, type: 2}
+  - {fileID: 11400000, guid: bb18b310a9557804dbdc63245426cb7a, type: 2}
+  - {fileID: 11400000, guid: ccea5970cd26946498dac906c046c575, type: 2}
+  - {fileID: 11400000, guid: f67836f68747c324187ba6d8f467a1c4, type: 2}
   timeBetweenScenario: 5
   secondaryAsset: {fileID: 0}

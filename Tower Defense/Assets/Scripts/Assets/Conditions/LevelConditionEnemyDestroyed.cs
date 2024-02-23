@@ -8,18 +8,10 @@ public class LevelConditionEnemyDestroyed : ConditionAsset
         get
         {
             int numDestroyed = 0;
-            SpawnScenarioAsset levelSpawnScenarios;
-            SpawnDataAsset spawnDataAssets;
             if (levelConditionEnemyDestroyed == "All" || levelConditionEnemyDestroyed == "all")
-                for (int i = 0; i < LevelsController.Instance.CurrentLevel.LevelSpawnScenarios.Length; i++)
-                {
-                    levelSpawnScenarios = LevelsController.Instance.CurrentLevel.LevelSpawnScenarios[i];
-                    for (int j = 0; j < levelSpawnScenarios.SpawnDataAssets.Length; j++)
-                    {
-                        spawnDataAssets = levelSpawnScenarios.SpawnDataAssets[j];
+                foreach (var levelSpawnScenarios in LevelsController.Instance.CurrentLevel.LevelSpawnScenarios)
+                    foreach (var spawnDataAssets in levelSpawnScenarios.SpawnDataAssets)
                         numDestroyed += spawnDataAssets.NumSpawnObjects * spawnDataAssets.NumSpawnIterations;
-                    }
-                }
             else
                 numDestroyed = int.Parse(levelConditionEnemyDestroyed);
             return numDestroyed == Destructible.NumDestroyed;

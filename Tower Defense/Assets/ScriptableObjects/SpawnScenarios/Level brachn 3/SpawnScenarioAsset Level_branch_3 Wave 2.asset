@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnDataAssets:
   - {fileID: 11400000, guid: 40e4e62ef4c458e4897749cf39871e70, type: 2}
-  - {fileID: 11400000, guid: 40e4e62ef4c458e4897749cf39871e70, type: 2}
-  - {fileID: 11400000, guid: 40e4e62ef4c458e4897749cf39871e70, type: 2}
+  - {fileID: 11400000, guid: bb18b310a9557804dbdc63245426cb7a, type: 2}
+  - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
+  - {fileID: 11400000, guid: 514013d5af34c7047affcf7494da7926, type: 2}
   timeBetweenScenario: 5
   secondaryAsset: {fileID: 0}
